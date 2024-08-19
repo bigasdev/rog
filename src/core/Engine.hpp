@@ -6,6 +6,9 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
+class SDL_Renderer;
+class GPU_Target;
+
 class Engine{
 public:
   Engine();
@@ -14,10 +17,14 @@ public:
   void init();
   void update();
   void input();
+  void draw();
   void quit();
   bool is_running() { return m_running; }
 private:
   bool m_running = true;
+
+  SDL_Renderer* m_renderer;
+  GPU_Target* m_gpu;
 };
 
 #endif

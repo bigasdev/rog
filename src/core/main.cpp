@@ -29,6 +29,7 @@ void loop() {
   while (engine->is_running()) {
     engine->input();
     engine->update();
+    engine->draw();
   }
 #endif
 
