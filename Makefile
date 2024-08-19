@@ -11,7 +11,7 @@ RELEASE_FOLDER = .release
 
 ICON_DIR = res/icon/icon.res
 BIN = bin/*.o
-DEBUG_FLAGS = -DF_ENABLE_ASSERTS -DF_ENABLE_DEBUG -DF_ENABLE_IMGUI
+DEBUG_FLAGS = -D_ASSERTS -D_DEBUG -D_IMGUI
 
 bin_dir:
 	mkdir bin

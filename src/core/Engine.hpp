@@ -14,6 +14,7 @@ public:
   void init();
   void update();
   void input();
+  void quit();
   bool is_running() { return m_running; }
 private:
   bool m_running = true;

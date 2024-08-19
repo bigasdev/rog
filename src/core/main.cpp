@@ -10,6 +10,7 @@ targetting it to the corect platform
 #endif
 
 #include "Engine.hpp"
+#include "Assert.hpp"
 #include "Timer.hpp"
 #include <iostream>
 #include <memory>
@@ -45,6 +46,7 @@ int main(int args, char *argv[]) {
   loop();
 #endif
 
+  engine->quit();
   return 0;
 }
 #endif
