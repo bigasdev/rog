@@ -2,6 +2,7 @@
 
 #ifndef PROFILER_HPP
 #define PROFILER_HPP
+
 class Profiler{
 public: 
   Profiler();
