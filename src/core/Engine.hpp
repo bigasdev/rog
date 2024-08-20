@@ -8,6 +8,7 @@
 
 class SDL_Renderer;
 class GPU_Target;
+class Profiler;
 
 class Engine{
 public:
@@ -27,6 +28,7 @@ private:
 
   SDL_Renderer* m_renderer;
   GPU_Target* m_gpu;
+  Profiler* m_profiler;
 };
 
 #endif

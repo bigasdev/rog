@@ -10,6 +10,7 @@
 #include "SDL_scancode.h"
 #include "SDL_video.h"
 #include "Timer.hpp"
+#include "../tools/Profiler.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -78,6 +79,8 @@ void Engine::post_init() {
     return;
   }
 
+  m_profiler = new Profiler();
+
   Logger::log("Engine post init");
   m_loaded = true;
 }
@@ -103,7 +106,11 @@ void Engine::input() {
   }
 }
 
-void Engine::update() { Timer::update(); }
+void Engine::update() { 
+  m_profiler->update();
+
+  Timer::update(); 
+}
 
 void Engine::draw() {
   GPU_Clear(m_gpu);
