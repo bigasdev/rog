@@ -4,6 +4,9 @@
 #include "SDL.h"
 #include "SDL_events.h"
 #include "SDL_gpu.h"
+#include "SDL_image.h"
+#include "SDL_mixer.h"
+#include "SDL_ttf.h"
 #include "SDL_scancode.h"
 #include "SDL_video.h"
 #include "Timer.hpp"
@@ -15,7 +18,12 @@ Engine::Engine() { Logger::setup_crash_handlers(); }
 Engine::~Engine() {}
 
 void Engine::init() {
-  auto init = SDL_Init(SDL_INIT_EVERYTHING);
+  int init = -99;
+#ifdef __EMSCRIPTEN__
+  init = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+#else
+  init = SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_AUDIO);
+#endif
 
   R_ASSERT(init == 0);
 
@@ -42,12 +50,36 @@ void Engine::init() {
     Logger::log("SDL2 renderer created");
     Logger::log("SDL2 GPU created");
   }
+  if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)) {
+    Logger::log("SDL2 image initialized");
+  }
+
+  SDL_GL_SetSwapInterval(1);
+
+  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) > 0) {
+    Logger::log("SDL2 mixer initialized");
+  }else{
+    Logger::log("SDL2 mixer failed to initialize " + std::string(Mix_GetError()));
+  }
+
+  TTF_Init();
 
   R_ASSERT(window != nullptr);
 
   if (window != nullptr) {
     Logger::log("SDL2 window created");
   }
+
+  m_running = true;
+}
+
+void Engine::post_init() {
+  if(m_loaded){
+    return;
+  }
+
+  Logger::log("Engine post init");
+  m_loaded = true;
 }
 
 bool m_moving = false;
@@ -71,17 +103,18 @@ void Engine::input() {
   }
 }
 
-  void Engine::update() { Timer::update(); }
+void Engine::update() { Timer::update(); }
 
-  void Engine::draw() {
-    GPU_Clear(m_gpu);
-    GPU_SetVirtualResolution(m_gpu, 800, 600);
-    GPU_Flip(m_gpu);
-  }
+void Engine::draw() {
+  GPU_Clear(m_gpu);
+  GPU_ClearColor(m_gpu, {0, 0, 0, 255});
+  GPU_SetVirtualResolution(m_gpu, 800, 600);
+  GPU_Flip(m_gpu);
+}
 
-  void Engine::quit() {
-    SDL_DestroyWindow(SDL_GetWindowFromID(GPU_GetInitWindow()));
-    SDL_Quit();
-    Logger::log("SDL2 quit");
-    Logger::write_to_file("log.txt");
-  }
+void Engine::quit() {
+  SDL_DestroyWindow(SDL_GetWindowFromID(GPU_GetInitWindow()));
+  SDL_Quit();
+  Logger::log("SDL2 quit");
+  Logger::write_to_file("log.txt");
+}

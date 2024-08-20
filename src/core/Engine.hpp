@@ -15,13 +15,15 @@ public:
   ~Engine();
 
   void init();
+  void post_init();
   void update();
   void input();
   void draw();
   void quit();
   bool is_running() { return m_running; }
 private:
-  bool m_running = true;
+  bool m_running = false;
+  bool m_loaded = false;
 
   SDL_Renderer* m_renderer;
   GPU_Target* m_gpu;

@@ -32,6 +32,7 @@ void loop() {
     engine->draw();
   }
 #endif
+  engine->post_init();
 
 #ifdef __EMSCRIPTEN__
   emscripten_cancel_main_loop();
