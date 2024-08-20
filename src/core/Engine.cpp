@@ -56,7 +56,7 @@ void Engine::init() {
 
   SDL_GL_SetSwapInterval(1);
 
-  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) > 0) {
+  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) >= 0) {
     Logger::log("SDL2 mixer initialized");
   }else{
     Logger::log("SDL2 mixer failed to initialize " + std::string(Mix_GetError()));

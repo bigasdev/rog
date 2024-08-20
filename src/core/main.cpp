@@ -9,8 +9,8 @@ targetting it to the corect platform
 #include "emscripten.h"
 #endif
 
-#include "Engine.hpp"
 #include "Assert.hpp"
+#include "Engine.hpp"
 #include "Timer.hpp"
 #include <iostream>
 #include <memory>
@@ -26,11 +26,9 @@ void loop() {
 #ifdef __EMSCRIPTEN__
   // mainloop
 #elif __WIN32__
-  while (engine->is_running()) {
-    engine->input();
-    engine->update();
-    engine->draw();
-  }
+  engine->input();
+  engine->update();
+  engine->draw();
 #endif
   engine->post_init();
 
@@ -45,7 +43,9 @@ int main(int args, char *argv[]) {
 #ifdef __EMSCRIPTEN__
   emscripten_set_main_loop(loop, 0, 1);
 #else
-  loop();
+  while(engine->is_running()) {
+    loop();
+  }
 #endif
 
   engine->quit();
