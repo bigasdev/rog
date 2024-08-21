@@ -1,11 +1,11 @@
 #include "Engine.hpp"
+#include "../renderer/AppGui.hpp"
 #include "../renderer/Renderer.hpp"
-#include "SoundManager.hpp"
-#include "InputManager.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Profiler.hpp"
 #include "Assert.hpp"
+#include "InputManager.hpp"
 #include "SDL.h"
 #include "SDL_events.h"
 #include "SDL_gpu.h"
@@ -14,6 +14,7 @@
 #include "SDL_scancode.h"
 #include "SDL_ttf.h"
 #include "SDL_video.h"
+#include "SoundManager.hpp"
 #include "Timer.hpp"
 #include "global.hpp"
 #include <cassert>
@@ -48,7 +49,8 @@ void Engine::init() {
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
-  m_sdl_renderer = SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
+  m_sdl_renderer =
+      SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
   m_gpu = GPU_Init(1920, 1080, GPU_DEFAULT_INIT_FLAGS);
   R_ASSERT(m_gpu != nullptr);
@@ -101,13 +103,25 @@ void Engine::post_init() {
   g_engine = this;
   g_res = m_res;
 
+#if _IMGUI
+  GUI::setup(m_sdl_window, m_sdl_renderer);
+#endif
+
   Logger::log("Engine post init");
   m_loaded = true;
 }
 
 bool m_moving = false;
 void Engine::input() {
+  if (!m_loaded)
+    return;
+
   SDL_Event event;
+
+#if _IMGUI
+  GUI::event(event);
+#endif
+
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
     case SDL_WINDOWEVENT:
@@ -118,7 +132,7 @@ void Engine::input() {
           SDL_GetWindowSize(m_sdl_window, &h, &w);
           m_window_size.x = h;
           m_window_size.y = w;
-          GPU_SetWindowResolution(h,w);
+          GPU_SetWindowResolution(h, w);
         }
       }
       break;
@@ -156,6 +170,10 @@ void Engine::draw() {
 
 #if _DEBUG
   m_profiler->draw();
+#endif
+
+#if _IMGUI
+  GUI::draw([]() {});
 #endif
 
   GPU_Flip(m_gpu);
