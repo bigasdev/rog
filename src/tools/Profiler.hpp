@@ -3,7 +3,7 @@
 #ifndef PROFILER_HPP
 #define PROFILER_HPP
 
-#define PROFILER_TICK 60
+#define PROFILER_TICK 30
 
 class Profiler{
 public: 

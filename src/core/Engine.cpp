@@ -1,25 +1,25 @@
 #include "Engine.hpp"
 #include "../tools/Logger.hpp"
+#include "../tools/Profiler.hpp"
 #include "Assert.hpp"
 #include "SDL.h"
 #include "SDL_events.h"
 #include "SDL_gpu.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
-#include "SDL_ttf.h"
 #include "SDL_scancode.h"
+#include "SDL_ttf.h"
 #include "SDL_video.h"
 #include "Timer.hpp"
-#include "../tools/Profiler.hpp"
 #include <cassert>
 #include <iostream>
 
-struct test{
+struct test {
   int a;
   int b;
 };
 
-std::vector<test*> tests;
+std::vector<test *> tests;
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -66,8 +66,9 @@ void Engine::init() {
 
   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) >= 0) {
     Logger::log("SDL2 mixer initialized");
-  }else{
-    Logger::log("SDL2 mixer failed to initialize " + std::string(Mix_GetError()));
+  } else {
+    Logger::log("SDL2 mixer failed to initialize " +
+                std::string(Mix_GetError()));
   }
 
   TTF_Init();
@@ -82,7 +83,7 @@ void Engine::init() {
 }
 
 void Engine::post_init() {
-  if(m_loaded){
+  if (m_loaded) {
     return;
   }
 
@@ -108,19 +109,20 @@ void Engine::input() {
         m_running = false;
 #endif
         break;
+      case SDL_SCANCODE_E:
+        for (int i = 0; i < 10000; i++) {
+          tests.push_back(new test());
+        }
+        break;
       }
     }
   }
 }
 
-void Engine::update() { 
+void Engine::update() {
   m_profiler->update();
 
-  for(int i = 0; i < 10000; i++){
-    tests.push_back(new test());
-  }
-
-  Timer::update(); 
+  Timer::update();
 }
 
 void Engine::draw() {

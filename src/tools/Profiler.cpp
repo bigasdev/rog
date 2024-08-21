@@ -5,6 +5,8 @@
 #include "TCHAR.h"
 #include "pdh.h"
 #include "psapi.h"
+#include <pdh.h>
+#include <pdhmsg.h>
 #include <windows.h>
 #endif
 
@@ -12,6 +14,9 @@ static ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 static int numProcessors;
 static HANDLE self;
 int m_tick_count;
+
+PDH_HQUERY query;
+PDH_HCOUNTER counter;
 
 Profiler::Profiler() {
   SYSTEM_INFO sysInfo;
@@ -27,6 +32,17 @@ Profiler::Profiler() {
   GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
   memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
   memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
+
+  PdhOpenQuery(NULL, NULL, &query);
+  PdhAddCounter(query, TEXT("\\GPU Engine(*)\\Utilization Percentage"), NULL,
+                &counter);
+  PdhCollectQueryData(query);
+}
+double getGpuUsage() {
+  PDH_FMT_COUNTERVALUE counterVal;
+  PdhCollectQueryData(query);
+  PdhGetFormattedCounterValue(counter, PDH_FMT_DOUBLE, NULL, &counterVal);
+  return counterVal.doubleValue;
 }
 double getCurrentValue() {
   FILETIME ftime, fsys, fuser;
@@ -69,6 +85,7 @@ void Profiler::update() {
     int mb = pmc.PagefileUsage / ((1024 * 1024) * 1.5);
     Logger::log("RAM Usage: " + std::to_string(mb));
     Logger::log("CPU Used: " + std::to_string(getCurrentValue()));
+    Logger::log("GPU Used: " + std::to_string(getGpuUsage()));
 #endif
     m_tick_count = 0;
   }
