@@ -1,5 +1,6 @@
 #include "Profiler.hpp"
 #include "Logger.hpp"
+#include "../core/Timer.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../core/Engine.hpp"
 #include "../res/Res.hpp"
@@ -93,6 +94,7 @@ void Profiler::update() {
 
     m_base_info.cpu_line_y = 480 - (25*((double)m_cpu_usage/m_base_info.max_cpu_usage));
     m_base_info.ram_line_y = 550 - (25*((double)m_ram_usage/m_base_info.max_ram_usage));
+    m_frames = Timer::get_frame_count();
 #endif
     m_tick_count = 0;
   }
@@ -103,6 +105,7 @@ void Profiler::draw() {
   g_engine->get_renderer()->draw_line({680, m_base_info.cpu_line_y, 780, m_base_info.cpu_line_y}, {255, 0, 0, 255});
   g_engine->get_renderer()->draw_rect({680, 520, 100, 40}, {0, 255, 0, 255});
   g_engine->get_renderer()->draw_line({680, m_base_info.ram_line_y, 780, m_base_info.ram_line_y}, {0, 255, 0, 255});
-  g_engine->get_renderer()->draw_text({680, 450}, (std::to_string(m_cpu_usage) + "%").c_str(), g_res->get_font("arial"), {255, 0, 0, 255});
-  g_engine->get_renderer()->draw_text({680, 520}, (std::to_string(m_ram_usage) + "mb").c_str(), g_res->get_font("arial"), {0, 255, 0, 255});
+  g_engine->get_renderer()->draw_text({682, 462}, (std::to_string(m_frames)).c_str(), g_res->get_font("arial"), {255, 0, 0, 255});
+  g_engine->get_renderer()->draw_text({682, 522}, (std::to_string(m_ram_usage) + "mb").c_str(), g_res->get_font("arial"), {0, 255, 0, 255});
+  g_engine->get_renderer()->draw_text({682, 452}, (std::to_string(m_cpu_usage) + "%").c_str(), g_res->get_font("arial"), {255, 0, 0, 255});
 }

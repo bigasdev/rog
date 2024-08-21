@@ -30,6 +30,7 @@ namespace Timer{
   void update();
   float get_tmod();
   float get_fps();
+  int get_frame_count();
   void skip();
 }
 

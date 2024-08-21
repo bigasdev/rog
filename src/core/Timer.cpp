@@ -24,6 +24,10 @@ float Timer::get_fps(){
   return 1/dt;
 }
 
+int Timer::get_frame_count(){
+  return frame_count;
+}
+
 void Timer::skip(){
   last_time_stamp = SDL_GetPerformanceCounter();
 }
