@@ -14,6 +14,13 @@
 #include <cassert>
 #include <iostream>
 
+struct test{
+  int a;
+  int b;
+};
+
+std::vector<test*> tests;
+
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
 Engine::~Engine() {}
@@ -108,6 +115,10 @@ void Engine::input() {
 
 void Engine::update() { 
   m_profiler->update();
+
+  for(int i = 0; i < 10000; i++){
+    tests.push_back(new test());
+  }
 
   Timer::update(); 
 }

@@ -27,39 +27,49 @@ Profiler::Profiler() {
   memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
   memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
 }
-double getCurrentValue(){
-    FILETIME ftime, fsys, fuser;
-    ULARGE_INTEGER now, sys, user;
-    double percent;
+double getCurrentValue() {
+  FILETIME ftime, fsys, fuser;
+  ULARGE_INTEGER now, sys, user;
+  double percent;
+  static ULONGLONG lastTime = 0;
 
-    GetSystemTimeAsFileTime(&ftime);
-    memcpy(&now, &ftime, sizeof(FILETIME));
+  GetSystemTimeAsFileTime(&ftime);
+  memcpy(&now, &ftime, sizeof(FILETIME));
 
-    GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
-    memcpy(&sys, &fsys, sizeof(FILETIME));
-    memcpy(&user, &fuser, sizeof(FILETIME));
-    percent = (sys.QuadPart - lastSysCPU.QuadPart) +
-        (user.QuadPart - lastUserCPU.QuadPart);
-    percent /= (now.QuadPart - lastCPU.QuadPart);
-    percent /= numProcessors;
-    lastCPU = now;
-    lastUserCPU = user;
-    lastSysCPU = sys;
+  if (lastTime == 0) {
+    lastTime = now.QuadPart;
+    return 0.0;
+  }
 
-    return percent * 100;
+  GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
+  memcpy(&sys, &fsys, sizeof(FILETIME));
+  memcpy(&user, &fuser, sizeof(FILETIME));
+  percent = (sys.QuadPart - lastSysCPU.QuadPart) +
+            (user.QuadPart - lastUserCPU.QuadPart);
+  percent /= (now.QuadPart - lastTime);
+  percent /= numProcessors;
+  lastTime = now.QuadPart;
+  lastCPU = now;
+  lastUserCPU = user;
+  lastSysCPU = sys;
+
+  return percent * 100;
 }
 
 Profiler::~Profiler() {}
 
 void Profiler::update() {
+  if (m_tick_count >= PROFILER_TICK) {
 #if __WIN32__
-  MEMORYSTATUSEX memInfo;
-  memInfo.dwLength = sizeof(MEMORYSTATUSEX);
-  GlobalMemoryStatusEx(&memInfo);
-  DWORDLONG physMemUsed = memInfo.ullTotalPhys - memInfo.ullAvailPhys;
-  Logger::log("RAM Used: " + std::to_string(physMemUsed));
-  Logger::log("CPU Used: " + std::to_string(getCurrentValue()));
+    auto handle = GetCurrentProcess();
+    PROCESS_MEMORY_COUNTERS pmc;
+    GetProcessMemoryInfo(handle, (PROCESS_MEMORY_COUNTERS *)&pmc, sizeof(pmc));
+    int mb = pmc.PagefileUsage / ((1024 * 1024) * 1.8);
+    Logger::log("RAM Usage: " + std::to_string(mb));
+    Logger::log("CPU Used: " + std::to_string(getCurrentValue()));
 #endif
+    m_tick_count = 0;
+  }
 }
 
 void Profiler::print() {}
