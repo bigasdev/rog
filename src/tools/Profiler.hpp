@@ -13,7 +13,7 @@ public:
   void update();
   void print();
 private:
-  int m_tick_count;
+  
 };
 
 #endif

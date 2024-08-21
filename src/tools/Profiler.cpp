@@ -11,6 +11,7 @@
 static ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 static int numProcessors;
 static HANDLE self;
+int m_tick_count;
 
 Profiler::Profiler() {
   SYSTEM_INFO sysInfo;
@@ -59,12 +60,13 @@ double getCurrentValue() {
 Profiler::~Profiler() {}
 
 void Profiler::update() {
+  m_tick_count++;
   if (m_tick_count >= PROFILER_TICK) {
 #if __WIN32__
     auto handle = GetCurrentProcess();
     PROCESS_MEMORY_COUNTERS pmc;
     GetProcessMemoryInfo(handle, (PROCESS_MEMORY_COUNTERS *)&pmc, sizeof(pmc));
-    int mb = pmc.PagefileUsage / ((1024 * 1024) * 1.8);
+    int mb = pmc.PagefileUsage / ((1024 * 1024) * 1.5);
     Logger::log("RAM Usage: " + std::to_string(mb));
     Logger::log("CPU Used: " + std::to_string(getCurrentValue()));
 #endif
