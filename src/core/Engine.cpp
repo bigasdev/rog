@@ -1,4 +1,5 @@
 #include "Engine.hpp"
+#include "../renderer/Renderer.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Profiler.hpp"
 #include "Assert.hpp"
@@ -49,8 +50,8 @@ void Engine::init() {
 
   GPU_SetInitWindow(SDL_GetWindowID(window));
 
-  m_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-  R_ASSERT(m_renderer != nullptr);
+  m_sdl_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  R_ASSERT(m_sdl_renderer != nullptr);
   m_gpu = GPU_Init(800, 600, GPU_DEFAULT_INIT_FLAGS);
   R_ASSERT(m_gpu != nullptr);
 
@@ -88,6 +89,7 @@ void Engine::post_init() {
   }
 
   m_profiler = new Profiler();
+  m_renderer = new Renderer(m_gpu);
 
   Logger::log("Engine post init");
   m_loaded = true;
@@ -126,9 +128,14 @@ void Engine::update() {
 }
 
 void Engine::draw() {
+  if(!m_loaded) {
+    return;
+  }
+
   GPU_Clear(m_gpu);
   GPU_ClearColor(m_gpu, {0, 0, 0, 255});
   GPU_SetVirtualResolution(m_gpu, 800, 600);
+  m_renderer->draw_rect({0, 0, 100, 100}, {255, 0, 0, 255});
   GPU_Flip(m_gpu);
 }
 
