@@ -7,7 +7,10 @@ here we will instantiate and run everything
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
+#include "../tools/Common.hpp"
+
 class SDL_Renderer;
+class SDL_Window;
 class GPU_Target;
 class Profiler;
 class Renderer;
@@ -19,10 +22,13 @@ private:
   bool m_loaded = false;
 
   SDL_Renderer *m_sdl_renderer;
+  SDL_Window *m_sdl_window;
   GPU_Target *m_gpu;
   Profiler *m_profiler;
   Renderer *m_renderer;
   Res *m_res;
+
+  vec2i m_window_size;
 
 public:
   Engine();
@@ -38,6 +44,7 @@ public:
 
   //getters 
   Renderer *get_renderer() { return m_renderer; }
+  vec2i get_window_size() { return m_window_size; }
 };
 
 #endif

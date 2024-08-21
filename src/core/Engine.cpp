@@ -1,5 +1,4 @@
 #include "Engine.hpp"
-#include "global.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
@@ -14,6 +13,7 @@
 #include "SDL_ttf.h"
 #include "SDL_video.h"
 #include "Timer.hpp"
+#include "global.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -46,16 +46,19 @@ void Engine::init() {
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
                         SDL_WINDOW_ALLOW_HIGHDPI);
-  SDL_Window *window =
+  m_sdl_window =
       SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                        800, 600, window_flags);
+  m_window_size = {800, 600};
 
-  GPU_SetInitWindow(SDL_GetWindowID(window));
+  GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
-  m_sdl_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  m_sdl_renderer = SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
-  m_gpu = GPU_Init(800, 600, GPU_DEFAULT_INIT_FLAGS);
+  m_gpu = GPU_Init(1920, 1080, GPU_DEFAULT_INIT_FLAGS);
   R_ASSERT(m_gpu != nullptr);
+
+  GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
 
   if (m_renderer != nullptr && m_gpu != nullptr) {
     Logger::log("SDL2 renderer created");
@@ -76,9 +79,9 @@ void Engine::init() {
 
   TTF_Init();
 
-  R_ASSERT(window != nullptr);
+  R_ASSERT(m_sdl_window != nullptr);
 
-  if (window != nullptr) {
+  if (m_sdl_window != nullptr) {
     Logger::log("SDL2 window created");
   }
 
@@ -107,6 +110,18 @@ void Engine::input() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
+    case SDL_WINDOWEVENT:
+      if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+        // updating window size
+        {
+          int h = 0, w = 0;
+          SDL_GetWindowSize(m_sdl_window, &h, &w);
+          m_window_size.x = h;
+          m_window_size.y = w;
+          GPU_SetWindowResolution(h,w);
+        }
+      }
+      break;
     case SDL_QUIT:
       m_running = false;
       break;
@@ -135,13 +150,12 @@ void Engine::update() {
 }
 
 void Engine::draw() {
-  if(!m_loaded) {
+  if (!m_loaded) {
     return;
   }
 
   GPU_Clear(m_gpu);
   GPU_ClearColor(m_gpu, {0, 0, 0, 255});
-  GPU_SetVirtualResolution(m_gpu, 800, 600);
 
   m_profiler->draw();
 
