@@ -1,5 +1,7 @@
 #include "Engine.hpp"
 #include "../renderer/Renderer.hpp"
+#include "SoundManager.hpp"
+#include "InputManager.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Profiler.hpp"
@@ -16,13 +18,6 @@
 #include "global.hpp"
 #include <cassert>
 #include <iostream>
-
-struct test {
-  int a;
-  int b;
-};
-
-std::vector<test *> tests;
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -95,6 +90,11 @@ void Engine::post_init() {
 
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
+  m_sound_manager = new SoundManager();
+  m_input_manager = new InputManager();
+  g_sound_manager = m_sound_manager;
+  g_input_manager = m_input_manager;
+
   m_res = new Res();
   m_res->init();
 
@@ -133,18 +133,15 @@ void Engine::input() {
         m_running = false;
 #endif
         break;
-      case SDL_SCANCODE_E:
-        for (int i = 0; i < 10000; i++) {
-          tests.push_back(new test());
-        }
-        break;
       }
     }
   }
 }
 
 void Engine::update() {
+#if _DEBUG
   m_profiler->update();
+#endif
 
   Timer::update();
 }
@@ -157,7 +154,9 @@ void Engine::draw() {
   GPU_Clear(m_gpu);
   GPU_ClearColor(m_gpu, {0, 0, 0, 255});
 
+#if _DEBUG
   m_profiler->draw();
+#endif
 
   GPU_Flip(m_gpu);
 }

@@ -16,6 +16,7 @@ public:
 
   // loaders
   void load_fonts();
+  void load_sounds();
 
   //getters 
   TTF_Font *get_font(std::string name) { return m_fonts[name]; }

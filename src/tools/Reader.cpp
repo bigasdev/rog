@@ -43,7 +43,6 @@ std::vector<std::string> Reader::get_extension_files(std::string path, const cha
     {
         if(entry.path().extension() == ext)
         {
-            std::cout << "File: " << entry.path().string() << "\n";
             files.push_back(entry.path().string());
         }
     }

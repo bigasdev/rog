@@ -15,6 +15,8 @@ class GPU_Target;
 class Profiler;
 class Renderer;
 class Res;
+class InputManager;
+class SoundManager;
 
 class Engine {
 private:
@@ -27,6 +29,8 @@ private:
   Profiler *m_profiler;
   Renderer *m_renderer;
   Res *m_res;
+  InputManager *m_input_manager;
+  SoundManager *m_sound_manager;
 
   vec2i m_window_size;
 
