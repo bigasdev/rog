@@ -1,5 +1,9 @@
 #include "Profiler.hpp"
 #include "Logger.hpp"
+#include "../renderer/Renderer.hpp"
+#include "../core/Engine.hpp"
+#include "../core/global.hpp"
+#include <string>
 
 #if __WIN32__
 #include "TCHAR.h"
@@ -83,12 +87,19 @@ void Profiler::update() {
     PROCESS_MEMORY_COUNTERS pmc;
     GetProcessMemoryInfo(handle, (PROCESS_MEMORY_COUNTERS *)&pmc, sizeof(pmc));
     int mb = pmc.PagefileUsage / ((1024 * 1024) * 1.5);
-    Logger::log("RAM Usage: " + std::to_string(mb));
-    Logger::log("CPU Used: " + std::to_string(getCurrentValue()));
-    Logger::log("GPU Used: " + std::to_string(getGpuUsage()));
+    m_ram_usage = mb;
+    m_cpu_usage = getCurrentValue();
+
+    m_base_info.cpu_line_y = 480 - (25*((double)m_cpu_usage/m_base_info.max_cpu_usage));
+    m_base_info.ram_line_y = 550 - (25*((double)m_ram_usage/m_base_info.max_ram_usage));
 #endif
     m_tick_count = 0;
   }
 }
 
-void Profiler::print() {}
+void Profiler::draw() {
+  g_engine->get_renderer()->draw_rect({680, 450, 100, 40}, {255, 0, 0, 255});
+  g_engine->get_renderer()->draw_line({680, m_base_info.cpu_line_y, 780, m_base_info.cpu_line_y}, {255, 0, 0, 255});
+  g_engine->get_renderer()->draw_rect({680, 520, 100, 40}, {0, 255, 0, 255});
+  g_engine->get_renderer()->draw_line({680, m_base_info.ram_line_y, 780, m_base_info.ram_line_y}, {0, 255, 0, 255});
+}

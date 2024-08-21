@@ -24,10 +24,6 @@ private:
 
 public:
   Engine();
-  static Engine &get_instance() {
-    static Engine instance;
-    return instance;
-  }
   ~Engine();
 
   void init();
@@ -37,6 +33,9 @@ public:
   void draw();
   void quit();
   bool is_running() { return m_running; }
+
+  //getters 
+  Renderer *get_renderer() { return m_renderer; }
 };
 
 #endif

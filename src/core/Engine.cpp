@@ -1,4 +1,5 @@
 #include "Engine.hpp"
+#include "global.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Profiler.hpp"
@@ -91,6 +92,8 @@ void Engine::post_init() {
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
 
+  g_engine = this;
+
   Logger::log("Engine post init");
   m_loaded = true;
 }
@@ -135,7 +138,9 @@ void Engine::draw() {
   GPU_Clear(m_gpu);
   GPU_ClearColor(m_gpu, {0, 0, 0, 255});
   GPU_SetVirtualResolution(m_gpu, 800, 600);
-  m_renderer->draw_rect({0, 0, 100, 100}, {255, 0, 0, 255});
+
+  m_profiler->draw();
+
   GPU_Flip(m_gpu);
 }
 
