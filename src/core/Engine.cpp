@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 #include "global.hpp"
 #include "../renderer/Renderer.hpp"
+#include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Profiler.hpp"
 #include "Assert.hpp"
@@ -91,8 +92,11 @@ void Engine::post_init() {
 
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
+  m_res = new Res();
+  m_res->init();
 
   g_engine = this;
+  g_res = m_res;
 
   Logger::log("Engine post init");
   m_loaded = true;

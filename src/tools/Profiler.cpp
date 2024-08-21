@@ -2,6 +2,7 @@
 #include "Logger.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../core/Engine.hpp"
+#include "../res/Res.hpp"
 #include "../core/global.hpp"
 #include <string>
 
@@ -102,4 +103,6 @@ void Profiler::draw() {
   g_engine->get_renderer()->draw_line({680, m_base_info.cpu_line_y, 780, m_base_info.cpu_line_y}, {255, 0, 0, 255});
   g_engine->get_renderer()->draw_rect({680, 520, 100, 40}, {0, 255, 0, 255});
   g_engine->get_renderer()->draw_line({680, m_base_info.ram_line_y, 780, m_base_info.ram_line_y}, {0, 255, 0, 255});
+  g_engine->get_renderer()->draw_text({680, 450}, (std::to_string(m_cpu_usage) + "%").c_str(), g_res->get_font("arial"), {255, 0, 0, 255});
+  g_engine->get_renderer()->draw_text({680, 520}, (std::to_string(m_ram_usage) + "mb").c_str(), g_res->get_font("arial"), {0, 255, 0, 255});
 }

@@ -11,6 +11,7 @@ class SDL_Renderer;
 class GPU_Target;
 class Profiler;
 class Renderer;
+class Res;
 
 class Engine {
 private:
@@ -21,6 +22,7 @@ private:
   GPU_Target *m_gpu;
   Profiler *m_profiler;
   Renderer *m_renderer;
+  Res *m_res;
 
 public:
   Engine();
