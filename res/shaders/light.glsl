@@ -4,16 +4,16 @@
 uniform sampler2D tex;
 
 // The position of the light source in screen coordinates
-uniform vec2 lightPos;
+uniform vec2 lightPos = vec2(0.0,0.0);
 
 // The color of the light
-uniform vec3 lightColor;
+uniform vec3 lightColor = vec3(1.0, 1.0, 1.0);
 
 // The intensity of the light
-uniform float lightIntensity;
+uniform float lightIntensity = 200.0f;
 
 // The radius of the light's effect
-uniform float lightRadius;
+uniform float lightRadius = 100.0f;
 
 // Varying variables passed from the vertex shader
 varying vec2 texCoord;

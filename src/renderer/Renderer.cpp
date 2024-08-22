@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include "../tools/Logger.hpp"
 #include "SDL_gpu.h"
 
 Renderer::Renderer(GPU_Target *gpu) : m_gpu(gpu) {}
@@ -9,25 +10,46 @@ void Renderer::post_update() { m_calls = 0; }
 
 void Renderer::init_shader(std::vector<std::string> shaders) {
   m_shader = GPU_CreateShaderProgram();
+  const char* vertex_shader = "res/shaders/vertex.glsl";
+  const char* fragment_shader = "res/shaders/light.glsl";
 
-  for(auto shader : shaders){
-    Uint32 fragment_shader = GPU_CompileShader(GPU_FRAGMENT_SHADER, shader.c_str());
+  Uint32 vertex_shader_id = GPU_CompileShader(GPU_VERTEX_SHADER, vertex_shader);
+  Uint32 fragment_shader_id = GPU_CompileShader(GPU_FRAGMENT_SHADER, fragment_shader);
+
+  GPU_AttachShader(m_shader, vertex_shader_id);
+  GPU_AttachShader(m_shader, fragment_shader_id);
+
+  GPU_LinkShaderProgram(m_shader);
+
+  auto block =
+      GPU_LoadShaderBlock(m_shader, "gpu_Vertex", "gpu_TexCoord", "gpu_Color",
+                          "gpu_ModelViewProjectionMatrix");
+
+  GPU_ActivateShaderProgram(m_shader, &block);
+
+  /*for (auto shader : shaders) {
+    Uint32 fragment_shader =
+        GPU_CompileShader(GPU_FRAGMENT_SHADER, shader.c_str());
     GPU_AttachShader(m_shader, fragment_shader);
     GPU_LinkShaderProgram(m_shader);
 
-    auto block = GPU_LoadShaderBlock(m_shader, "gpu_Vertex", "gpu_TexCoord", "gpu_Color", "gpu_ModelViewProjectionMatrix");
+    auto block =
+        GPU_LoadShaderBlock(m_shader, "gpu_Vertex", "gpu_TexCoord", "gpu_Color",
+                            "gpu_ModelViewProjectionMatrix");
 
     GPU_ActivateShaderProgram(m_shader, &block);
-  }
+
+    Logger::log("Got here!");
+  }*/
 }
 
 void Renderer::draw_rect(Rect rect, Color color, bool fill) {
   if (!fill) {
     GPU_Rectangle(m_gpu, rect.x, rect.y, rect.x + rect.w, rect.y + rect.h,
                   {color.r, color.g, color.b, color.a});
-  }else{
+  } else {
     GPU_RectangleFilled(m_gpu, rect.x, rect.y, rect.x + rect.w, rect.y + rect.h,
-                  {color.r, color.g, color.b, color.a});
+                        {color.r, color.g, color.b, color.a});
   }
   m_calls++;
 }
@@ -65,7 +87,7 @@ void Renderer::draw_text(vec2 pos, const char *text, TTF_Font *font,
 
 void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point) {
   GPU_Rect src;
-  src.x = l_point.x * l_point.w; 
+  src.x = l_point.x * l_point.w;
   src.y = l_point.y * l_point.h;
   src.w = l_point.w;
   src.h = l_point.h;
