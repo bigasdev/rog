@@ -48,3 +48,20 @@ void Renderer::draw_text(vec2 pos, const char *text, TTF_Font *font,
   GPU_FreeImage(message);
   m_calls++;
 }
+
+void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point) {
+  GPU_Rect src;
+  src.x = l_point.x * l_point.w; 
+  src.y = l_point.y * l_point.h;
+  src.w = l_point.w;
+  src.h = l_point.h;
+
+  GPU_Rect dst;
+  dst.x = pos.x;
+  dst.y = pos.y;
+  dst.w = src.w;
+  dst.h = src.h;
+
+  GPU_BlitRect(sheet, &src, m_gpu, &dst);
+  m_calls++;
+}

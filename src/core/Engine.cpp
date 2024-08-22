@@ -183,6 +183,7 @@ void Engine::draw() {
   GPU_SetCamera(m_gpu, m_camera);
   m_renderer->draw_line({0, 0, 100, 100}, {255, 255, 255, 255});
   //game draw 
+  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {20, 20}, {0, 1, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
 
 #if _DEBUG
