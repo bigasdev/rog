@@ -6,6 +6,10 @@ struct Rect {
 
   Rect() : x(0), y(0), w(0), h(0) {}
   Rect(int x, int y, int w, int h) : x(x), y(y), w(w), h(h) {}
+
+  bool intersects(const Rect &r) {
+    return x < r.x + r.w && x + w > r.x && y < r.y + r.h && y + h > r.y;
+  }
 };
 
 struct Line {
