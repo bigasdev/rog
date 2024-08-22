@@ -10,6 +10,7 @@
 class GPU_Target;
 class GPU_Image;
 class GPU_ShaderProgram;
+class GPU_ShaderBlock;
 
 class Renderer{
 public: 

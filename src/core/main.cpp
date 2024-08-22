@@ -5,6 +5,7 @@ targetting it to the corect platform
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
+#include "SDL_timer.h"
 #ifdef __EMSCRIPTEN__
 #include "emscripten.h"
 #endif

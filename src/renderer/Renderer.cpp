@@ -9,38 +9,6 @@ Renderer::~Renderer() {}
 void Renderer::post_update() { m_calls = 0; }
 
 void Renderer::init_shader(std::vector<std::string> shaders) {
-  m_shader = GPU_CreateShaderProgram();
-  const char* vertex_shader = "res/shaders/vertex.glsl";
-  const char* fragment_shader = "res/shaders/light.glsl";
-
-  Uint32 vertex_shader_id = GPU_CompileShader(GPU_VERTEX_SHADER, vertex_shader);
-  Uint32 fragment_shader_id = GPU_CompileShader(GPU_FRAGMENT_SHADER, fragment_shader);
-
-  GPU_AttachShader(m_shader, vertex_shader_id);
-  GPU_AttachShader(m_shader, fragment_shader_id);
-
-  GPU_LinkShaderProgram(m_shader);
-
-  auto block =
-      GPU_LoadShaderBlock(m_shader, "gpu_Vertex", "gpu_TexCoord", "gpu_Color",
-                          "gpu_ModelViewProjectionMatrix");
-
-  GPU_ActivateShaderProgram(m_shader, &block);
-
-  /*for (auto shader : shaders) {
-    Uint32 fragment_shader =
-        GPU_CompileShader(GPU_FRAGMENT_SHADER, shader.c_str());
-    GPU_AttachShader(m_shader, fragment_shader);
-    GPU_LinkShaderProgram(m_shader);
-
-    auto block =
-        GPU_LoadShaderBlock(m_shader, "gpu_Vertex", "gpu_TexCoord", "gpu_Color",
-                            "gpu_ModelViewProjectionMatrix");
-
-    GPU_ActivateShaderProgram(m_shader, &block);
-
-    Logger::log("Got here!");
-  }*/
 }
 
 void Renderer::draw_rect(Rect rect, Color color, bool fill) {

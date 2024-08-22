@@ -10,6 +10,7 @@
 #include "SDL_events.h"
 #include "SDL_gpu.h"
 #include "SDL_image.h"
+#include "SDL_keycode.h"
 #include "SDL_mixer.h"
 #include "SDL_scancode.h"
 #include "SDL_ttf.h"
@@ -19,6 +20,9 @@
 #include "global.hpp"
 #include <cassert>
 #include <iostream>
+
+bool m_move_press = false;
+float x = 20;
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -40,8 +44,7 @@ void Engine::init() {
   }
 
   SDL_WindowFlags window_flags =
-      (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
-                        SDL_WINDOW_ALLOW_HIGHDPI);
+      (SDL_WindowFlags)(SDL_WINDOW_OPENGL);
   m_sdl_window =
       SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                        800, 600, window_flags);
@@ -52,7 +55,7 @@ void Engine::init() {
   m_sdl_renderer =
       SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
-  m_gpu = GPU_Init(1920, 1080, GPU_DEFAULT_INIT_FLAGS);
+  m_gpu = GPU_Init(1920, 1080, GPU_INIT_DISABLE_VSYNC);
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
@@ -96,6 +99,7 @@ void Engine::post_init() {
   m_input_manager = new InputManager();
   g_sound_manager = m_sound_manager;
   g_input_manager = m_input_manager;
+  g_input_manager->bind_keyboard(SDLK_e, &m_move_press);
 
   m_res = new Res(m_sdl_renderer);
   m_res->init();
@@ -109,7 +113,7 @@ void Engine::post_init() {
   GUI::setup(m_sdl_window, m_sdl_renderer);
 #endif
 
-  m_camera = new GPU_Camera{0, 0, 0, 0, 5, 5, 1, 1};
+  m_camera = new GPU_Camera{0, 0, 0, 0, 3, 3, 1, 1};
 
   Logger::log("Engine post init");
   m_loaded = true;
@@ -121,45 +125,46 @@ void Engine::input() {
     return;
 
   SDL_Event event;
+  SDL_PollEvent(&event);
 
 #if _IMGUI
-  GUI::event(event);
+  // GUI::event(event);
 #endif
-
-  while (SDL_PollEvent(&event)) {
-    switch (event.type) {
-    case SDL_WINDOWEVENT:
-      if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-        // updating window size
-        {
-          int h = 0, w = 0;
-          SDL_GetWindowSize(m_sdl_window, &h, &w);
-          m_window_size.x = h;
-          m_window_size.y = w;
-          GPU_SetWindowResolution(h, w);
-        }
+  g_input_manager->update(event);
+  switch (event.type) {
+  case SDL_WINDOWEVENT:
+    if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+      // updating window size
+      {
+        int h = 0, w = 0;
+        SDL_GetWindowSize(m_sdl_window, &h, &w);
+        m_window_size.x = h;
+        m_window_size.y = w;
+        GPU_SetWindowResolution(h, w);
       }
-      break;
-    case SDL_QUIT:
-      m_running = false;
-      break;
+    }
+    break;
+  case SDL_QUIT:
+    m_running = false;
+    break;
 
-    case SDL_KEYDOWN:
-      switch (event.key.keysym.scancode) {
-      case SDL_SCANCODE_ESCAPE:
+  case SDL_KEYDOWN:
+    switch (event.key.keysym.scancode) {
+    case SDL_SCANCODE_ESCAPE:
 #if _DEBUG
-        m_running = false;
+      m_running = false;
 #endif
-        break;
-      }
+      break;
     }
   }
 }
 
 void Engine::update() {
-if(!m_loaded) {
-  return;
-}
+  if (!m_loaded) {
+    return;
+  }
+
+  x += 0.3 * Timer::get_tmod();
 
   Timer::update();
 }
@@ -184,8 +189,15 @@ void Engine::draw() {
   GPU_ClearColor(m_gpu, {0, 0, 0, 255});
   GPU_SetCamera(m_gpu, m_camera);
   m_renderer->draw_line({0, 0, 100, 100}, {255, 255, 255, 255});
-  //game draw 
-  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {20, 20}, {0, 1, 8, 8});
+  // game draw
+  for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 10; j++) {
+      m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i*8, j*8},
+                                  {0, 0, 8, 8});
+    }
+  }
+  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, 20},
+                              {0, 1, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
 
 #if _DEBUG
