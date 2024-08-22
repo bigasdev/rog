@@ -107,6 +107,8 @@ void Engine::post_init() {
   GUI::setup(m_sdl_window, m_sdl_renderer);
 #endif
 
+  m_camera = new GPU_Camera{0, 0, 0, 0, 5, 5, 1, 1};
+
   Logger::log("Engine post init");
   m_loaded = true;
 }
@@ -167,6 +169,7 @@ void Engine::post_update() {
 #if _DEBUG
   m_profiler->update();
   m_renderer->post_update();
+  m_res->update();
 #endif
 }
 
@@ -177,6 +180,10 @@ void Engine::draw() {
 
   GPU_Clear(m_gpu);
   GPU_ClearColor(m_gpu, {0, 0, 0, 255});
+  GPU_SetCamera(m_gpu, m_camera);
+  m_renderer->draw_line({0, 0, 100, 100}, {255, 255, 255, 255});
+  //game draw 
+  GPU_SetCamera(m_gpu, nullptr);
 
 #if _DEBUG
   m_profiler->draw();
