@@ -97,7 +97,7 @@ void Engine::post_init() {
   g_sound_manager = m_sound_manager;
   g_input_manager = m_input_manager;
 
-  m_res = new Res();
+  m_res = new Res(m_sdl_renderer);
   m_res->init();
 
   g_engine = this;

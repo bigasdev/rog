@@ -40,5 +40,15 @@ Loading sound: unpause
 SoundManager::load_sound: loaded sound unpause
 Loading sound: victory
 SoundManager::load_sound: loaded sound victory
+res/character_atlas.aseprite
+res/concept.aseprite
+res/logo.aseprite
+res/ui.aseprite
+Finished aseprite load!
+------------
+Aseprite: character_atlas
+Aseprite: concept
+Aseprite: logo
+Aseprite: ui
 Engine post init
 SDL2 quit
