@@ -100,6 +100,8 @@ void Engine::post_init() {
   m_res = new Res(m_sdl_renderer);
   m_res->init();
 
+  m_renderer->init_shader(m_res->get_shaders());
+
   g_engine = this;
   g_res = m_res;
 

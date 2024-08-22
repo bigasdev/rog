@@ -61,6 +61,7 @@ void Res::init() {
   load_fonts();
   load_sounds();
   load_aseprites();
+  load_shaders();
 }
 
 void Res::load_fonts() {
@@ -157,6 +158,18 @@ void Res::load_aseprites() {
   Logger::log("------------");
   for (auto const &aseprite : m_aseprite_textures) {
     Logger::log_group("Aseprite", aseprite.first);
+  }
+}
+
+void Res::load_shaders() {
+  auto files = Reader::get_extension_files("res/shaders", ".glsl");
+
+  for (auto file : files) {
+    std::string path = file;
+    std::string file_name = path.substr(path.find_last_of("/\\") + 1);
+    file_name = file_name.substr(0, file_name.find_last_of("."));
+    Logger::log("Loading shader: " + file_name);
+    m_shaders.push_back(file);
   }
 }
 
