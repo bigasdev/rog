@@ -41,6 +41,7 @@ public:
   void init();
   void post_init();
   void update();
+  void post_update();
   void input();
   void draw();
   void quit();

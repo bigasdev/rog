@@ -153,11 +153,21 @@ void Engine::input() {
 }
 
 void Engine::update() {
-#if _DEBUG
-  m_profiler->update();
-#endif
+if(!m_loaded) {
+  return;
+}
 
   Timer::update();
+}
+
+void Engine::post_update() {
+  if (!m_loaded) {
+    return;
+  }
+#if _DEBUG
+  m_profiler->update();
+  m_renderer->post_update();
+#endif
 }
 
 void Engine::draw() {
@@ -173,7 +183,6 @@ void Engine::draw() {
 #endif
 
 #if _IMGUI
-  GUI::draw([]() {});
 #endif
 
   GPU_Flip(m_gpu);

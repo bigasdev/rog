@@ -29,6 +29,7 @@ private:
   int m_cpu_usage = 0;
   int m_ram_usage = 0;
   int m_frames = 0;
+  int m_calls = 0;
 };
 
 #endif

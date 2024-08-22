@@ -28,6 +28,7 @@ void loop() {
 #elif __WIN32__
   engine->input();
   engine->update();
+  engine->post_update();
   engine->draw();
 #endif
   engine->post_init();
