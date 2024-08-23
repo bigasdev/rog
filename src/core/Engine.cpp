@@ -43,7 +43,7 @@ void Engine::init() {
     Logger::log_group("SDL2 version", SDL_GetRevision());
   }
 
-  SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL);
+  SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
   m_sdl_window =
       SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                        800, 600, window_flags);
@@ -164,7 +164,7 @@ void Engine::update() {
     return;
   }
 
-  x += 10.3 * Timer::get_tmod();
+  x += 0.1f * Timer::get_tmod();
 }
 
 void Engine::post_update() {
@@ -184,18 +184,17 @@ void Engine::draw() {
   }
 
   GPU_Clear(m_gpu);
-  GPU_SetCamera(m_gpu, m_camera);
-  m_renderer->draw_line({0, 0, 100, 100}, {255, 255, 255, 255});
+  //GPU_SetCamera(m_gpu, m_camera);
   // game draw
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
-      m_renderer->draw_from_sheet(*m_res->get_texture("concept"),
-                                  {i * 8, j * 8}, {0, 0, 8, 8});
+      //m_renderer->draw_from_sheet(*m_res->get_texture("concept"),
+                                  //{i * 8, j * 8}, {0, 0, 8, 8});
     }
   }
-  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, 20},
+  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, 20.f},
                               {0, 1, 8, 8});
-  GPU_SetCamera(m_gpu, nullptr);
+  //GPU_SetCamera(m_gpu, nullptr);
 
 #if _DEBUG
   m_profiler->draw();
