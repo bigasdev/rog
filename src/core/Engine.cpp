@@ -21,7 +21,8 @@
 #include <cassert>
 #include <iostream>
 
-bool m_move_press = false;
+bool moving_right = false;
+bool moving_left = false;
 float x = 20;
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
@@ -98,7 +99,8 @@ void Engine::post_init() {
   m_input_manager = new InputManager();
   g_sound_manager = m_sound_manager;
   g_input_manager = m_input_manager;
-  g_input_manager->bind_keyboard(SDLK_e, &m_move_press);
+  g_input_manager->bind_keyboard(SDLK_e, &moving_right);
+  g_input_manager->bind_keyboard(SDLK_q, &moving_left);
 
   m_res = new Res(m_sdl_renderer);
   m_res->init();
@@ -128,8 +130,8 @@ void Engine::input() {
 #if _IMGUI
   // GUI::event(event);
 #endif
-  g_input_manager->update(event);
   while (SDL_PollEvent(&event) != 0) {
+    g_input_manager->update(event);
     switch (event.type) {
     case SDL_WINDOWEVENT:
       if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
@@ -164,7 +166,8 @@ void Engine::update() {
     return;
   }
 
-  x += 0.1f * Timer::get_tmod();
+  x += g_input_manager->get_raw_axis().x * 20 * Timer::get_tmod();
+
 }
 
 void Engine::post_update() {
@@ -184,7 +187,7 @@ void Engine::draw() {
   }
 
   GPU_Clear(m_gpu);
-  //GPU_SetCamera(m_gpu, m_camera);
+  GPU_SetCamera(m_gpu, m_camera);
   // game draw
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
@@ -194,7 +197,7 @@ void Engine::draw() {
   }
   m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, 20.f},
                               {0, 1, 8, 8});
-  //GPU_SetCamera(m_gpu, nullptr);
+  GPU_SetCamera(m_gpu, nullptr);
 
 #if _DEBUG
   m_profiler->draw();
