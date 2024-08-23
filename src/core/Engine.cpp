@@ -9,6 +9,7 @@
 #include "SDL.h"
 #include "SDL_events.h"
 #include "SDL_gpu.h"
+#include "SDL_hints.h"
 #include "SDL_image.h"
 #include "SDL_keycode.h"
 #include "SDL_mixer.h"
@@ -18,6 +19,7 @@
 #include "SoundManager.hpp"
 #include "Timer.hpp"
 #include "global.hpp"
+#include "../tools/Math.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -43,6 +45,7 @@ void Engine::init() {
     Logger::log("SDL2 initialized");
     Logger::log_group("SDL2 version", SDL_GetRevision());
   }
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
   SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
   m_sdl_window =
@@ -114,7 +117,7 @@ void Engine::post_init() {
   GUI::setup(m_sdl_window, m_sdl_renderer);
 #endif
 
-  m_camera = new GPU_Camera{0, 0, 0, 0, 3, 3, 1, 1};
+  m_camera = new GPU_Camera{0, 0, 0, 0, 4, 4, 1, 1};
 
   Logger::log("Engine post init");
   m_loaded = true;
@@ -166,7 +169,7 @@ void Engine::update() {
     return;
   }
 
-  x += g_input_manager->get_raw_axis().x * 20 * Timer::get_tmod();
+  x = Math::lerp(x, 100, 1 * Timer::get_tmod());
 
 }
 
