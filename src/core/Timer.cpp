@@ -2,22 +2,25 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
+#include "../tools/Logger.hpp"
 
 void Timer::update(){
   frame_count++;
   auto new_time = SDL_GetPerformanceCounter();
   elapsed_time = (double)(new_time - last_time_stamp)/ (double)SDL_GetPerformanceFrequency();
   last_time_stamp = new_time;
-  if(elapsed_time < max_delta_time){
-    current_dt = std::lerp(elapsed_time, current_dt, smooth_factor);
-  }else{
-    elapsed_time = 1 / wanted_fps;
-  }
-  dt = current_dt;
+
+  elapsed_time = std::min(elapsed_time, max_delta_time);
+  accumulator += elapsed_time;
+  current_dt = std::lerp(elapsed_time, current_dt, smooth_factor);
 }
 
-float Timer::get_tmod(){
-  return dt * wanted_fps;
+double Timer::get_tmod(){
+  return dt;
+}
+
+double Timer::get_accumulator(){
+  return accumulator;
 }
 
 float Timer::get_fps(){
@@ -30,4 +33,9 @@ int Timer::get_frame_count(){
 
 void Timer::skip(){
   last_time_stamp = SDL_GetPerformanceCounter();
+}
+
+void Timer::fixed_t(){
+  dt = fixed_dt;
+  accumulator -= fixed_dt;
 }

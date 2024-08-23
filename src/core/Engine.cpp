@@ -43,8 +43,7 @@ void Engine::init() {
     Logger::log_group("SDL2 version", SDL_GetRevision());
   }
 
-  SDL_WindowFlags window_flags =
-      (SDL_WindowFlags)(SDL_WINDOW_OPENGL);
+  SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL);
   m_sdl_window =
       SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                        800, 600, window_flags);
@@ -55,7 +54,7 @@ void Engine::init() {
   m_sdl_renderer =
       SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
-  m_gpu = GPU_Init(1920, 1080, GPU_INIT_DISABLE_VSYNC);
+  m_gpu = GPU_Init(1920, 1080, 0);
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
@@ -125,36 +124,37 @@ void Engine::input() {
     return;
 
   SDL_Event event;
-  SDL_PollEvent(&event);
 
 #if _IMGUI
   // GUI::event(event);
 #endif
   g_input_manager->update(event);
-  switch (event.type) {
-  case SDL_WINDOWEVENT:
-    if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-      // updating window size
-      {
-        int h = 0, w = 0;
-        SDL_GetWindowSize(m_sdl_window, &h, &w);
-        m_window_size.x = h;
-        m_window_size.y = w;
-        GPU_SetWindowResolution(h, w);
+  while (SDL_PollEvent(&event) != 0) {
+    switch (event.type) {
+    case SDL_WINDOWEVENT:
+      if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+        // updating window size
+        {
+          int h = 0, w = 0;
+          SDL_GetWindowSize(m_sdl_window, &h, &w);
+          m_window_size.x = h;
+          m_window_size.y = w;
+          GPU_SetWindowResolution(h, w);
+        }
       }
-    }
-    break;
-  case SDL_QUIT:
-    m_running = false;
-    break;
-
-  case SDL_KEYDOWN:
-    switch (event.key.keysym.scancode) {
-    case SDL_SCANCODE_ESCAPE:
-#if _DEBUG
-      m_running = false;
-#endif
       break;
+    case SDL_QUIT:
+      m_running = false;
+      break;
+
+    case SDL_KEYDOWN:
+      switch (event.key.keysym.scancode) {
+      case SDL_SCANCODE_ESCAPE:
+#if _DEBUG
+        m_running = false;
+#endif
+        break;
+      }
     }
   }
 }
@@ -164,9 +164,7 @@ void Engine::update() {
     return;
   }
 
-  x += 0.3 * Timer::get_tmod();
-
-  Timer::update();
+  x += 10.3 * Timer::get_tmod();
 }
 
 void Engine::post_update() {
@@ -186,14 +184,13 @@ void Engine::draw() {
   }
 
   GPU_Clear(m_gpu);
-  GPU_ClearColor(m_gpu, {0, 0, 0, 255});
   GPU_SetCamera(m_gpu, m_camera);
   m_renderer->draw_line({0, 0, 100, 100}, {255, 255, 255, 255});
   // game draw
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
-      m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i*8, j*8},
-                                  {0, 0, 8, 8});
+      m_renderer->draw_from_sheet(*m_res->get_texture("concept"),
+                                  {i * 8, j * 8}, {0, 0, 8, 8});
     }
   }
   m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, 20},

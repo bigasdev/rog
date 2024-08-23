@@ -13,6 +13,7 @@ targetting it to the corect platform
 #include "Assert.hpp"
 #include "Engine.hpp"
 #include "Timer.hpp"
+#include "../tools/Logger.hpp"
 #include <iostream>
 #include <memory>
 
@@ -27,8 +28,13 @@ void loop() {
 #ifdef __EMSCRIPTEN__
   // mainloop
 #elif __WIN32__
+  Timer::update();
   engine->input();
-  engine->update();
+
+  while (Timer::get_accumulator() >= Timer::get_tmod()) {
+    Timer::fixed_t();
+    engine->update();
+  }
   engine->post_update();
   engine->draw();
 #endif
