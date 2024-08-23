@@ -61,7 +61,7 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point) {
   src.h = l_point.h;
 
   GPU_Rect dst;
-  dst.x = static_cast<int>(pos.x);
+  dst.x = (pos.x);
   dst.y = (float)pos.y;
   dst.w = src.w;
   dst.h = src.h;

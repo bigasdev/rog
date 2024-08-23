@@ -13,6 +13,7 @@
 #include "SDL_image.h"
 #include "SDL_keycode.h"
 #include "SDL_mixer.h"
+#include "SDL_render.h"
 #include "SDL_scancode.h"
 #include "SDL_ttf.h"
 #include "SDL_video.h"
@@ -25,7 +26,7 @@
 
 bool moving_right = false;
 bool moving_left = false;
-float x = 20;
+float x = -200;
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -169,8 +170,7 @@ void Engine::update() {
     return;
   }
 
-  x = Math::lerp(x, 100, 1 * Timer::get_tmod());
-
+  x = Math::lerp(x, 100, 9 * Timer::get_tmod());
 }
 
 void Engine::post_update() {
