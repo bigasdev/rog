@@ -7,24 +7,25 @@
 #include "Logger.hpp"
 #include <string>
 
-#if __WIN32__
+#if __WIN32__ && _DEBUG
 #include "TCHAR.h"
 #include "pdh.h"
 #include "psapi.h"
 #include <pdh.h>
 #include <pdhmsg.h>
 #include <windows.h>
-#endif
 
 static ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 static int numProcessors;
 static HANDLE self;
-int m_tick_count;
 
 PDH_HQUERY query;
 PDH_HCOUNTER counter;
+#endif
+int m_tick_count;
 
 Profiler::Profiler() {
+#if __WIN32__ && _DEBUG
   SYSTEM_INFO sysInfo;
   FILETIME ftime, fsys, fuser;
 
@@ -43,9 +44,11 @@ Profiler::Profiler() {
   PdhAddCounter(query, TEXT("\\GPU Engine(*)\\Utilization Percentage"), NULL,
                 &counter);
   PdhCollectQueryData(query);
+#endif
 }
 
 double getCurrentValue() {
+#if __WIN32__ && _DEBUG
   FILETIME ftime, fsys, fuser;
   ULARGE_INTEGER now, sys, user;
   double percent;
@@ -69,6 +72,8 @@ double getCurrentValue() {
   lastUserCPU = user;
 
   return percent * 100;
+#endif
+  return 0;
 }
 
 Profiler::~Profiler() {}
@@ -76,7 +81,7 @@ Profiler::~Profiler() {}
 void Profiler::update() {
   m_tick_count++;
   if (m_tick_count >= PROFILER_TICK) {
-#if __WIN32__
+#if __WIN32__ && _DEBUG
     auto handle = GetCurrentProcess();
     PROCESS_MEMORY_COUNTERS_EX pmc;
     if (GetProcessMemoryInfo(handle, (PROCESS_MEMORY_COUNTERS *)&pmc,
@@ -104,6 +109,7 @@ float get_pos_x(int value) { return g_engine->get_window_size().x - value; }
 float get_pos_y(int value) { return g_engine->get_window_size().y - value; }
 
 void Profiler::draw() {
+#if __WIN32__ && _DEBUG
   g_engine->get_renderer()->draw_rect({static_cast<int>(get_pos_x(105)),
                                        static_cast<int>(get_pos_y(150)), 100,
                                        40},
@@ -169,4 +175,5 @@ void Profiler::draw() {
       ("_DEBUG " + std::to_string(static_cast<int>(Timer::get_fps())) + " fps")
           .c_str(),
       g_res->get_font("arial"), {0, 255, 0, 255});
+#endif
 }

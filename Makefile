@@ -4,7 +4,8 @@ NAME = rpg_side_screen
 CC = g++ -std=c++20 -Wno-narrowing
 STATIC_LIBS = -static-libstdc++ -static-libgcc
 INCLUDES = -Iinclude -Iinclude/sdl -Iinclude/headers -Llib
-LIBS = -lstdc++fs -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gpu -lSDL2_mixer -lpsapi -lpdh -lole32 -mwindows
+LIBS = -lstdc++fs -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gpu -lSDL2_mixer -lole32 -mwindows
+DEBUG_LIBS = -lstdc++fs -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gpu -lSDL2_mixer -lpsapi -lpdh -lole32 -mwindows
 # set all the files needed
 DEBUG_FOLDER = .build
 RELEASE_FOLDER = .release
@@ -47,7 +48,7 @@ bin/%.o: src/tools/%.cpp
 	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 debug: imgui_o app_o entity_o renderer_o resources_o game_o tools_o
-	${CC} -g -O0 $(STATIC_LIBS) $(INCLUDES) -o $(DEBUG_FOLDER)/fortress.exe ${BIN} $(ICON_DIR) $(LIBS) -mconsole
+	${CC} -g -O0 $(STATIC_LIBS) $(INCLUDES) -o $(DEBUG_FOLDER)/fortress.exe ${BIN} $(ICON_DIR) $(DEBUG_LIBS) -mconsole
 
 build: app_o entity_o renderer_o resources_o game_o tools_o
 	${CC} -s -O3 -finline-functions -flto $(STATIC_LIBS) $(INCLUDES) -o $(RELEASE_FOLDER)/${NAME}.exe ${BIN} $(ICON_DIR) $(LIBS)

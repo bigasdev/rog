@@ -166,8 +166,6 @@ void Engine::input() {
   }
 }
 
-std::vector<int*> test;
-
 void Engine::fixed_update() {
   if (!m_loaded) {
     return;
@@ -175,10 +173,6 @@ void Engine::fixed_update() {
 
   x += g_input_manager->get_raw_axis().x * 30 * Timer::get_tmod();
   y += g_input_manager->get_raw_axis().y * 30 * Timer::get_tmod();
-
-  for(int i = 0; i < 100; i++){
-    test.push_back(new int(0));
-  }
 }
 
 void Engine::update() {
