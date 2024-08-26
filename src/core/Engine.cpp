@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 #include "../renderer/AppGui.hpp"
 #include "../renderer/Renderer.hpp"
+#include "../renderer/Camera.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Profiler.hpp"
@@ -26,8 +27,7 @@
 
 bool moving_right = false;
 bool moving_left = false;
-float x = 0;
-float y = 0;
+vec2 hero_pos;
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -100,6 +100,7 @@ void Engine::post_init() {
 
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
+  m_camera = new Camera({static_cast<float>(m_window_size.x), static_cast<float>(m_window_size.y)});
   m_sound_manager = new SoundManager();
   m_input_manager = new InputManager();
   g_sound_manager = m_sound_manager;
@@ -112,14 +113,14 @@ void Engine::post_init() {
 
   m_renderer->init_shader(m_res->get_shaders());
 
+  m_camera->track_pos(&hero_pos);
+
   g_engine = this;
   g_res = m_res;
 
 #if _IMGUI
   GUI::setup(m_sdl_window, m_sdl_renderer);
 #endif
-
-  m_camera = new GPU_Camera{0, 0, 0, 0, 4, 4, 1, 1};
 
   Logger::log("Engine post init");
   m_loaded = true;
@@ -171,14 +172,16 @@ void Engine::fixed_update() {
     return;
   }
 
-  x += g_input_manager->get_raw_axis().x * 30 * Timer::get_tmod();
-  y += g_input_manager->get_raw_axis().y * 30 * Timer::get_tmod();
+  hero_pos += (g_input_manager->get_raw_axis() * 30) * Timer::get_tmod();
 }
 
 void Engine::update() {
   if (!m_loaded) {
     return;
   }
+
+  m_camera->move();
+  m_camera->update();
 }
 
 void Engine::post_update() {
@@ -198,7 +201,7 @@ void Engine::draw() {
   }
 
   GPU_Clear(m_gpu);
-  GPU_SetCamera(m_gpu, m_camera);
+  GPU_SetCamera(m_gpu, m_camera->get());
   // game draw
   for (int i = 0; i < 1000; i+=8) {
     for (int j = 0; j < 1000; j+=8) {
@@ -206,7 +209,7 @@ void Engine::draw() {
                                   {i, j}, {0, 0, 8, 8});
     }
   }
-  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, y},
+  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), hero_pos,
                               {0, 1, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
 

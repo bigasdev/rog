@@ -35,9 +35,15 @@ struct vec2 {
   bool operator==(const vec2 &v) { return x == v.x && y == v.y; }
   bool operator!=(const vec2 &v) { return x != v.x || y != v.y; }
   vec2 operator+(const vec2 &v) { return vec2(x + v.x, y + v.y); }
+  vec2 operator+=(const vec2 &v) {
+    x += v.x;
+    y += v.y;
+    return *this;
+  }
   vec2 operator-(const vec2 &v) { return vec2(x - v.x, y - v.y); }
   vec2 operator*(const vec2 &v) { return vec2(x * v.x, y * v.y); }
   vec2 operator/(const vec2 &v) { return vec2(x / v.x, y / v.y); }
+  vec2 operator/(const int &i) { return vec2(x / i, y / i); }
   vec2 operator*(const float &f) { return vec2(x * f, y * f); }
 };
 

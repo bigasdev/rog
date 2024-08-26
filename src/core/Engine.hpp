@@ -12,9 +12,9 @@ here we will instantiate and run everything
 class SDL_Renderer;
 class SDL_Window;
 class GPU_Target;
-class GPU_Camera;
 class Profiler;
 class Renderer;
+class Camera;
 class Res;
 class InputManager;
 class SoundManager;
@@ -27,9 +27,9 @@ private:
   SDL_Renderer *m_sdl_renderer;
   SDL_Window *m_sdl_window;
   GPU_Target *m_gpu;
-  GPU_Camera *m_camera;
   Profiler *m_profiler;
   Renderer *m_renderer;
+  Camera *m_camera;
   Res *m_res;
   InputManager *m_input_manager;
   SoundManager *m_sound_manager;
