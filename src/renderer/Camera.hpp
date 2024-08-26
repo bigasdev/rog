@@ -27,10 +27,13 @@ private:
   vec2 *m_tracked_pos;
 
   //tracking stuff 
+  bool clamp_bounds = false;
   float tracking_speed = 20.f;
   float base_frict = .98f;
   float dx;
   float dy;
+  vec2 raw_focus;
+  vec2 clamped_focus;
 };
 
 #endif
