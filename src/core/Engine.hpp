@@ -42,6 +42,7 @@ public:
 
   void init();
   void post_init();
+  void fixed_update();
   void update();
   void post_update();
   void input();

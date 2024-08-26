@@ -32,6 +32,7 @@ namespace Timer{
 
   void update();
   double get_tmod();
+  double get_dt();
   double get_accumulator();
   float get_fps();
   int get_frame_count();

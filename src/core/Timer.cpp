@@ -19,12 +19,16 @@ double Timer::get_tmod(){
   return dt;
 }
 
+double Timer::get_dt(){
+  return current_dt;
+}
+
 double Timer::get_accumulator(){
   return accumulator;
 }
 
 float Timer::get_fps(){
-  return 1/dt;
+  return 1/current_dt;
 }
 
 int Timer::get_frame_count(){

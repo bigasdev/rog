@@ -33,8 +33,9 @@ void loop() {
 
   while (Timer::get_accumulator() >= Timer::get_tmod()) {
     Timer::fixed_t();
-    engine->update();
+    engine->fixed_update();
   }
+  engine->update();
   engine->post_update();
   engine->draw();
 #endif
