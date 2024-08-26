@@ -18,23 +18,25 @@ Camera::~Camera() {
 void Camera::move() {
   if (m_tracked_pos != nullptr) {
 
-    auto spd_x = 0.15*tracking_speed*m_camera->zoom_x;
+    auto spd_x = 0.015*tracking_speed*m_camera->zoom_x;
     auto spd_y = 0.023*tracking_speed*m_camera->zoom_y;
-    auto tx = m_tracked_pos->x;
+    auto tx = (m_tracked_pos->x)*0.5f + (m_size.x*0.5f);
     auto ty = m_tracked_pos->y - m_size.y/2;
 
     auto dist_x = (tx - m_pos.x);
+    Logger::log("dist_x: " + std::to_string(dist_x));
     auto dist_y = (ty - m_pos.y);
 
-    dx += (0.95f*dist_x-(m_size.x/2)) * spd_x * Timer::get_dt();
-    Logger::log("dx: " + std::to_string(dx));
-    //dy += (0.8f*dist_y-m_size.y) * spd_y * Timer::get_dt();
+    dx += (0.8f*dist_x-0.04*m_size.x) * spd_x * Timer::get_dt();
+    //dy += (0.8f*dist_y) * spd_y * Timer::get_dt();
 
     auto frict_x = base_frict - tracking_speed*m_camera->zoom_x*0.027*base_frict;
     auto frict_y = frict_x;
 
     m_pos.x += dx * Timer::get_dt();
+    //dx *= Math::pow(frict_x, Timer::get_dt());
     m_pos.y += dy * Timer::get_dt();
+    //dy *= Math::pow(frict_y, Timer::get_dt());
 
     m_camera->x = m_pos.x;
     m_camera->y = m_pos.y;
