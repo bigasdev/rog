@@ -28,8 +28,8 @@ private:
 
   //tracking stuff 
   bool clamp_bounds = false;
-  float tracking_speed = 20.f;
-  float base_frict = .98f;
+  float tracking_speed = 10.f;
+  float base_frict = .89f;
   float dx;
   float dy;
   vec2 raw_focus;
