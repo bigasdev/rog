@@ -27,7 +27,7 @@ void Camera::move() {
     auto dist_x = std::fabs(tx-raw_focus.x);
     Logger::log("dist_x: " + std::to_string(dist_x));
     if(dist_x >= 0.04f * m_size.x){
-      dx += (0.8f * dist_x - 0.04f * m_size.x) * spd_x * Timer::get_tmod();
+      dx += (0.8f * dist_x - 0.04f * m_size.x) * spd_x * Timer::get_dt();
     }
 
     auto dist_y = std::fabs(ty-raw_focus.y);
