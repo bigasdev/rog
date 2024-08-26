@@ -8,7 +8,7 @@
 #include <string>
 
 Camera::Camera(vec2 size) : m_size(size) {
-  m_camera = new GPU_Camera{0,0,0,0,3,3,1,1};
+  m_camera = new GPU_Camera{0,0,0,0,4,4,1,1};
   m_pos = vec2(0, 0);
   m_tracked_pos = nullptr;
 }
@@ -19,12 +19,11 @@ Camera::~Camera() {
 
 void Camera::move() {
   if (m_tracked_pos != nullptr) {
-    auto dead_zone = 2;
+    auto dead_zone = 8;
     auto tx = m_tracked_pos->x;
     auto ty = m_tracked_pos->y;
 
     auto dist = Math::dist_vec(m_pos, vec2(tx, ty));
-    Logger::log(std::to_string(dist));
     if (dist>=dead_zone){
       auto a = std::atan2(ty - m_pos.y, tx - m_pos.x);
 

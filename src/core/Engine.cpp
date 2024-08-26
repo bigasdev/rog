@@ -170,15 +170,16 @@ void Engine::input() {
   }
 }
 
-float dx, dy;
+float dx, dy, dwood;
 
 void Engine::fixed_update() {
   if (!m_loaded) {
     return;
   }
 
-  dx += (g_input_manager->get_raw_axis().x * 5) * Timer::get_dt();
-  dy += (g_input_manager->get_raw_axis().y * 5) * Timer::get_dt();
+  dx += (g_input_manager->get_raw_axis().x * 5) * Timer::get_tmod();
+  dy += (g_input_manager->get_raw_axis().y * 5) * Timer::get_tmod();
+  dwood += 4 * Timer::get_tmod();
 
   if(Math::fabs(dx) <= 0.005*Timer::get_tmod()){
     dx = 0;
@@ -189,6 +190,7 @@ void Engine::fixed_update() {
 
   dx*=Math::pow(0.89, Timer::get_tmod());
   dy*=Math::pow(0.89, Timer::get_tmod());
+  dwood*=Math::pow(0.89, Timer::get_tmod());
 }
 
 int hero_x = 2;
@@ -212,8 +214,8 @@ void Engine::update() {
   }
 
   hero_pos += {dx,dy};
-  wood_pos.y += 15 * Timer::get_tmod();
-  if (wood_pos.y > 70) {
+  wood_pos += {0, dwood};
+  if(wood_pos.y > 70){
     wood_pos.y = 0;
   }
 
@@ -248,7 +250,7 @@ void Engine::draw() {
   }
   m_renderer->draw_from_sheet(*m_res->get_texture("concept"), hero_pos,
                               {hero_x, 1, 7, 8});
-  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), wood_pos,
+  m_renderer->draw_from_sheet(*m_res->get_texture("concept"),wood_pos,
                               {0, 6, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
 
