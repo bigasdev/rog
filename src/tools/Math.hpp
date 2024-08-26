@@ -12,6 +12,7 @@ int round(double value);
 int floor(double value);
 double sign(double value);
 double abs(double value);
+float fabs(float value);
 double pow(double base, double exponent);
 double sqrt(double value);
 

@@ -66,6 +66,14 @@ double Math::abs(double value)
     return value;
 }
 
+float Math::fabs(float value)
+{
+  if (value < 0)
+    return -value;
+  else
+    return value;
+}
+
 double Math::pow(double base, double exponent)
 {
   double result = 1;
