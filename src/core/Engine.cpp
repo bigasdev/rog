@@ -1,9 +1,10 @@
 #include "Engine.hpp"
 #include "../renderer/AppGui.hpp"
-#include "../renderer/Renderer.hpp"
 #include "../renderer/Camera.hpp"
+#include "../renderer/Renderer.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
+#include "../tools/Math.hpp"
 #include "../tools/Profiler.hpp"
 #include "Assert.hpp"
 #include "InputManager.hpp"
@@ -21,13 +22,13 @@
 #include "SoundManager.hpp"
 #include "Timer.hpp"
 #include "global.hpp"
-#include "../tools/Math.hpp"
 #include <cassert>
 #include <iostream>
 
 bool moving_right = false;
 bool moving_left = false;
 vec2 hero_pos;
+vec2 wood_pos = {20, 40};
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -49,11 +50,12 @@ void Engine::init() {
   }
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
-  SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
+  SDL_WindowFlags window_flags =
+      (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
   m_sdl_window =
-      SDL_CreateWindow("Game", 1920-400, 1080-200,
-                       400, 200, window_flags);
-  m_window_size = {400, 200};
+      SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                       800, 600, window_flags);
+  m_window_size = {800, 600};
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
@@ -100,7 +102,8 @@ void Engine::post_init() {
 
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
-  m_camera = new Camera({static_cast<float>(m_window_size.x), static_cast<float>(m_window_size.y)});
+  m_camera = new Camera({static_cast<float>(m_window_size.x),
+                         static_cast<float>(m_window_size.y)});
   m_sound_manager = new SoundManager();
   m_input_manager = new InputManager();
   g_sound_manager = m_sound_manager;
@@ -167,17 +170,51 @@ void Engine::input() {
   }
 }
 
+float dx, dy;
+
 void Engine::fixed_update() {
   if (!m_loaded) {
     return;
   }
 
-  hero_pos += (g_input_manager->get_raw_axis() * 30) * Timer::get_tmod();
+  dx += (g_input_manager->get_raw_axis().x * 5) * Timer::get_dt();
+  dy += (g_input_manager->get_raw_axis().y * 5) * Timer::get_dt();
+
+  if(Math::fabs(dx) <= 0.005*Timer::get_tmod()){
+    dx = 0;
+  }
+  if(Math::fabs(dy) <= 0.005*Timer::get_tmod()){
+    dy = 0;
+  }
+
+  dx*=Math::pow(0.89, Timer::get_tmod());
+  dy*=Math::pow(0.89, Timer::get_tmod());
 }
+
+int hero_x = 2;
+float timer = 0;
 
 void Engine::update() {
   if (!m_loaded) {
     return;
+  }
+
+  if (moving_left)
+    m_camera->track_pos(&wood_pos);
+
+  timer += 1*Timer::get_dt();
+  if(timer >= .1f){
+    hero_x++;
+    if(hero_x >= 6){
+      hero_x = 2;
+    }
+    timer = 0;
+  }
+
+  hero_pos += {dx,dy};
+  wood_pos.y += 15 * Timer::get_tmod();
+  if (wood_pos.y > 70) {
+    wood_pos.y = 0;
   }
 
   m_camera->move();
@@ -203,14 +240,16 @@ void Engine::draw() {
   GPU_Clear(m_gpu);
   GPU_SetCamera(m_gpu, m_camera->get());
   // game draw
-  for (int i = 0; i < 1000; i+=8) {
-    for (int j = 0; j < 1000; j+=8) {
-      m_renderer->draw_from_sheet(*m_res->get_texture("concept"),
-                                  {i, j}, {0, 0, 8, 8});
+  for (int i = 0; i < 1000; i += 8) {
+    for (int j = 0; j < 1000; j += 8) {
+      m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i, j},
+                                  {0, 0, 8, 8});
     }
   }
   m_renderer->draw_from_sheet(*m_res->get_texture("concept"), hero_pos,
-                              {0, 1, 8, 8});
+                              {hero_x, 1, 7, 8});
+  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), wood_pos,
+                              {0, 6, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
 
 #if _DEBUG
