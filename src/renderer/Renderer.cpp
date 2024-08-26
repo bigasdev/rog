@@ -66,10 +66,6 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point) {
   dst.w = src.w;
   dst.h = src.h;
 
-  Logger::log("Dst : " + std::to_string(dst.x) + " " + std::to_string(dst.y) +
-              " " + std::to_string(dst.w) + " " + std::to_string(dst.h));
-
-
   GPU_BlitRectX(sheet, &src, m_gpu, &dst, 0, 0, 0, GPU_FLIP_NONE);
   m_calls++;
 }

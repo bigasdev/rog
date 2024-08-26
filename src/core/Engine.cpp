@@ -26,7 +26,8 @@
 
 bool moving_right = false;
 bool moving_left = false;
-float x = -200;
+float x = 0;
+float y = 0;
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -170,7 +171,10 @@ void Engine::update() {
     return;
   }
 
-  x = Math::lerp(x, 100, 9 * Timer::get_tmod());
+  
+  x += g_input_manager->get_raw_axis().x * 30 * Timer::get_tmod();
+  y += g_input_manager->get_raw_axis().y * 30 * Timer::get_tmod();
+  Logger::log(std::to_string(x));
 }
 
 void Engine::post_update() {
@@ -192,13 +196,13 @@ void Engine::draw() {
   GPU_Clear(m_gpu);
   GPU_SetCamera(m_gpu, m_camera);
   // game draw
-  for (int i = 0; i < 10; i++) {
-    for (int j = 0; j < 10; j++) {
-      //m_renderer->draw_from_sheet(*m_res->get_texture("concept"),
-                                  //{i * 8, j * 8}, {0, 0, 8, 8});
+  for (int i = 0; i < 1000; i+=8) {
+    for (int j = 0; j < 1000; j+=8) {
+      m_renderer->draw_from_sheet(*m_res->get_texture("concept"),
+                                  {i, j}, {0, 0, 8, 8});
     }
   }
-  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, 20.f},
+  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {x, y},
                               {0, 1, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
 
