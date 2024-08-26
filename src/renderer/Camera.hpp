@@ -27,8 +27,8 @@ private:
   vec2 *m_tracked_pos;
 
   //tracking stuff 
-  float tracking_speed = 4;
-  float base_frict = 0.95f;
+  float tracking_speed = 20.f;
+  float base_frict = .98f;
   float dx;
   float dy;
 };

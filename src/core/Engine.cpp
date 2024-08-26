@@ -51,9 +51,9 @@ void Engine::init() {
 
   SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
   m_sdl_window =
-      SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                       800, 600, window_flags);
-  m_window_size = {800, 600};
+      SDL_CreateWindow("Game", 1920-400, 1080-200,
+                       400, 200, window_flags);
+  m_window_size = {400, 200};
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
