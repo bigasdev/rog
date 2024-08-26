@@ -50,4 +50,19 @@ Loading shader: light
 Loading shader: vertex
 Engine post init
 Controller Added
+0
+0
+0
+0
+0
+3
+3
+0
+0
+0
+0
+0
+4
+4
+8
 SDL2 quit

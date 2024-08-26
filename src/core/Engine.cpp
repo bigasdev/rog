@@ -62,7 +62,7 @@ void Engine::init() {
   m_sdl_renderer =
       SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
-  m_gpu = GPU_Init(1920, 1080, 0);
+  m_gpu = GPU_Init(1024, 768, 0);
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
@@ -177,9 +177,8 @@ void Engine::fixed_update() {
     return;
   }
 
-  dx += (g_input_manager->get_raw_axis().x * 5) * Timer::get_tmod();
-  dy += (g_input_manager->get_raw_axis().y * 5) * Timer::get_tmod();
-  dwood += 4 * Timer::get_tmod();
+  dx += (g_input_manager->get_raw_axis().x * 5.5) * Timer::get_tmod();
+  dy += (g_input_manager->get_raw_axis().y * 5.5) * Timer::get_tmod();
 
   if(Math::fabs(dx) <= 0.005*Timer::get_tmod()){
     dx = 0;
@@ -190,7 +189,6 @@ void Engine::fixed_update() {
 
   dx*=Math::pow(0.89, Timer::get_tmod());
   dy*=Math::pow(0.89, Timer::get_tmod());
-  dwood*=Math::pow(0.89, Timer::get_tmod());
 }
 
 int hero_x = 2;
@@ -245,7 +243,7 @@ void Engine::draw() {
   for (int i = 0; i < 1000; i += 8) {
     for (int j = 0; j < 1000; j += 8) {
       m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i, j},
-                                  {0, 0, 8, 8});
+                                  {2, 0, 8, 8});
     }
   }
   m_renderer->draw_from_sheet(*m_res->get_texture("concept"), hero_pos,
