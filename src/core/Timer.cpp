@@ -9,10 +9,11 @@ void Timer::update(){
   auto new_time = SDL_GetPerformanceCounter();
   elapsed_time = (double)(new_time - last_time_stamp)/ (double)SDL_GetPerformanceFrequency();
   last_time_stamp = new_time;
+  Logger::log("Delta time: " + std::to_string(elapsed_time));
 
   elapsed_time = std::min(elapsed_time, max_delta_time);
   accumulator += elapsed_time;
-  current_dt = std::lerp(elapsed_time, current_dt, smooth_factor);
+  current_dt = elapsed_time;
 }
 
 double Timer::get_tmod(){

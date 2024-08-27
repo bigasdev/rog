@@ -8,7 +8,7 @@
 #include <string>
 
 Camera::Camera(vec2* size) : m_size(size) {
-  m_camera = new GPU_Camera{0,0,0,0,1,1,1,1};
+  m_camera = new GPU_Camera{0,0,0,0,4,4,1,1};
   m_pos = vec2(0, 0);
   m_tracked_pos = nullptr;
 }

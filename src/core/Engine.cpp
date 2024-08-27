@@ -176,23 +176,6 @@ void Engine::fixed_update() {
     return;
   }
 
-  dx += (g_input_manager->get_raw_axis().x * 7.5) * Timer::get_tmod();
-  dy += (g_input_manager->get_raw_axis().y * 2.5) * Timer::get_tmod();
-
-  Logger::log("DT: " + std::to_string(Timer::get_dt()) + " Tmod: " +
-              std::to_string(Timer::get_tmod()) + " DX: " + std::to_string(dx) +
-              " DY: " + std::to_string(dy) + " X: " + std::to_string(hero_pos.x) +
-              " Y: " + std::to_string(hero_pos.y) + " WOOD: " + std::to_string(wood_pos.y));
-
-  if(Math::fabs(dx) <= 0.005*Timer::get_tmod()){
-    dx = 0;
-  }
-  if(Math::fabs(dy) <= 0.005*Timer::get_tmod()){
-    dy = 0;
-  }
-
-  dx*=Math::pow(0.89, Timer::get_tmod());
-  dy*=Math::pow(0.89, Timer::get_tmod());
 }
 
 int hero_x = 2;
@@ -205,6 +188,8 @@ void Engine::update() {
 
   if (moving_left)
     m_camera->track_pos(&wood_pos);
+  if(moving_right)
+    m_camera->track_pos(&hero_pos);
 
   timer += 1*Timer::get_dt();
   /*if(timer >= .1f){
@@ -214,6 +199,15 @@ void Engine::update() {
     }
     timer = 0;
   }*/
+  dx = (g_input_manager->get_raw_axis().x * 17.5) * Timer::get_dt();
+  dy = (g_input_manager->get_raw_axis().y * 17.5) * Timer::get_dt();
+
+  if(Math::fabs(dx) <= 0.005*Timer::get_dt()){
+    dx = 0;
+  }
+  if(Math::fabs(dy) <= 0.005*Timer::get_tmod()){
+    dy = 0;
+  }
 
   hero_pos += {dx,dy};
   wood_pos += {0, dwood};
