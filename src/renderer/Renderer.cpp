@@ -8,8 +8,7 @@ Renderer::~Renderer() {}
 
 void Renderer::post_update() { m_calls = 0; }
 
-void Renderer::init_shader(std::vector<std::string> shaders) {
-}
+void Renderer::init_shader(std::vector<std::string> shaders) {}
 
 void Renderer::draw_rect(Rect rect, Color color, bool fill) {
   if (!fill) {

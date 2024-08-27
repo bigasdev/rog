@@ -8,7 +8,7 @@ class GPU_Camera;
 
 class Camera{
 public: 
-  Camera(vec2 size);
+  Camera(vec2* size);
   ~Camera();
 
   void move();
@@ -23,7 +23,7 @@ private:
   GPU_Camera *m_camera;
   vec2 m_pos;
   vec2 m_ref_pos;
-  vec2 m_size;
+  vec2 *m_size;
   vec2 *m_tracked_pos;
 
   //tracking stuff 

@@ -7,8 +7,8 @@
 #include <cmath>
 #include <string>
 
-Camera::Camera(vec2 size) : m_size(size) {
-  m_camera = new GPU_Camera{0,0,0,0,2,2,1,1};
+Camera::Camera(vec2* size) : m_size(size) {
+  m_camera = new GPU_Camera{0,0,0,0,1,1,1,1};
   m_pos = vec2(0, 0);
   m_tracked_pos = nullptr;
 }
@@ -37,8 +37,8 @@ void Camera::move() {
     dy *= Math::pow(base_frict, Timer::get_dt());
 
 
-    m_camera->x = (m_pos.x*m_camera->zoom_x - m_size.x*0.5f);
-    m_camera->y = (m_pos.y*m_camera->zoom_y - m_size.y * 0.5f);
+    m_camera->x = (m_pos.x*m_camera->zoom_x - m_size->x*0.5f);
+    m_camera->y = (m_pos.y*m_camera->zoom_y - m_size->y * 0.5f);
   }
 }
 
@@ -46,8 +46,8 @@ void Camera::update() {
 }
 
 bool Camera::is_on_screen(vec2 pos) {
-  return pos.x > m_pos.x && pos.x < m_pos.x + m_size.x &&
-         pos.y > m_pos.y && pos.y < m_pos.y + m_size.y;
+  return pos.x > m_pos.x && pos.x < m_pos.x + m_size->x &&
+         pos.y > m_pos.y && pos.y < m_pos.y + m_size->y;
 }
 
 void Camera::track_pos(vec2 *pos) {

@@ -34,7 +34,7 @@ private:
   InputManager *m_input_manager;
   SoundManager *m_sound_manager;
 
-  vec2i m_window_size;
+  vec2 m_window_size;
 
 public:
   Engine();
@@ -52,7 +52,7 @@ public:
 
   //getters 
   Renderer *get_renderer() { return m_renderer; }
-  vec2i get_window_size() { return m_window_size; }
+  vec2 get_window_size() { return m_window_size; }
 };
 
 #endif

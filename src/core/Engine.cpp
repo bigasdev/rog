@@ -51,7 +51,7 @@ void Engine::init() {
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
   SDL_WindowFlags window_flags =
-      (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
+      (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
   m_sdl_window =
       SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                        800, 600, window_flags);
@@ -102,8 +102,7 @@ void Engine::post_init() {
 
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
-  m_camera = new Camera({static_cast<float>(m_window_size.x),
-                         static_cast<float>(m_window_size.y)});
+  m_camera = new Camera(&m_window_size);
   m_sound_manager = new SoundManager();
   m_input_manager = new InputManager();
   g_sound_manager = m_sound_manager;
@@ -177,8 +176,13 @@ void Engine::fixed_update() {
     return;
   }
 
-  dx += (g_input_manager->get_raw_axis().x * 5.5) * Timer::get_tmod();
-  dy += (g_input_manager->get_raw_axis().y * 5.5) * Timer::get_tmod();
+  dx += (g_input_manager->get_raw_axis().x * 7.5) * Timer::get_tmod();
+  dy += (g_input_manager->get_raw_axis().y * 2.5) * Timer::get_tmod();
+
+  Logger::log("DT: " + std::to_string(Timer::get_dt()) + " Tmod: " +
+              std::to_string(Timer::get_tmod()) + " DX: " + std::to_string(dx) +
+              " DY: " + std::to_string(dy) + " X: " + std::to_string(hero_pos.x) +
+              " Y: " + std::to_string(hero_pos.y) + " WOOD: " + std::to_string(wood_pos.y));
 
   if(Math::fabs(dx) <= 0.005*Timer::get_tmod()){
     dx = 0;
@@ -203,13 +207,13 @@ void Engine::update() {
     m_camera->track_pos(&wood_pos);
 
   timer += 1*Timer::get_dt();
-  if(timer >= .1f){
+  /*if(timer >= .1f){
     hero_x++;
     if(hero_x >= 6){
       hero_x = 2;
     }
     timer = 0;
-  }
+  }*/
 
   hero_pos += {dx,dy};
   wood_pos += {0, dwood};
@@ -217,14 +221,14 @@ void Engine::update() {
     wood_pos.y = 0;
   }
 
-  m_camera->move();
-  m_camera->update();
 }
 
 void Engine::post_update() {
   if (!m_loaded) {
     return;
   }
+  m_camera->move();
+  m_camera->update();
 #if _DEBUG
   m_profiler->update();
   m_renderer->post_update();
