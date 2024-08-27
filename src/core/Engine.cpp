@@ -62,7 +62,7 @@ void Engine::init() {
   m_sdl_renderer =
       SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
-  m_gpu = GPU_Init(1024, 768, 0);
+  m_gpu = GPU_Init(1920, 1080, 0);
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
@@ -176,6 +176,11 @@ void Engine::fixed_update() {
     return;
   }
 
+  dx += (g_input_manager->get_raw_axis().x * 17.5) * Timer::get_tmod();
+  dy += (g_input_manager->get_raw_axis().y * 17.5) * Timer::get_tmod();
+
+  dx*=Math::pow(.9f, Timer::get_tmod());
+  dy*=Math::pow(.9f, Timer::get_tmod());
 }
 
 int hero_x = 2;
@@ -192,23 +197,14 @@ void Engine::update() {
     m_camera->track_pos(&hero_pos);
 
   timer += 1*Timer::get_dt();
-  /*if(timer >= .1f){
+  if(timer >= .1f){
     hero_x++;
     if(hero_x >= 6){
       hero_x = 2;
     }
     timer = 0;
-  }*/
-  dx = (g_input_manager->get_raw_axis().x * 17.5) * Timer::get_dt();
-  dy = (g_input_manager->get_raw_axis().y * 17.5) * Timer::get_dt();
-
-  if(Math::fabs(dx) <= 0.005*Timer::get_dt()){
-    dx = 0;
   }
-  if(Math::fabs(dy) <= 0.005*Timer::get_tmod()){
-    dy = 0;
-  }
-
+  
   hero_pos += {dx,dy};
   wood_pos += {0, dwood};
   if(wood_pos.y > 70){
@@ -238,8 +234,8 @@ void Engine::draw() {
   GPU_Clear(m_gpu);
   GPU_SetCamera(m_gpu, m_camera->get());
   // game draw
-  for (int i = 0; i < 1000; i += 8) {
-    for (int j = 0; j < 1000; j += 8) {
+  for (int i = 0; i < 1000; i += 8*5) {
+    for (int j = 0; j < 1000; j += 8*5) {
       m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i, j},
                                   {2, 0, 8, 8});
     }

@@ -31,10 +31,10 @@ void loop() {
   Timer::update();
   engine->input();
 
-  /*while (Timer::get_accumulator() >= Timer::get_tmod()) {
+  while (Timer::get_accumulator() >= Timer::get_tmod()) {
     Timer::fixed_t();
     engine->fixed_update();
-  }*/
+  }
   engine->update();
   engine->post_update();
   engine->draw();
