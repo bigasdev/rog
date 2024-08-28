@@ -42,6 +42,7 @@ namespace Timer{
   int get_frame_count();
   void skip();
   void fixed_t();
+  void set_slow_mo(double slowmo);
   void apply_slow_mo(double slowmo);
   void reset_slow_mo();
 }

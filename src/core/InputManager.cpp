@@ -5,6 +5,8 @@
 #include "SDL_joystick.h"
 #include "SDL_keycode.h"
 
+//grab the connected joystick, this runs with the connect/disconnected event too 
+//no support for double joysticks yet
 void connect_controller() {
   if (SDL_NumJoysticks() < 1) {
     Logger::log("No joysticks connected!\n");
@@ -36,6 +38,8 @@ void InputManager::bind_mouse(bool *left, bool *right, bool *wheel) {
   wheel_click = wheel;
 }
 
+//loops through the keys set in the key and joy map
+//default implementation for axis and RT/LT 
 void InputManager::update(SDL_Event event) {
   switch (event.type) {
   case SDL_JOYDEVICEREMOVED:
