@@ -176,8 +176,8 @@ void Engine::fixed_update() {
     return;
   }
 
-  dx += (g_input_manager->get_raw_axis().x * 17.5) * Timer::get_tmod();
-  dy += (g_input_manager->get_raw_axis().y * 17.5) * Timer::get_tmod();
+  dx += (g_input_manager->get_raw_axis().x * 7.5) * Timer::get_tmod();
+  dy += (g_input_manager->get_raw_axis().y * 7.5) * Timer::get_tmod();
 
   dx*=Math::pow(.9f, Timer::get_tmod());
   dy*=Math::pow(.9f, Timer::get_tmod());
