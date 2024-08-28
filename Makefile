@@ -13,6 +13,7 @@ RELEASE_FOLDER = .release
 ICON_DIR = res/icon/icon.res
 BIN = bin/*.o
 DEBUG_FLAGS = -D_ASSERTS -D_DEBUG -D_IMGUI
+GAME_FLAGS = -DWIN_WIDTH=600 -DWIN_HEIGHT=400
 
 bin_dir:
 	mkdir bin
@@ -27,25 +28,25 @@ tools_o : $(patsubst src/tools/%.cpp,bin/%.o,$(wildcard src/tools/*.cpp))
 
 # Rule to build all .cpp files in the src/ImGui folder
 bin/%.o: src/imgui/%.cpp
-	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 bin/%.o: src/core/%.cpp
-	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 bin/%.o: src/entity/%.cpp
-	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 bin/%.o: src/renderer/%.cpp
-	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 bin/%.o: src/res/%.cpp
-	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 bin/%.o: src/game/%.cpp
-	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 bin/%.o: src/tools/%.cpp
-	$(CC) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
 debug: imgui_o app_o entity_o renderer_o resources_o game_o tools_o
 	${CC} -g -O0 $(STATIC_LIBS) $(INCLUDES) -o $(DEBUG_FOLDER)/fortress.exe ${BIN} $(ICON_DIR) $(DEBUG_LIBS) -mconsole

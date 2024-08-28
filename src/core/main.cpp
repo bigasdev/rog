@@ -28,9 +28,11 @@ void loop() {
 #ifdef __EMSCRIPTEN__
   // mainloop
 #elif __WIN32__
+  //dt calculation is always done at the start of the frame
   Timer::update();
   engine->input();
 
+  //fixed delta time loop
   while (Timer::get_accumulator() >= Timer::get_tmod()) {
     Timer::fixed_t();
     engine->fixed_update();

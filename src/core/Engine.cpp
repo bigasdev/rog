@@ -25,6 +25,12 @@
 #include <cassert>
 #include <iostream>
 
+//init 
+#ifndef WIN_WIDTH
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
+#endif
+
 bool moving_right = false;
 bool moving_left = false;
 bool slow_mo = false;
@@ -55,8 +61,8 @@ void Engine::init() {
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
   m_sdl_window =
       SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                       800, 600, window_flags);
-  m_window_size = {800, 600};
+                       WIN_WIDTH, WIN_HEIGHT, window_flags);
+  m_window_size = {WIN_WIDTH, WIN_HEIGHT};
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
