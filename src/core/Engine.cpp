@@ -69,7 +69,7 @@ void Engine::init() {
   m_sdl_renderer =
       SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
-  m_gpu = GPU_Init(1920, 1080, 0);
+  m_gpu = GPU_InitRenderer(GPU_RENDERER_OPENGL_3, WIN_WIDTH, WIN_HEIGHT, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
