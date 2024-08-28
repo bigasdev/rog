@@ -234,8 +234,8 @@ void Engine::draw() {
   GPU_Clear(m_gpu);
   GPU_SetCamera(m_gpu, m_camera->get());
   // game draw
-  for (int i = 0; i < 1000; i += 8*5) {
-    for (int j = 0; j < 1000; j += 8*5) {
+  for (int i = 0; i < 1000; i += 8) {
+    for (int j = 0; j < 1000; j += 8) {
       m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i, j},
                                   {2, 0, 8, 8});
     }
