@@ -1,9 +1,10 @@
 SDL2 initialized
 SDL2 version: SDL-release-2.28.4-0-gcc016b004
+SDL2 renderer created
+SDL2 GPU created
 SDL2 image initialized
 SDL2 mixer initialized
 SDL2 window created
-Delta time: 0.396626
 0
 No joysticks connected!
 
@@ -52,490 +53,580 @@ Aseprite: ui
 Loading shader: light
 Loading shader: vertex
 Engine post init
-Delta time: 0.381940
-Delta time: 0.011992
-Delta time: 0.010170
-Delta time: 0.008027
-Delta time: 0.008892
-Delta time: 0.008469
-Delta time: 0.012980
-Delta time: 0.013469
-Delta time: 0.012732
-Delta time: 0.020127
-Delta time: 0.009796
-Delta time: 0.010368
-Delta time: 0.014455
-Delta time: 0.012552
-Delta time: 0.013023
-Delta time: 0.013589
-Delta time: 0.013648
-Delta time: 0.013026
-Delta time: 0.012989
-Delta time: 0.013264
-Delta time: 0.013573
-Delta time: 0.013523
-Delta time: 0.013131
-Delta time: 0.012712
-Delta time: 0.013697
-Delta time: 0.013151
-Delta time: 0.013901
-Delta time: 0.012977
-Delta time: 0.013801
-Delta time: 0.013856
-Delta time: 0.012610
-Delta time: 0.013248
-Delta time: 0.014431
-Delta time: 0.012263
-Delta time: 0.013283
-Delta time: 0.013402
-Delta time: 0.013340
-Delta time: 0.013824
-Delta time: 0.012462
-Delta time: 0.014057
-Delta time: 0.012941
-Delta time: 0.014075
-Delta time: 0.012959
-Delta time: 0.012885
-Delta time: 0.013409
-Delta time: 0.013849
-Delta time: 0.013328
-Delta time: 0.013062
-Delta time: 0.012809
-Delta time: 0.013691
-Delta time: 0.013442
-Delta time: 0.013970
-Delta time: 0.012386
-Delta time: 0.013501
-Delta time: 0.013064
-Delta time: 0.013719
-Delta time: 0.013204
-Delta time: 0.013560
-Delta time: 0.013156
-Delta time: 0.013650
-Delta time: 0.013111
-Delta time: 0.013506
-Delta time: 0.013084
-Delta time: 0.013317
-Delta time: 0.013003
-Delta time: 0.013838
-Delta time: 0.013391
-Delta time: 0.013172
-Delta time: 0.013259
-Delta time: 0.013151
-Delta time: 0.013290
-Delta time: 0.013328
-Delta time: 0.013721
-Delta time: 0.013126
-Delta time: 0.013483
-Delta time: 0.013401
-Delta time: 0.013257
-Delta time: 0.013095
-Delta time: 0.013568
-Delta time: 0.013049
-Delta time: 0.014044
-Delta time: 0.014314
-Delta time: 0.011926
-Delta time: 0.013478
-Delta time: 0.013677
-Delta time: 0.012451
-Delta time: 0.013272
-Delta time: 0.013923
-Delta time: 0.013355
-Delta time: 0.013165
-Delta time: 0.013213
-Delta time: 0.013427
-Delta time: 0.013496
-Delta time: 0.013194
-Delta time: 0.013770
-Delta time: 0.013080
-Delta time: 0.013041
-Delta time: 0.013407
-Delta time: 0.013324
-Delta time: 0.013427
-Delta time: 0.012832
-Delta time: 0.013585
-Delta time: 0.013288
-Delta time: 0.013751
-Delta time: 0.012844
-Delta time: 0.013999
-Delta time: 0.013405
-Delta time: 0.013116
-Delta time: 0.013518
-Delta time: 0.013032
-Delta time: 0.013415
-Delta time: 0.013296
-Delta time: 0.013526
-Delta time: 0.013239
-Delta time: 0.013197
-Delta time: 0.013266
-Delta time: 0.013015
-Delta time: 0.013182
-Delta time: 0.013585
-Delta time: 0.013477
-Delta time: 0.013154
-Delta time: 0.013248
-Delta time: 0.014464
-Delta time: 0.012363
-Delta time: 0.013430
-Delta time: 0.013564
-Delta time: 0.013117
-Delta time: 0.012998
-Delta time: 0.014043
-Delta time: 0.012740
-Delta time: 0.014112
-Delta time: 0.012473
-Delta time: 0.013624
-Delta time: 0.013134
-Delta time: 0.013322
-Delta time: 0.013726
-Delta time: 0.013616
-Delta time: 0.012578
-Delta time: 0.013579
-Delta time: 0.013201
-Delta time: 0.013324
-Delta time: 0.013336
-Delta time: 0.013713
-Delta time: 0.013555
-Delta time: 0.013255
-Delta time: 0.012656
-Delta time: 0.014118
-Delta time: 0.013536
-Delta time: 0.012837
-Delta time: 0.013472
-Delta time: 0.012842
-Delta time: 0.013243
-Delta time: 0.013841
-Delta time: 0.013358
-Delta time: 0.013124
-Delta time: 0.013086
-Delta time: 0.014306
-Delta time: 0.012944
-Delta time: 0.013140
-Delta time: 0.013384
-Delta time: 0.013638
-Delta time: 0.012472
-Delta time: 0.013584
-Delta time: 0.014167
-Delta time: 0.012343
-Delta time: 0.013545
-Delta time: 0.013085
-Delta time: 0.013446
-Delta time: 0.013491
-Delta time: 0.013241
-Delta time: 0.013462
-Delta time: 0.013766
-Delta time: 0.012786
-Delta time: 0.013441
-Delta time: 0.013871
-Delta time: 0.012341
-Delta time: 0.013917
-Delta time: 0.013262
-Delta time: 0.013066
-Delta time: 0.013761
-Delta time: 0.013309
-Delta time: 0.013125
-Delta time: 0.013482
-Delta time: 0.013340
-Delta time: 0.012874
-Delta time: 0.013650
-Delta time: 0.013303
-Delta time: 0.013276
-Delta time: 0.013000
-Delta time: 0.013543
-Delta time: 0.013047
-Delta time: 0.014157
-Delta time: 0.013010
-Delta time: 0.013208
-Delta time: 0.013362
-Delta time: 0.013080
-Delta time: 0.013606
-Delta time: 0.013522
-Delta time: 0.013549
-Delta time: 0.012864
-Delta time: 0.013254
-Delta time: 0.013322
-Delta time: 0.013314
-Delta time: 0.013202
-Delta time: 0.013540
-Delta time: 0.014032
-Delta time: 0.012709
-Delta time: 0.013270
-Delta time: 0.014201
-Delta time: 0.012584
-Delta time: 0.013384
-Delta time: 0.013576
-Delta time: 0.012737
-Delta time: 0.013899
-Delta time: 0.013457
-Delta time: 0.013057
-Delta time: 0.013171
-Delta time: 0.013845
-Delta time: 0.012940
-Delta time: 0.014020
-Delta time: 0.012688
-Delta time: 0.013739
-Delta time: 0.013127
-Delta time: 0.013170
-Delta time: 0.012958
-Delta time: 0.014191
-Delta time: 0.013730
-Delta time: 0.012621
-Delta time: 0.013861
-Delta time: 0.013286
-Delta time: 0.012834
-Delta time: 0.013721
-Delta time: 0.012937
-Delta time: 0.014257
-Delta time: 0.012582
-Delta time: 0.012786
-Delta time: 0.013685
-Delta time: 0.013748
-Delta time: 0.013053
-Delta time: 0.013439
-Delta time: 0.013379
-Delta time: 0.013132
-Delta time: 0.013730
-Delta time: 0.013211
-Delta time: 0.012849
-Delta time: 0.013748
-Delta time: 0.013211
-Delta time: 0.013884
-Delta time: 0.012596
-Delta time: 0.013160
-Delta time: 0.014298
-Delta time: 0.012923
-Delta time: 0.013133
-Delta time: 0.013380
-Delta time: 0.013169
-Delta time: 0.013741
-Delta time: 0.013247
-Delta time: 0.013156
-Delta time: 0.012875
-Delta time: 0.013337
-Delta time: 0.013622
-Delta time: 0.013406
-Delta time: 0.013808
-Delta time: 0.012693
-Delta time: 0.013348
-Delta time: 0.013367
-Delta time: 0.013379
-Delta time: 0.013315
-Delta time: 0.013063
-Delta time: 0.013796
-Delta time: 0.013783
-Delta time: 0.012814
-Delta time: 0.013217
-Delta time: 0.013617
-Delta time: 0.012848
-Delta time: 0.013307
-Delta time: 0.013972
-Delta time: 0.013390
-Delta time: 0.012944
-Delta time: 0.013183
-Delta time: 0.013483
-Delta time: 0.013121
-Delta time: 0.013633
-Delta time: 0.013020
-Delta time: 0.014110
-Delta time: 0.012694
-Delta time: 0.013240
-Delta time: 0.013417
-Delta time: 0.013994
-Delta time: 0.012527
-Delta time: 0.013762
-Delta time: 0.013598
-Delta time: 0.012660
-Delta time: 0.013726
-Delta time: 0.013279
-Delta time: 0.013184
-Delta time: 0.014097
-Delta time: 0.013306
-Delta time: 0.012678
-Delta time: 0.013922
-Delta time: 0.012980
-Delta time: 0.013362
-Delta time: 0.012861
-Delta time: 0.013748
-Delta time: 0.013066
-Delta time: 0.013282
-Delta time: 0.013951
-Delta time: 0.012602
-Delta time: 0.013732
-Delta time: 0.013083
-Delta time: 0.013533
-Delta time: 0.012783
-Delta time: 0.014319
-Delta time: 0.012769
-Delta time: 0.013963
-Delta time: 0.014078
-Delta time: 0.012570
-Delta time: 0.013585
-Delta time: 0.012607
-Delta time: 0.014321
-Delta time: 0.012752
-Delta time: 0.013382
-Delta time: 0.012866
-Delta time: 0.013525
-Delta time: 0.012887
-Delta time: 0.013116
-Delta time: 0.013625
-Delta time: 0.013206
-Delta time: 0.013796
-Delta time: 0.013088
-Delta time: 0.013297
-Delta time: 0.013322
-Delta time: 0.013175
-Delta time: 0.013531
-Delta time: 0.012944
-Delta time: 0.014044
-Delta time: 0.012843
-Delta time: 0.013145
-Delta time: 0.013263
-Delta time: 0.013937
-Delta time: 0.013370
-Delta time: 0.012832
-Delta time: 0.013614
-Delta time: 0.013166
-Delta time: 0.013122
-Delta time: 0.013393
-Delta time: 0.013161
-Delta time: 0.013813
-Delta time: 0.013286
-Delta time: 0.013645
-Delta time: 0.012798
-Delta time: 0.013654
-Delta time: 0.013587
-Delta time: 0.013310
-Delta time: 0.012952
-Delta time: 0.013495
-Delta time: 0.013463
-Delta time: 0.013795
-Delta time: 0.012709
-Delta time: 0.013225
-Delta time: 0.013910
-Delta time: 0.012828
-Delta time: 0.013703
-Delta time: 0.013020
-Delta time: 0.013008
-Delta time: 0.013526
-Delta time: 0.013443
-Delta time: 0.013576
-Delta time: 0.013116
-Delta time: 0.013419
-Delta time: 0.013174
-Delta time: 0.012920
-Delta time: 0.013766
-Delta time: 0.012788
-Delta time: 0.014186
-Delta time: 0.013287
-Delta time: 0.013081
-Delta time: 0.012945
-Delta time: 0.013802
-Delta time: 0.013105
-Delta time: 0.013775
-Delta time: 0.013103
-Delta time: 0.013245
-Delta time: 0.012977
-Delta time: 0.013981
-Delta time: 0.013116
-Delta time: 0.013242
-Delta time: 0.013741
-Delta time: 0.012545
-Delta time: 0.014199
-Delta time: 0.012837
-Delta time: 0.013522
-Delta time: 0.013408
-Delta time: 0.013338
-Delta time: 0.012975
-Delta time: 0.014173
-Delta time: 0.013220
-Delta time: 0.013100
-Delta time: 0.013185
-Delta time: 0.013484
-Delta time: 0.012659
-Delta time: 0.013655
-Delta time: 0.013699
-Delta time: 0.012704
-Delta time: 0.013504
-Delta time: 0.013612
-Delta time: 0.012828
-Delta time: 0.013562
-Delta time: 0.013228
-Delta time: 0.013492
-Delta time: 0.013464
-Delta time: 0.013303
-Delta time: 0.013152
-Delta time: 0.013430
-Delta time: 0.013574
-Delta time: 0.013141
-Delta time: 0.013378
-Delta time: 0.013520
-Delta time: 0.013281
-Delta time: 0.014006
-Delta time: 0.012988
-Delta time: 0.012857
-Delta time: 0.013514
-Delta time: 0.013136
-Delta time: 0.013441
-Delta time: 0.013579
-Delta time: 0.013554
-Delta time: 0.012583
-Delta time: 0.013425
-Delta time: 0.013148
-Delta time: 0.013867
-Delta time: 0.013309
-Delta time: 0.013276
-Delta time: 0.013483
-Delta time: 0.013431
-Delta time: 0.013119
-Delta time: 0.013287
-Delta time: 0.013213
-Delta time: 0.013804
-Delta time: 0.013518
-Delta time: 0.013112
-Delta time: 0.012786
-Delta time: 0.014169
-Delta time: 0.012828
-Delta time: 0.013495
-Delta time: 0.013069
-Delta time: 0.013109
-Delta time: 0.013721
-Delta time: 0.012725
-Delta time: 0.013711
-Delta time: 0.013144
-Delta time: 0.013330
-Delta time: 0.013111
-Delta time: 0.014215
-Delta time: 0.012905
-Delta time: 0.012828
-Delta time: 0.014142
-Delta time: 0.012451
-Delta time: 0.013789
-Delta time: 0.012918
-Delta time: 0.014079
-Delta time: 0.013140
-Delta time: 0.012903
-Delta time: 0.013658
-Delta time: 0.013635
-Delta time: 0.013140
-Delta time: 0.012966
-Delta time: 0.013519
-Delta time: 0.013047
-Delta time: 0.014217
-Delta time: 0.013239
-Delta time: 0.013550
-Delta time: 0.013258
-Delta time: 0.013416
-Delta time: 0.012739
-Delta time: 0.012943
-Delta time: 0.014039
-Delta time: 0.012881
-Delta time: 0.013445
-Delta time: 0.012779
-Delta time: 0.014782
-Delta time: 0.012370
-Delta time: 0.013172
-Delta time: 0.013254
-Delta time: 0.013121
-Delta time: 0.013489
+slowmo: 0.998293
+slowmo: 0.996659
+slowmo: 0.994907
+slowmo: 0.993283
+slowmo: 0.991626
+slowmo: 0.989983
+slowmo: 0.988324
+slowmo: 0.986653
+slowmo: 0.985019
+slowmo: 0.983377
+slowmo: 0.981707
+slowmo: 0.980070
+slowmo: 0.978402
+slowmo: 0.976773
+slowmo: 0.975147
+slowmo: 0.973577
+slowmo: 0.971922
+slowmo: 0.970270
+slowmo: 0.968642
+slowmo: 0.967031
+slowmo: 0.965414
+slowmo: 0.963859
+slowmo: 0.962201
+slowmo: 0.960635
+slowmo: 0.959045
+slowmo: 0.957435
+slowmo: 0.955843
+slowmo: 0.954165
+slowmo: 0.952587
+slowmo: 0.951005
+slowmo: 0.949424
+slowmo: 0.947852
+slowmo: 0.946262
+slowmo: 0.944741
+slowmo: 0.943112
+slowmo: 0.941584
+slowmo: 0.939978
+slowmo: 0.938439
+slowmo: 0.936885
+slowmo: 0.935318
+slowmo: 0.933749
+slowmo: 0.932124
+slowmo: 0.930595
+slowmo: 0.929091
+slowmo: 0.927493
+slowmo: 0.925983
+slowmo: 0.924434
+slowmo: 0.922862
+slowmo: 0.921363
+slowmo: 0.919820
+slowmo: 0.918287
+slowmo: 0.916708
+slowmo: 0.915178
+slowmo: 0.913663
+slowmo: 0.912135
+slowmo: 0.910618
+slowmo: 0.909102
+slowmo: 0.907618
+slowmo: 0.906077
+slowmo: 0.904558
+slowmo: 0.903083
+slowmo: 0.901583
+slowmo: 0.900073
+slowmo: 0.898515
+slowmo: 0.897032
+slowmo: 0.895548
+slowmo: 0.894043
+slowmo: 0.892552
+slowmo: 0.891061
+slowmo: 0.889582
+slowmo: 0.888111
+slowmo: 0.886608
+slowmo: 0.885121
+slowmo: 0.883663
+slowmo: 0.882175
+slowmo: 0.880717
+slowmo: 0.879234
+slowmo: 0.877747
+slowmo: 0.876318
+slowmo: 0.874806
+slowmo: 0.873360
+slowmo: 0.871949
+slowmo: 0.870475
+slowmo: 0.869013
+slowmo: 0.867575
+slowmo: 0.866135
+slowmo: 0.864666
+slowmo: 0.863238
+slowmo: 0.861841
+slowmo: 0.860359
+slowmo: 0.858968
+slowmo: 0.857522
+slowmo: 0.856033
+slowmo: 0.854645
+slowmo: 0.853191
+slowmo: 0.851793
+slowmo: 0.850401
+slowmo: 0.848916
+slowmo: 0.847573
+slowmo: 0.846143
+slowmo: 0.844701
+slowmo: 0.843271
+slowmo: 0.841927
+slowmo: 0.840481
+slowmo: 0.839078
+slowmo: 0.837723
+slowmo: 0.836314
+slowmo: 0.834908
+slowmo: 0.833493
+slowmo: 0.832138
+slowmo: 0.830729
+slowmo: 0.829329
+slowmo: 0.827918
+slowmo: 0.826552
+slowmo: 0.825179
+slowmo: 0.823822
+slowmo: 0.822426
+slowmo: 0.821072
+slowmo: 0.819692
+slowmo: 0.818306
+slowmo: 0.817014
+slowmo: 0.815630
+slowmo: 0.814241
+slowmo: 0.812911
+slowmo: 0.811523
+slowmo: 0.810159
+slowmo: 0.808823
+slowmo: 0.807448
+slowmo: 0.806133
+slowmo: 0.804801
+slowmo: 0.803482
+slowmo: 0.802099
+slowmo: 0.800765
+slowmo: 0.799414
+slowmo: 0.798081
+slowmo: 0.796796
+slowmo: 0.795460
+slowmo: 0.794128
+slowmo: 0.792812
+slowmo: 0.791493
+slowmo: 0.790111
+slowmo: 0.788777
+slowmo: 0.787535
+slowmo: 0.786176
+slowmo: 0.784865
+slowmo: 0.783560
+slowmo: 0.782241
+slowmo: 0.780958
+slowmo: 0.779644
+slowmo: 0.778347
+slowmo: 0.777077
+slowmo: 0.775783
+slowmo: 0.774479
+slowmo: 0.773161
+slowmo: 0.771875
+slowmo: 0.770558
+slowmo: 0.769293
+slowmo: 0.767963
+slowmo: 0.766764
+slowmo: 0.765501
+slowmo: 0.764215
+slowmo: 0.762898
+slowmo: 0.761637
+slowmo: 0.760331
+slowmo: 0.759116
+slowmo: 0.757865
+slowmo: 0.756590
+slowmo: 0.755332
+slowmo: 0.754070
+slowmo: 0.752770
+slowmo: 0.751510
+slowmo: 0.750284
+slowmo: 0.748999
+slowmo: 0.747743
+slowmo: 0.746530
+slowmo: 0.745276
+slowmo: 0.744029
+slowmo: 0.742821
+slowmo: 0.741582
+slowmo: 0.740344
+slowmo: 0.739112
+slowmo: 0.737877
+slowmo: 0.736616
+slowmo: 0.735372
+slowmo: 0.734159
+slowmo: 0.732950
+slowmo: 0.731747
+slowmo: 0.730521
+slowmo: 0.729257
+slowmo: 0.728062
+slowmo: 0.726870
+slowmo: 0.725615
+slowmo: 0.724455
+slowmo: 0.723238
+slowmo: 0.722036
+slowmo: 0.720795
+slowmo: 0.719588
+slowmo: 0.718397
+slowmo: 0.717201
+slowmo: 0.715992
+slowmo: 0.714791
+slowmo: 0.713608
+slowmo: 0.712452
+slowmo: 0.711259
+slowmo: 0.710056
+slowmo: 0.708861
+slowmo: 0.707688
+slowmo: 0.706500
+slowmo: 0.705318
+slowmo: 0.704178
+slowmo: 0.703005
+slowmo: 0.701837
+slowmo: 0.700644
+slowmo: 0.699487
+slowmo: 0.698297
+slowmo: 0.697105
+slowmo: 0.695965
+slowmo: 0.694800
+slowmo: 0.693632
+slowmo: 0.692488
+slowmo: 0.691329
+slowmo: 0.690181
+slowmo: 0.689025
+slowmo: 0.687871
+slowmo: 0.686718
+slowmo: 0.685611
+slowmo: 0.684477
+slowmo: 0.683325
+slowmo: 0.682180
+slowmo: 0.681052
+slowmo: 0.679885
+slowmo: 0.678755
+slowmo: 0.677597
+slowmo: 0.676473
+slowmo: 0.675382
+slowmo: 0.674229
+slowmo: 0.673105
+slowmo: 0.671981
+slowmo: 0.670869
+slowmo: 0.669742
+slowmo: 0.668653
+slowmo: 0.667543
+slowmo: 0.666426
+slowmo: 0.665287
+slowmo: 0.664173
+slowmo: 0.663061
+slowmo: 0.661962
+slowmo: 0.660847
+slowmo: 0.659745
+slowmo: 0.658635
+slowmo: 0.657544
+slowmo: 0.656461
+slowmo: 0.655347
+slowmo: 0.654275
+slowmo: 0.653178
+slowmo: 0.652074
+slowmo: 0.651035
+slowmo: 0.649940
+slowmo: 0.648864
+slowmo: 0.647752
+slowmo: 0.646664
+slowmo: 0.645589
+slowmo: 0.644499
+slowmo: 0.643444
+slowmo: 0.642356
+slowmo: 0.641291
+slowmo: 0.640221
+slowmo: 0.639151
+slowmo: 0.638081
+slowmo: 0.637018
+slowmo: 0.635954
+slowmo: 0.634930
+slowmo: 0.633862
+slowmo: 0.632810
+slowmo: 0.631748
+slowmo: 0.630683
+slowmo: 0.629604
+slowmo: 0.628565
+slowmo: 0.627520
+slowmo: 0.626465
+slowmo: 0.625412
+slowmo: 0.624373
+slowmo: 0.623328
+slowmo: 0.622307
+slowmo: 0.621253
+slowmo: 0.620223
+slowmo: 0.619188
+slowmo: 0.618158
+slowmo: 0.617132
+slowmo: 0.616112
+slowmo: 0.615076
+slowmo: 0.614039
+slowmo: 0.613016
+slowmo: 0.612021
+slowmo: 0.611003
+slowmo: 0.609964
+slowmo: 0.608961
+slowmo: 0.607931
+slowmo: 0.606915
+slowmo: 0.605882
+slowmo: 0.604886
+slowmo: 0.603875
+slowmo: 0.602869
+slowmo: 0.601853
+slowmo: 0.600858
+slowmo: 0.599863
+slowmo: 0.598866
+slowmo: 0.597848
+slowmo: 0.596845
+slowmo: 0.595843
+slowmo: 0.594892
+slowmo: 0.593891
+slowmo: 0.592889
+slowmo: 0.591885
+slowmo: 0.590889
+slowmo: 0.589880
+slowmo: 0.588903
+slowmo: 0.587977
+slowmo: 0.586951
+slowmo: 0.585992
+slowmo: 0.585032
+slowmo: 0.584045
+slowmo: 0.583074
+slowmo: 0.582096
+slowmo: 0.581114
+slowmo: 0.580162
+slowmo: 0.579214
+slowmo: 0.578217
+slowmo: 0.577251
+slowmo: 0.576320
+slowmo: 0.575331
+slowmo: 0.574377
+slowmo: 0.573430
+slowmo: 0.572467
+slowmo: 0.571502
+slowmo: 0.570560
+slowmo: 0.569593
+slowmo: 0.568658
+slowmo: 0.567721
+slowmo: 0.566762
+slowmo: 0.565831
+slowmo: 0.564883
+slowmo: 0.563927
+slowmo: 0.562973
+slowmo: 0.562005
+slowmo: 0.561086
+slowmo: 0.560171
+slowmo: 0.559238
+slowmo: 0.558294
+slowmo: 0.557372
+slowmo: 0.556438
+slowmo: 0.555523
+slowmo: 0.554609
+slowmo: 0.553680
+slowmo: 0.552752
+slowmo: 0.551833
+slowmo: 0.550870
+slowmo: 0.549962
+slowmo: 0.549065
+slowmo: 0.548138
+slowmo: 0.547216
+slowmo: 0.546310
+slowmo: 0.545401
+slowmo: 0.544471
+slowmo: 0.543584
+slowmo: 0.542671
+slowmo: 0.541764
+slowmo: 0.540869
+slowmo: 0.539984
+slowmo: 0.539081
+slowmo: 0.538181
+slowmo: 0.537290
+slowmo: 0.536360
+slowmo: 0.535467
+slowmo: 0.534568
+slowmo: 0.533676
+slowmo: 0.532798
+slowmo: 0.531914
+slowmo: 0.531023
+slowmo: 0.530146
+slowmo: 0.529235
+slowmo: 0.528379
+slowmo: 0.527489
+slowmo: 0.526627
+slowmo: 0.525755
+slowmo: 0.524875
+slowmo: 0.523977
+slowmo: 0.523094
+slowmo: 0.522216
+slowmo: 0.521385
+slowmo: 0.520484
+slowmo: 0.519623
+slowmo: 0.518753
+slowmo: 0.517887
+slowmo: 0.517026
+slowmo: 0.516157
+slowmo: 0.515299
+slowmo: 0.514458
+slowmo: 0.513598
+slowmo: 0.512712
+slowmo: 0.511885
+slowmo: 0.511035
+slowmo: 0.510142
+slowmo: 0.509300
+slowmo: 0.508457
+slowmo: 0.507589
+slowmo: 0.506782
+slowmo: 0.505940
+slowmo: 0.505062
+slowmo: 0.504260
+slowmo: 0.503392
+slowmo: 0.502548
+slowmo: 0.501733
+slowmo: 0.500880
+slowmo: 0.500057
+slowmo: 0.499226
+slowmo: 0.498405
+slowmo: 0.497558
+slowmo: 0.496711
+slowmo: 0.495883
+slowmo: 0.495048
+slowmo: 0.494243
+slowmo: 0.493405
+slowmo: 0.492584
+slowmo: 0.491759
+slowmo: 0.490940
+slowmo: 0.490148
+slowmo: 0.489298
+slowmo: 0.488492
+slowmo: 0.487685
+slowmo: 0.486834
+slowmo: 0.486010
+slowmo: 0.485237
+slowmo: 0.484406
+slowmo: 0.483587
+slowmo: 0.482799
+slowmo: 0.482004
+slowmo: 0.481198
+slowmo: 0.480403
+slowmo: 0.479572
+slowmo: 0.478761
+slowmo: 0.477982
+slowmo: 0.477187
+slowmo: 0.476370
+slowmo: 0.475607
+slowmo: 0.474785
+slowmo: 0.474004
+slowmo: 0.473207
+slowmo: 0.472442
+slowmo: 0.471631
+slowmo: 0.470864
+slowmo: 0.470061
+slowmo: 0.469290
+slowmo: 0.468511
+slowmo: 0.467732
+slowmo: 0.466907
+slowmo: 0.466148
+slowmo: 0.465384
+slowmo: 0.464591
+slowmo: 0.463822
+slowmo: 0.463046
+slowmo: 0.462275
+slowmo: 0.461503
+slowmo: 0.460732
+slowmo: 0.459960
+slowmo: 0.459212
+slowmo: 0.458454
+slowmo: 0.457679
+slowmo: 0.456888
+slowmo: 0.456140
+slowmo: 0.455391
+slowmo: 0.454619
+slowmo: 0.453858
+slowmo: 0.453100
+slowmo: 0.452356
+slowmo: 0.451590
+slowmo: 0.450845
+slowmo: 0.450087
+slowmo: 0.449359
+slowmo: 0.448606
+slowmo: 0.447858
+slowmo: 0.447094
+slowmo: 0.446352
+slowmo: 0.445600
+slowmo: 0.444849
+slowmo: 0.444107
+slowmo: 0.443391
+slowmo: 0.442633
+slowmo: 0.441903
+slowmo: 0.441156
+slowmo: 0.440421
+slowmo: 0.439697
+slowmo: 0.438954
+slowmo: 0.438245
+slowmo: 0.437510
+slowmo: 0.436783
+slowmo: 0.436056
+slowmo: 0.435285
+slowmo: 0.434567
+slowmo: 0.433865
+slowmo: 0.433144
+slowmo: 0.432412
+slowmo: 0.431686
+slowmo: 0.430971
+slowmo: 0.430265
+slowmo: 0.429547
+slowmo: 0.428833
+slowmo: 0.428087
+slowmo: 0.427389
+slowmo: 0.426668
+slowmo: 0.425955
+slowmo: 0.425254
+slowmo: 0.424530
+slowmo: 0.423836
+slowmo: 0.423111
+slowmo: 0.422419
+slowmo: 0.421708
+slowmo: 0.421007
+slowmo: 0.420309
+slowmo: 0.419602
+slowmo: 0.418910
+slowmo: 0.418205
+slowmo: 0.417515
+slowmo: 0.416813
+slowmo: 0.416116
+slowmo: 0.415440
+slowmo: 0.414747
+slowmo: 0.414057
+slowmo: 0.413345
+slowmo: 0.412643
+slowmo: 0.411972
+slowmo: 0.411281
+slowmo: 0.410595
+slowmo: 0.409913
+slowmo: 0.409223
+slowmo: 0.408565
+slowmo: 0.407848
+slowmo: 0.407172
+slowmo: 0.406508
+slowmo: 0.405843
+slowmo: 0.405167
+slowmo: 0.404488
+slowmo: 0.403814
+slowmo: 0.403128
+slowmo: 0.402446
+slowmo: 0.401784
+slowmo: 0.401105
+slowmo: 0.400444
+slowmo: 0.399777
+slowmo: 0.399103
+slowmo: 0.398443
+slowmo: 0.397792
+slowmo: 0.397119
+slowmo: 0.396465
+slowmo: 0.395799
+slowmo: 0.395152
+slowmo: 0.394451
+slowmo: 0.393806
+slowmo: 0.393170
+slowmo: 0.392512
+slowmo: 0.391840
+slowmo: 0.391179
+slowmo: 0.390535
+slowmo: 0.389884
+slowmo: 0.389222
+slowmo: 0.388596
+slowmo: 0.387951
+slowmo: 0.387291
+slowmo: 0.386655
+slowmo: 0.385987
+slowmo: 0.385333
+slowmo: 0.384689
+slowmo: 0.384064
+slowmo: 0.383422
+slowmo: 0.382784
+slowmo: 0.382151
 SDL2 quit

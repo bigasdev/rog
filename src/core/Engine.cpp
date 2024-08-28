@@ -27,6 +27,7 @@
 
 bool moving_right = false;
 bool moving_left = false;
+bool slow_mo = false;
 vec2 hero_pos;
 vec2 wood_pos = {20, 40};
 
@@ -109,6 +110,7 @@ void Engine::post_init() {
   g_input_manager = m_input_manager;
   g_input_manager->bind_keyboard(SDLK_e, &moving_right);
   g_input_manager->bind_keyboard(SDLK_q, &moving_left);
+  g_input_manager->bind_keyboard(SDLK_SPACE, &slow_mo);
 
   m_res = new Res(m_sdl_renderer);
   m_res->init();
@@ -203,6 +205,10 @@ void Engine::update() {
       hero_x = 2;
     }
     timer = 0;
+  }
+
+  if(slow_mo){
+    Timer::apply_slow_mo(.1f * Timer::get_dt());
   }
   
   hero_pos += {dx,dy};

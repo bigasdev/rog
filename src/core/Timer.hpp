@@ -9,7 +9,11 @@
 #include "SDL_timer.h"
 
 namespace Timer{
-  static double wanted_fps = 60.0f;
+  //fixed update is calculated at 30fps so it runs in every computer
+  static double wanted_fps = 30.0f;
+  //slowmo
+  static double tmod_multiplier = 1.0f;
+  static double min_tmod_multiplier = 0.1f;
 
   static double max_delta_time = 0.5;
 
@@ -38,6 +42,8 @@ namespace Timer{
   int get_frame_count();
   void skip();
   void fixed_t();
+  void apply_slow_mo(double slowmo);
+  void reset_slow_mo();
 }
 
 
