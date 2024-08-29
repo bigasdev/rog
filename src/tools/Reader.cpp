@@ -1,6 +1,8 @@
 #include "Reader.hpp"
+#include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <sstream>
 
 std::vector<std::string> Reader::get_folders(std::string path)
 {
@@ -17,6 +19,18 @@ std::vector<std::string> Reader::get_folders(std::string path)
             folders.push_back(dir_entry.path().string());
         }
         return folders;
+}
+
+std::string Reader::get_file_contents(std::string file)
+{
+  std::ifstream in(file);
+  if(!in.is_open()){
+    return "";
+  }
+  std::stringstream buffer;
+  buffer << in.rdbuf();
+  std::string contents = buffer.str();
+  return contents;
 }
 
 std::vector<std::string> Reader::read_file(std::string path)

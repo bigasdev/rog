@@ -50,7 +50,8 @@ Aseprite: character_atlas
 Aseprite: concept
 Aseprite: logo
 Aseprite: ui
-Loading shader: light
-Loading shader: vertex
+Loading shader: base_vertex
+Loading shader: light_fragment
+ERROR: Failed to link shader: res/shaders\light_fragment.glsl
 Engine post init
 SDL2 quit

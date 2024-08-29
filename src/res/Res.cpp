@@ -1,3 +1,4 @@
+#include "SDL_gpu.h"
 #define CUTE_ASEPRITE_IMPLEMENTATION
 #include "Res.hpp"
 #include "SDL_render.h"
@@ -169,6 +170,37 @@ void Res::load_shaders() {
     std::string file_name = path.substr(path.find_last_of("/\\") + 1);
     file_name = file_name.substr(0, file_name.find_last_of("."));
     Logger::log("Loading shader: " + file_name);
+
+    std::string shader_code = Reader::get_file_contents(file);
+    if(shader_code.empty()){
+      Logger::error("Failed to read shader: " + file);
+      continue;
+    }
+
+    GPU_ShaderEnum shader_type;
+    if (file_name.find("vertex") != std::string::npos) {
+      shader_type = GPU_VERTEX_SHADER;
+    } else if (file_name.find("fragment") != std::string::npos) {
+      shader_type = GPU_FRAGMENT_SHADER;
+    } else {
+      Logger::error("Failed to get shader type: " + file);
+      continue;
+    }
+
+    GPU_ShaderBlock block;
+    auto shader = GPU_CompileShader(shader_type, shader_code.c_str());
+    if (!shader) {
+      Logger::error("Failed to compile shader: " + file);
+      continue;
+    }
+
+    auto program = GPU_LinkShaders(shader, 0);
+    if (!program) {
+      Logger::error("Failed to link shader: " + file);
+      GPU_FreeShader(shader);
+      continue;
+    }
+
     m_shaders.push_back(file);
   }
 }
