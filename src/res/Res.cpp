@@ -1,12 +1,12 @@
 #include "SDL_gpu.h"
 #define CUTE_ASEPRITE_IMPLEMENTATION
+#include "../core/Engine.hpp"
+#include "../core/SoundManager.hpp"
+#include "../core/global.hpp"
+#include "../tools/Reader.hpp"
 #include "Res.hpp"
 #include "SDL_render.h"
 #include "cute_aseprite.h"
-#include "../core/SoundManager.hpp"
-#include "../core/global.hpp"
-#include "../core/Engine.hpp"
-#include "../tools/Reader.hpp"
 
 #include "../tools/Logger.hpp"
 #include <filesystem>
@@ -52,9 +52,7 @@ GPU_Image *CreateTextureFromRGBA(SDL_Renderer *renderer, const uint8_t *rgba,
   return texture;
 }
 
-Res::Res(SDL_Renderer *renderer) {
-  m_renderer = renderer;
-}
+Res::Res(SDL_Renderer *renderer) { m_renderer = renderer; }
 
 Res::~Res() {}
 
@@ -163,9 +161,47 @@ void Res::load_aseprites() {
 }
 
 void Res::load_shaders() {
-  auto files = Reader::get_extension_files("res/shaders", ".glsl");
+  // auto files = Reader::get_extension_files("res/shaders", ".glsl");
+  std::string shader_vert = "res/shaders/light_vertex.glsl";
+  std::string shader_frag = "res/shaders/light_fragment.glsl";
 
-  for (auto file : files) {
+  std::string vert_code = Reader::get_file_contents(shader_vert);
+  std::string frag_code = Reader::get_file_contents(shader_frag);
+
+  if (vert_code.empty() || frag_code.empty()) {
+    Logger::error("Failed to read shader: " + shader_vert + " or " +
+                  shader_frag);
+    return;
+  }
+
+  auto vert_shader = GPU_CompileShader(GPU_VERTEX_SHADER, vert_code.c_str());
+  if (!vert_shader) {
+    Logger::error("Failed to compile shader: " + shader_vert);
+    return;
+  }
+
+  auto frag_shader = GPU_CompileShader(GPU_FRAGMENT_SHADER, frag_code.c_str());
+  if (!frag_shader) {
+    Logger::error("Failed to compile shader: " + shader_frag);
+    return;
+  }
+
+  Uint32 program = GPU_LinkShaders(vert_shader, frag_shader);
+  if (!program) {
+    Logger::error("Failed to link shader: " + shader_vert + " and " +
+                  shader_frag);
+    return;
+  }
+
+  GPU_ShaderBlock block =
+      GPU_LoadShaderBlock(program, "gpu_Vertex", "gpu_TexCoord", "gpu_Color", "");
+
+  GPU_ActivateShaderProgram(program, &block);
+  m_shader_blocks.push_back(block);
+  m_shaders_id.push_back(program);
+  Logger::log("Loaded shader: " + shader_vert + " and " + shader_frag);
+
+  /*for (auto file : files) {
     std::string path = file;
     std::string file_name = path.substr(path.find_last_of("/\\") + 1);
     file_name = file_name.substr(0, file_name.find_last_of("."));
@@ -202,16 +238,19 @@ void Res::load_shaders() {
     }
 
     m_shaders.push_back(file);
-  }
+  }*/
 }
 
+// FIX: needs to be rewrite later, this is just returning the light shader for
+// now
+Uint32 Res::get_shader_id() { return m_shaders_id[0]; }
+// same as the above
+GPU_ShaderBlock Res::get_shader_block() { return m_shader_blocks[0]; }
+
 GPU_Image **Res::get_texture(std::string name) {
-  try
-  {
+  try {
     return &m_aseprite_textures.at(name);
-  }
-  catch (const std::out_of_range &e)
-  {
+  } catch (const std::out_of_range &e) {
     Logger::error("Texture " + std::string(name) + " not found!");
     return nullptr;
   }
@@ -219,12 +258,10 @@ GPU_Image **Res::get_texture(std::string name) {
 
 void Res::update() {
 #if _DEBUG
-for (auto f : m_aseprite_files)
-  {
+  for (auto f : m_aseprite_files) {
     std::string new_edited_time = get_aseprite_edited_time(f.file.c_str());
 
-    if (new_edited_time != f.last_edited_time)
-    {
+    if (new_edited_time != f.last_edited_time) {
       Logger::log("Aseprite file changed: " + f.file);
       f.last_edited_time = new_edited_time;
       load_aseprites();

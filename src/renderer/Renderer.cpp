@@ -1,5 +1,7 @@
 #include "Renderer.hpp"
 #include "../tools/Logger.hpp"
+#include "../res/Res.hpp"
+#include "../core/global.hpp"
 #include "SDL_gpu.h"
 
 Renderer::Renderer(GPU_Target *gpu) : m_gpu(gpu) {}
@@ -66,6 +68,14 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point) {
   dst.w = src.w*4;
   dst.h = src.h*4;
 
+  auto program = g_res->get_shader_id();
+  GPU_ShaderBlock block = g_res->get_shader_block();
+  GPU_ActivateShaderProgram(program, &block);
+
+  GPU_Blit(sheet, &src, m_gpu, dst.x, dst.y);
+
   GPU_BlitRectX(sheet, &src, m_gpu, &dst, 0, 0, 0, GPU_FLIP_NONE);
+
   m_calls++;
+  GPU_DeactivateShaderProgram();
 }

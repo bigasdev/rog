@@ -246,17 +246,18 @@ void Engine::draw() {
   GPU_Clear(m_gpu);
   GPU_SetCamera(m_gpu, m_camera->get());
   // game draw
-  for (int i = 0; i < 1000; i += 8) {
+  /*for (int i = 0; i < 1000; i += 8) {
     for (int j = 0; j < 1000; j += 8) {
       m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i, j},
                                   {2, 0, 8, 8});
     }
-  }
+  }*/
   m_renderer->draw_from_sheet(*m_res->get_texture("concept"), hero_pos,
                               {hero_x, 1, 7, 8});
   m_renderer->draw_from_sheet(*m_res->get_texture("concept"),wood_pos,
                               {0, 6, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
+  GPU_DeactivateShaderProgram();
 
 #if _DEBUG
   m_profiler->draw();
