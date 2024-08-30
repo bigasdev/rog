@@ -5,8 +5,6 @@ SDL2 GPU created
 SDL2 image initialized
 SDL2 mixer initialized
 SDL2 window created
-Game:1
-1
 0
 No joysticks connected!
 
@@ -53,5 +51,8 @@ Aseprite: concept
 Aseprite: logo
 Aseprite: ui
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/light_fragment.glsl
+Game:1
+1
+Game initialized
 Engine post init
 SDL2 quit

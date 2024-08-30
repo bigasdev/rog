@@ -104,9 +104,9 @@ void Profiler::update() {
   }
 }
 
-float get_pos_x(int value) { return static_cast<int>(g_engine->get_window_size().x) - value; }
+float get_pos_x(int value) { return static_cast<int>(g_engine->get_window_size()->x) - value; }
 
-float get_pos_y(int value) { return static_cast<int>(g_engine->get_window_size().y) - value; }
+float get_pos_y(int value) { return static_cast<int>(g_engine->get_window_size()->y) - value; }
 
 void Profiler::draw() {
 #if __WIN32__ && _DEBUG

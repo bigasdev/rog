@@ -1,5 +1,5 @@
 #include "Engine.hpp"
-#include "../renderer/AppGui.hpp"
+#include "../game/Game.hpp"
 #include "../renderer/Camera.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../res/Res.hpp"
@@ -25,17 +25,11 @@
 #include <cassert>
 #include <iostream>
 
-//init 
+// init
 #ifndef WIN_WIDTH
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
 #endif
-
-bool moving_right = false;
-bool moving_left = false;
-bool slow_mo = false;
-vec2 hero_pos;
-vec2 wood_pos = {20, 40};
 
 Engine::Engine() { Logger::setup_crash_handlers(); }
 
@@ -58,10 +52,10 @@ void Engine::init() {
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
   SDL_WindowFlags window_flags =
-      (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
-  m_sdl_window =
-      SDL_CreateWindow("Game", 1920-WIN_WIDTH, 1080-WIN_HEIGHT,
-                       WIN_WIDTH, WIN_HEIGHT, window_flags);
+      (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI |
+                        SDL_WINDOW_RESIZABLE);
+  m_sdl_window = SDL_CreateWindow("Game", 1920 - WIN_WIDTH, 1080 - WIN_HEIGHT,
+                                  WIN_WIDTH, WIN_HEIGHT, window_flags);
   m_window_size = {WIN_WIDTH, WIN_HEIGHT};
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
@@ -69,7 +63,8 @@ void Engine::init() {
   m_sdl_renderer =
       SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
-  m_gpu = GPU_InitRenderer(GPU_RENDERER_OPENGL_3, WIN_WIDTH, WIN_HEIGHT, SDL_RENDERER_ACCELERATED);
+  m_gpu = GPU_InitRenderer(GPU_RENDERER_OPENGL_3, WIN_WIDTH, WIN_HEIGHT,
+                           SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
@@ -109,28 +104,28 @@ void Engine::post_init() {
 
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
-  m_camera = new Camera(&m_window_size);
   m_sound_manager = new SoundManager();
   m_input_manager = new InputManager();
   g_sound_manager = m_sound_manager;
   g_input_manager = m_input_manager;
-  g_input_manager->bind_keyboard(SDLK_e, &moving_right);
-  g_input_manager->bind_keyboard(SDLK_q, &moving_left);
-  g_input_manager->bind_keyboard(SDLK_SPACE, &slow_mo);
 
   m_res = new Res(m_sdl_renderer);
   m_res->init();
 
   m_renderer->init_shader(m_res->get_shaders());
 
-  m_camera->track_pos(&hero_pos);
-
   g_engine = this;
   g_res = m_res;
-  g_camera = m_camera;
+  g_renderer = m_renderer;
+
+  // starting game
+  m_game = new Game();
+  m_game->init();
+
+  Logger::log("Game initialized");
 
 #if _IMGUI
-  GUI::setup(m_sdl_window, m_sdl_renderer);
+  // GUI::setup(m_sdl_window, m_sdl_renderer);
 #endif
 
   Logger::log("Engine post init");
@@ -178,60 +173,29 @@ void Engine::input() {
   }
 }
 
-float dx, dy, dwood;
-
 void Engine::fixed_update() {
   if (!m_loaded) {
     return;
   }
 
-  dx += (g_input_manager->get_raw_axis().x * 7.5) * Timer::get_tmod();
-  dy += (g_input_manager->get_raw_axis().y * 7.5) * Timer::get_tmod();
-
-  dx*=Math::pow(.9f, Timer::get_tmod());
-  dy*=Math::pow(.9f, Timer::get_tmod());
+  m_game->fixed_update(Timer::get_tmod());
 }
-
-int hero_x = 2;
-float timer = 0;
 
 void Engine::update() {
   if (!m_loaded) {
     return;
   }
 
-  if (moving_left)
-    m_camera->track_pos(&wood_pos);
-  if(moving_right)
-    m_camera->track_pos(&hero_pos);
-
-  timer += 1*Timer::get_dt();
-  if(timer >= .1f){
-    hero_x++;
-    if(hero_x >= 6){
-      hero_x = 2;
-    }
-    timer = 0;
-  }
-
-  if(slow_mo){
-    Timer::apply_slow_mo(.1f * Timer::get_dt());
-  }
-  
-  hero_pos += {dx,dy};
-  wood_pos += {0, dwood};
-  if(wood_pos.y > 70){
-    wood_pos.y = 0;
-  }
-
+  m_game->update(Timer::get_dt());
 }
 
 void Engine::post_update() {
   if (!m_loaded) {
     return;
   }
-  m_camera->move();
-  m_camera->update();
+
+  m_game->post_update(Timer::get_dt());
+
 #if _DEBUG
   m_profiler->update();
   m_renderer->post_update();
@@ -245,22 +209,16 @@ void Engine::draw() {
   }
 
   GPU_Clear(m_gpu);
-  GPU_SetCamera(m_gpu, m_camera->get());
+  GPU_SetCamera(m_gpu, *g_camera->get_gpu_cam());
+  m_game->draw_root();
+  m_game->draw_ent();
   // game draw
-  for (int i = 0; i < 1000; i += 8) {
-    for (int j = 0; j < 1000; j += 8) {
-      m_renderer->draw_from_sheet(*m_res->get_texture("concept"), {i, j},
-                                  {2, 0, 8, 8});
-    }
-  }
-  m_renderer->draw_from_sheet(*m_res->get_texture("concept"), hero_pos,
-                              {hero_x, 1, 7, 8});
-  m_renderer->draw_from_sheet(*m_res->get_texture("concept"),wood_pos,
-                              {0, 6, 8, 8});
   GPU_SetCamera(m_gpu, nullptr);
+  m_game->draw_ui();
   GPU_DeactivateShaderProgram();
 
 #if _DEBUG
+  GPU_SetCamera(m_gpu, nullptr);
   m_profiler->draw();
 #endif
 
@@ -271,6 +229,7 @@ void Engine::draw() {
 }
 
 void Engine::quit() {
+  m_game->clean();
   SDL_DestroyWindow(SDL_GetWindowFromID(GPU_GetInitWindow()));
   SDL_Quit();
   Logger::log("SDL2 quit");

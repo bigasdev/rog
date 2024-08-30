@@ -23,6 +23,10 @@ Camera::Camera(vec2* size) : m_size(size) {
   Logger::log(std::to_string(m_game_scale));
 }
 
+GPU_Camera** Camera::get_gpu_cam() {
+  return &m_camera;
+}
+
 Camera::~Camera() {
   delete m_camera;
 }

@@ -14,7 +14,7 @@ public:
   void move();
   void update();
 
-  GPU_Camera *get() { return m_camera; }
+  GPU_Camera** get_gpu_cam();
   int get_game_scale() { return m_game_scale; }
 
   bool is_on_screen(vec2 pos);
