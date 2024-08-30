@@ -7,10 +7,20 @@
 #include <cmath>
 #include <string>
 
+#ifndef GAME_SCALE
+#define GAME_SCALE 1
+#endif
+
 Camera::Camera(vec2* size) : m_size(size) {
   m_camera = new GPU_Camera{0,0,0,0,1,1,1,1};
   m_pos = vec2(0, 0);
   m_tracked_pos = nullptr;
+
+  Logger::log("Game:"+std::to_string(GAME_SCALE));
+
+  m_game_scale = GAME_SCALE;
+
+  Logger::log(std::to_string(m_game_scale));
 }
 
 Camera::~Camera() {

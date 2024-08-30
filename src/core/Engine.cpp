@@ -60,7 +60,7 @@ void Engine::init() {
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
   m_sdl_window =
-      SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+      SDL_CreateWindow("Game", 1920-WIN_WIDTH, 1080-WIN_HEIGHT,
                        WIN_WIDTH, WIN_HEIGHT, window_flags);
   m_window_size = {WIN_WIDTH, WIN_HEIGHT};
 
@@ -127,6 +127,7 @@ void Engine::post_init() {
 
   g_engine = this;
   g_res = m_res;
+  g_camera = m_camera;
 
 #if _IMGUI
   GUI::setup(m_sdl_window, m_sdl_renderer);

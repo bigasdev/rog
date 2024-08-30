@@ -1,6 +1,7 @@
 #include "Renderer.hpp"
 #include "../tools/Logger.hpp"
 #include "../res/Res.hpp"
+#include "Camera.hpp"
 #include "../core/global.hpp"
 #include "SDL_gpu.h"
 
@@ -65,8 +66,8 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point) {
   dst.x = static_cast<int>(pos.x);
   dst.y = static_cast<int>(pos.y);
   //the zoom is the key..
-  dst.w = src.w*4;
-  dst.h = src.h*4;
+  dst.w = src.w*g_camera->get_game_scale();
+  dst.h = src.h*g_camera->get_game_scale();
 
   /*auto program = g_res->get_shader_id();
   GPU_ShaderBlock block = g_res->get_shader_block();

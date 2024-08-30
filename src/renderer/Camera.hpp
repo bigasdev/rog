@@ -15,6 +15,7 @@ public:
   void update();
 
   GPU_Camera *get() { return m_camera; }
+  int get_game_scale() { return m_game_scale; }
 
   bool is_on_screen(vec2 pos);
   void track_pos(vec2* pos);
@@ -25,6 +26,8 @@ private:
   vec2 m_ref_pos;
   vec2 *m_size;
   vec2 *m_tracked_pos;
+
+  int m_game_scale;
 
   //tracking stuff 
   bool clamp_bounds = false;
