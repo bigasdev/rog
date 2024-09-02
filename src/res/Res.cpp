@@ -159,7 +159,9 @@ void Res::load_aseprites() {
     Logger::log_group("Aseprite", aseprite.first);
   }
 }
-
+//FIX: To my older self.. 
+// this shader part needs to be rewritten to easily load more shaders, for now its hard Loading
+// remember for every frag we need a vert (and we can change the .glsl to .frag and .vert)
 void Res::load_shaders() {
   // auto files = Reader::get_extension_files("res/shaders", ".glsl");
   std::string shader_vert = "res/shaders/light_vertex.glsl";
