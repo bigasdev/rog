@@ -1,7 +1,8 @@
 #version 130
 
-varying vec4 color;
-varying vec2 texCoord;
+in vec4 color;
+in vec2 texCoord;
+out vec4 fragColor;
 
 uniform sampler2D tex;
 

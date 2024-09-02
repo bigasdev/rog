@@ -83,12 +83,12 @@ void Game::post_update(double dt) {
 }
 
 void Game::draw_root() {
-  for (int i = 0; i < 1000; i += 8) {
+  /*for (int i = 0; i < 1000; i += 8) {
     for (int j = 0; j < 1000; j += 8) {
       g_renderer->draw_from_sheet(*g_res->get_texture("concept"), {i, j},
                                   {2, 0, 8, 8});
     }
-  }
+  }*/
 }
 
 void Game::draw_ent(){

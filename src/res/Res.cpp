@@ -194,7 +194,7 @@ void Res::load_shaders() {
   }
 
   GPU_ShaderBlock block =
-      GPU_LoadShaderBlock(program, "gpu_Vertex", "gpu_TexCoord", "gpu_Color", "");
+      GPU_LoadShaderBlock(program, "gpu_Vertex", "gpu_TexCoord", "gpu_Color", "gpu_ModelViewProjectionMatrix");
 
   GPU_ActivateShaderProgram(program, &block);
   m_shader_blocks.push_back(block);
