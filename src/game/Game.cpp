@@ -86,7 +86,7 @@ void Game::draw_root() {
   for (int i = 0; i < 500; i += 24) {
     for (int j = 0; j < 500; j += 24) {
       g_renderer->draw_from_sheet(*g_res->get_texture("concept"), {i, j},
-                                  {2, 0, 8, 8}, true);
+                                  {2, 0, 8, 8}, false);
     }
   }
 }

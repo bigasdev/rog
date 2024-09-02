@@ -35,4 +35,8 @@ void main(void)
 
     // Output the final color
     fragColor = vec4(texColor.rgb * lighting, texColor.a);
+
+    // we can use this to single color shaders
+    // if(texColor.a > 0.5)
+       // fragColor = vec4(1.0,0.0,0.0,1.0);
 }
