@@ -2,6 +2,7 @@
 #include "../core/global.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
+#include  "../core/Engine.hpp"
 #include "Camera.hpp"
 #include "SDL_gpu.h"
 
@@ -70,12 +71,15 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
   dst.w = src.w * g_camera->get_game_scale();
   dst.h = src.h * g_camera->get_game_scale();
 
+
   if (use_shader) {
     auto program = g_res->get_shader_id();
     GPU_ShaderBlock block = g_res->get_shader_block();
     GPU_ActivateShaderProgram(program, &block);
-    GPU_SetUniformf(GPU_GetUniformLocation(program, "pos_x"), 15.1);
-    GPU_SetUniformf(GPU_GetUniformLocation(program, "pos_y"), 5.1);
+    GPU_SetUniformf(GPU_GetUniformLocation(program, "pos_x"), 20.0);
+    GPU_SetUniformf(GPU_GetUniformLocation(program, "pos_y"), 40.0);
+    GPU_SetUniformf(GPU_GetUniformLocation(program, "window_x"), g_engine->get_window_size()->x);
+    GPU_SetUniformf(GPU_GetUniformLocation(program, "window_y"), g_engine->get_window_size()->y);
   }
 
   GPU_BlitRectX(sheet, &src, m_gpu, &dst, 0, 0, 0, GPU_FLIP_NONE);

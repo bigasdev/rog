@@ -83,10 +83,10 @@ void Game::post_update(double dt) {
 }
 
 void Game::draw_root() {
-  for (int i = 0; i < 500; i += 24) {
-    for (int j = 0; j < 500; j += 24) {
+  for (int i = -500; i < 500; i += 8*g_camera->get_game_scale()) {
+    for (int j = -500; j < 500; j += 8*g_camera->get_game_scale()) {
       g_renderer->draw_from_sheet(*g_res->get_texture("concept"), {i, j},
-                                  {2, 0, 8, 8}, false);
+                                  {2, 0, 8, 8}, true);
     }
   }
 }
@@ -95,7 +95,7 @@ void Game::draw_ent(){
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"), hero_pos,
                               {hero_x, 1, 7, 8}, true);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),wood_pos,
-                              {0, 6, 8, 8}, true);
+                              {1, 3, 16, 16}, false);
 }
 void Game::draw_ui(){
 
