@@ -10,7 +10,7 @@ uniform sampler2D tex;
 uniform float pos_x = 0.0;
 uniform float pos_y = 0.0;
 uniform vec3 lightColor = vec3(1.0, 1.0, 1.0); // Color of the light
-uniform float lightRadius = 1.5; // Radius of the light effect
+uniform float lightRadius = .95; // Radius of the light effect
 uniform vec3 ambientColor = vec3(0.75, 1.0, 0.75); // Ambient light color
 
 void main(void)
@@ -19,7 +19,8 @@ void main(void)
 
     // Calculate the distance from the light source
     vec2 lightPos = vec2(pos_x, pos_y);
-    float distance = length(lightPos - pos);
+    vec2 res = vec2(400,200);
+    float distance = length(lightPos/res.xy - gl_FragCoord.xy/res.xy);
 
     // Calculate the light intensity based on distance
     float intensity = 1.0 - clamp(distance/lightRadius, 0.0, 1.0);
