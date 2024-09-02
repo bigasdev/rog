@@ -1,7 +1,7 @@
 #version 130
 
 in vec4 color;
-in mat4 viewProjectionMatrix;
+in mat4 viewprojectionmatrix;
 in vec2 texCoord;
 in vec2 pos;
 
@@ -14,7 +14,7 @@ uniform float window_x = 400.0;
 uniform float window_y = 200.0;
 uniform vec3 lightColor = vec3(1.0, 1.0, 1.0); // Color of the light
 uniform float lightRadius = 1.95; // Radius of the light effect
-uniform vec3 ambientColor = vec3(0.85, 0.85, 0.85); // Ambient light color
+uniform vec3 ambientColor = vec3(0.65, 0.65, 0.65); // Ambient light color
 
 void main(void)
 {

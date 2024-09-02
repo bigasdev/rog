@@ -76,10 +76,7 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
     auto program = g_res->get_shader_id();
     GPU_ShaderBlock block = g_res->get_shader_block();
     GPU_ActivateShaderProgram(program, &block);
-    GPU_SetUniformf(GPU_GetUniformLocation(program, "pos_x"), 20.0);
-    GPU_SetUniformf(GPU_GetUniformLocation(program, "pos_y"), 40.0);
-    GPU_SetUniformf(GPU_GetUniformLocation(program, "window_x"), g_engine->get_window_size()->x);
-    GPU_SetUniformf(GPU_GetUniformLocation(program, "window_y"), g_engine->get_window_size()->y);
+   
   }
 
   GPU_BlitRectX(sheet, &src, m_gpu, &dst, 0, 0, 0, GPU_FLIP_NONE);

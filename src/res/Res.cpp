@@ -165,7 +165,7 @@ void Res::load_aseprites() {
 void Res::load_shaders() {
   // auto files = Reader::get_extension_files("res/shaders", ".glsl");
   std::string shader_vert = "res/shaders/light_vertex.glsl";
-  std::string shader_frag = "res/shaders/light_fragment.glsl";
+  std::string shader_frag = "res/shaders/outline.frag.glsl";
 
   std::string vert_code = Reader::get_file_contents(shader_vert);
   std::string frag_code = Reader::get_file_contents(shader_frag);
