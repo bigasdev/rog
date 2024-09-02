@@ -50,9 +50,9 @@ Aseprite: character_atlas
 Aseprite: concept
 Aseprite: logo
 Aseprite: ui
-ERROR: Failed to compile shader: res/shaders/light_vertex.glsl
-Game:1
-1
+ERROR: Failed to compile shader: res/shaders/light_fragment.glsl
+Game:3
+3
 Game initialized
 Engine post init
 ERROR: Signal: 11
