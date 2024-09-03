@@ -60,6 +60,7 @@ void Res::init() {
   load_fonts();
   load_sounds();
   load_aseprites();
+  load_pallete();
   load_shaders();
 }
 
@@ -159,9 +160,49 @@ void Res::load_aseprites() {
     Logger::log_group("Aseprite", aseprite.first);
   }
 }
-//FIX: To my older self.. 
-// this shader part needs to be rewritten to easily load more shaders, for now its hard Loading
-// remember for every frag we need a vert (and we can change the .glsl to .frag and .vert)
+
+void Res::load_pallete() {
+  std::string path = "res/sweetie-16-1x.png";
+
+  GPU_Image *image = GPU_LoadImage(path.c_str());
+
+  if (!image) {
+    Logger::error("Failed to load pallete: " + path);
+    return;
+  }
+
+  int w = image->w;
+  int h = image->h;
+
+  Uint32 *pixels = (Uint32 *)image->data;
+
+  if (pixels == nullptr) {
+    Logger::error("Failed to get pixels from pallete: " + path);
+    return;
+  }
+
+  for (int i = 0; i < w; ++i) {
+    for (int j = 0; j < h; ++j) {
+      Uint32 pixel = pixels[j * w + i];
+      Uint8 r, g, b, a;
+
+      r = (pixel >> 24) & 0xFF;
+      g = (pixel >> 16) & 0xFF;
+      b = (pixel >> 8) & 0xFF;
+      a = (pixel)&0xFF;
+
+      Logger::log("Loading color : " + std::to_string(r) + " " + std::to_string(g) + " " +
+                  std::to_string(b) + " " + std::to_string(a));
+
+      m_palette.push_back({r, g, b, a});
+    }
+  }
+}
+
+// FIX: To my older self..
+//  this shader part needs to be rewritten to easily load more shaders, for now
+//  its hard Loading remember for every frag we need a vert (and we can change
+//  the .glsl to .frag and .vert)
 void Res::load_shaders() {
   // auto files = Reader::get_extension_files("res/shaders", ".glsl");
   std::string shader_vert = "res/shaders/light_vertex.glsl";
@@ -196,7 +237,8 @@ void Res::load_shaders() {
   }
 
   GPU_ShaderBlock block =
-      GPU_LoadShaderBlock(program, "gpu_Vertex", "gpu_TexCoord", "gpu_Color", "gpu_ModelViewProjectionMatrix");
+      GPU_LoadShaderBlock(program, "gpu_Vertex", "gpu_TexCoord", "gpu_Color",
+                          "gpu_ModelViewProjectionMatrix");
 
   GPU_ActivateShaderProgram(program, &block);
   m_shader_blocks.push_back(block);

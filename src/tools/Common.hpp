@@ -19,11 +19,14 @@ struct Line {
   Line(int x1, int y1, int x2, int y2) : x1(x1), y1(y1), x2(x2), y2(y2) {}
 };
 
-struct Color {
+struct Col {
   Uint8 r, g, b, a;
 
-  Color() : r(0), g(0), b(0), a(0) {}
-  Color(Uint8 r, Uint8 g, Uint8 b, Uint8 a) : r(r), g(g), b(b), a(a) {}
+  Col() : r(0), g(0), b(0), a(0) {}
+  Col(Uint8 r, Uint8 g, Uint8 b, Uint8 a) : r(r), g(g), b(b), a(a) {}
+
+  Col without_alpha() { return Col(r, g, b, 255); }
+  Col primitive() { return Col(r/255, g/255, b/255, 255); }
 };
 
 struct vec2 {

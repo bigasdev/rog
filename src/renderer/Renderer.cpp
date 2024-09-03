@@ -14,7 +14,7 @@ void Renderer::post_update() { m_calls = 0; }
 
 void Renderer::init_shader(std::vector<std::string> shaders) {}
 
-void Renderer::draw_rect(Rect rect, Color color, bool fill) {
+void Renderer::draw_rect(Rect rect, Col color, bool fill) {
   if (!fill) {
     GPU_Rectangle(m_gpu, rect.x, rect.y, rect.x + rect.w, rect.y + rect.h,
                   {color.r, color.g, color.b, color.a});
@@ -25,14 +25,14 @@ void Renderer::draw_rect(Rect rect, Color color, bool fill) {
   m_calls++;
 }
 
-void Renderer::draw_line(Line line, Color color) {
+void Renderer::draw_line(Line line, Col color) {
   GPU_Line(m_gpu, line.x1, line.y1, line.x2, line.y2,
            {color.r, color.g, color.b, color.a});
   m_calls++;
 }
 
 void Renderer::draw_text(vec2 pos, const char *text, TTF_Font *font,
-                         Color color, int size, int width) {
+                         Col color, int size, int width) {
   SDL_Surface *surfaceMessage = TTF_RenderText_Blended_Wrapped(
       font, text, {color.r, color.g, color.b, color.a}, width);
   GPU_Image *message = GPU_CopyImageFromSurface(surfaceMessage);
@@ -71,11 +71,16 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
   dst.w = src.w * g_camera->get_game_scale();
   dst.h = src.h * g_camera->get_game_scale();
 
-
   if (use_shader) {
     auto program = g_res->get_shader_id();
     GPU_ShaderBlock block = g_res->get_shader_block();
     GPU_ActivateShaderProgram(program, &block);
+    auto col = g_res->get_color_primitive(4);
+    Logger::log("Color: " + std::to_string(col.r) + " " +
+                std::to_string(col.g) + " " + std::to_string(col.b));
+    GPU_SetUniformf(GPU_GetUniformLocation(program,"r") , col.r);
+    GPU_SetUniformf(GPU_GetUniformLocation(program,"g") , col.g);
+    GPU_SetUniformf(GPU_GetUniformLocation(program,"b") , col.b);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"width") , sheet->w);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"height") , sheet->h);
   }

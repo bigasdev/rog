@@ -5,7 +5,9 @@ in vec2 texCoord;
 out vec4 fragColor;
 
 uniform sampler2D tex;
-uniform vec4 outlineColor = vec4(1.0, 1.0, 0.0, 1.0); // Default white color
+uniform float r = 1.0;
+uniform float g = 1.0;
+uniform float b = 0.0;
 uniform float width = 1.0f;
 uniform float height = 1.0f;
 
@@ -26,7 +28,7 @@ void main(void)
     float bottom = texture2D(tex, texCoord + offset).a;
 
     float a = step(SMALL_NUMBER, left+right+top+bottom);
-    pixel = mix(pixel, vec4(vec3(outlineColor), 1.0), a);
+    pixel = mix(pixel, vec4(vec3(r,g,b), 1.0), a);
   }
 
   fragColor = pixel;
