@@ -75,9 +75,7 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
     auto program = g_res->get_shader_id();
     GPU_ShaderBlock block = g_res->get_shader_block();
     GPU_ActivateShaderProgram(program, &block);
-    auto col = g_res->get_color_primitive(4);
-    Logger::log("Color: " + std::to_string(col.r) + " " +
-                std::to_string(col.g) + " " + std::to_string(col.b));
+    auto col = g_res->get_color_primitive(2);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"r") , col.r);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"g") , col.g);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"b") , col.b);

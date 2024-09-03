@@ -40,7 +40,7 @@ public:
   //getters 
   TTF_Font *get_font(std::string name) { return m_fonts[name]; }
   Col get_color(int idx) { return m_palette[idx]; };
-  Col get_color_primitive(int idx) { return m_palette[idx].primitive(); };
+  PCol get_color_primitive(int idx) { return m_palette[idx].to_pcol(); };
   GPU_Image **get_texture(std::string name);
   std::vector<std::string> get_shaders() { return m_shaders; }
   Uint32 get_shader_id();

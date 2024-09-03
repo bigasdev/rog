@@ -19,15 +19,6 @@ struct Line {
   Line(int x1, int y1, int x2, int y2) : x1(x1), y1(y1), x2(x2), y2(y2) {}
 };
 
-struct Col {
-  Uint8 r, g, b, a;
-
-  Col() : r(0), g(0), b(0), a(0) {}
-  Col(Uint8 r, Uint8 g, Uint8 b, Uint8 a) : r(r), g(g), b(b), a(a) {}
-
-  Col without_alpha() { return Col(r, g, b, 255); }
-  Col primitive() { return Col(r/255, g/255, b/255, 255); }
-};
 
 struct vec2 {
   float x, y;
@@ -52,6 +43,20 @@ struct vec2 {
 
 struct vec3 {
   float x, y, z;
+};
+//primitive color, its used to get 0 to 1 rgb values.
+struct PCol{
+  float r, g, b;
+};
+
+struct Col {
+  Uint8 r, g, b, a;
+
+  Col() : r(0), g(0), b(0), a(0) {}
+  Col(Uint8 r, Uint8 g, Uint8 b, Uint8 a) : r(r), g(g), b(b), a(a) {}
+
+  Col without_alpha() { return Col(r, g, b, 255); }
+  PCol to_pcol() { return {r / 255.f, g / 255.f, b / 255.f}; }
 };
 
 struct vec2i {

@@ -1,4 +1,6 @@
 #include "SDL_gpu.h"
+#include "SDL_pixels.h"
+#include <string>
 #define CUTE_ASEPRITE_IMPLEMENTATION
 #include "../core/Engine.hpp"
 #include "../core/SoundManager.hpp"
@@ -173,30 +175,36 @@ void Res::load_pallete() {
 
   int w = image->w;
   int h = image->h;
+  Logger::log("Loading pallete: " + path + " w: " + std::to_string(w) +
+              " h: " + std::to_string(h));
 
-  Uint32 *pixels = (Uint32 *)image->data;
+  Uint8 *pixels = (Uint8 *)image->data;
 
   if (pixels == nullptr) {
     Logger::error("Failed to get pixels from pallete: " + path);
     return;
   }
 
-  for (int i = 0; i < w; ++i) {
-    for (int j = 0; j < h; ++j) {
-      Uint32 pixel = pixels[j * w + i];
+  for (int i = 0; i < h; i++) {
+    for (int j = 0; j < w; j++) {
+      int pixel = ((i * w) + j) * 3;
+      Logger::log("Loading pixel: " + std::to_string(pixels[pixel]));
       Uint8 r, g, b, a;
 
-      r = (pixel >> 24) & 0xFF;
-      g = (pixel >> 16) & 0xFF;
-      b = (pixel >> 8) & 0xFF;
-      a = (pixel)&0xFF;
+      r = pixels[pixel+0];
+      g = pixels[pixel+1];
+      b = pixels[pixel+2];
+      a = 255;
 
-      Logger::log("Loading color : " + std::to_string(r) + " " + std::to_string(g) + " " +
-                  std::to_string(b) + " " + std::to_string(a));
+      Logger::log("Loading color : " + std::to_string(r) + " " +
+                  std::to_string(g) + " " + std::to_string(b) + " " +
+                  std::to_string(a));
 
       m_palette.push_back({r, g, b, a});
     }
   }
+
+  GPU_FreeImage(image);
 }
 
 // FIX: To my older self..
