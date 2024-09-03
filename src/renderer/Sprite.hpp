@@ -6,10 +6,15 @@
 
 struct Sprite{
   //positions 
-  float spr_x, spr_y;
+
+  //basically an offset,this won't take the collisions into account
+  float spr_x = 0.0f, spr_y = 0.0f;
 
   //scale
-  float wid, hei;
+
+  //used to determine the position of the sprite in the Atlas
+  float dst_x = 0, dst_y = 0;
+  float wid = 16, hei = 16;
   float scale_x = 1.0f, scale_y = 1.0f;
   float squash_x = 1.0f, squash_y = 1.0f;
 
@@ -23,8 +28,11 @@ struct Sprite{
   bool visible = true;
 
   //shaders 
+  bool has_shader = false;
   int shader_id = 0;
   int shader_block_id = 0;
+  PCol blink_color = WHITE;
+  PCol outline_color = WHITE;
 };
 
 #endif
