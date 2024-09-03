@@ -49,6 +49,15 @@ struct PCol{
   float r, g, b;
 };
 
+#define RED PCol{1,0,0}
+#define GREEN PCol{0,1,0}
+#define BLUE PCol{0,0,1}
+#define WHITE PCol{1,1,1}
+#define BLACK PCol{0,0,0}
+#define YELLOW PCol{1,1,0}
+#define CYAN PCol{0,1,1}
+#define MAGENTA PCol{1,0,1}
+
 struct Col {
   Uint8 r, g, b, a;
 
