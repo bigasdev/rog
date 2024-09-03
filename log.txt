@@ -50,9 +50,9 @@ Aseprite: character_atlas
 Aseprite: concept
 Aseprite: logo
 Aseprite: ui
-Loaded shader: res/shaders/light_vertex.glsl and res/shaders/outline.frag.glsl
-Game:5
-5
+Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
+Game:3
+3
 Game initialized
 Engine post init
 SDL2 quit
