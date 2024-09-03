@@ -19,6 +19,9 @@ private:
   Cooldown* m_cooldown;
   //used to add debuffs or buffs to the entity, it has a strength priority system too
   AffectManager* m_affect_manager;
+
+  //
+  vec2 m_pos;
   
   //velocity
   float dx = 0.0, dy = 0.0;
