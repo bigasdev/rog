@@ -3,6 +3,13 @@
 #define SPRITE_HPP
 
 #include "../tools/Common.hpp"
+#include <map>
+
+struct SpriteFrame{
+  int x, y;
+  int frames;
+  float frame_timer = 0.16f;
+};
 
 struct Sprite{
   //positions 
@@ -33,6 +40,21 @@ struct Sprite{
   int shader_block_id = 0;
   PCol blink_color = WHITE;
   PCol outline_color = WHITE;
+};
+
+class SpriteAnimator{
+  public:
+    SpriteAnimator(Sprite spr);
+    ~SpriteAnimator();
+
+    void update(double dt);
+    void register_anim(SpriteFrame frame, bool* state);
+  private:
+    Sprite m_spr;
+    std::map<SpriteFrame, bool*> m_states;
+    SpriteFrame m_current_frame;
+    float m_timer = 0;
+    bool m_playing = false;
 };
 
 #endif
