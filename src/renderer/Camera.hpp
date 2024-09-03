@@ -31,7 +31,7 @@ private:
 
   //tracking stuff 
   bool clamp_bounds = false;
-  float tracking_speed = 10.f;
+  float tracking_speed = 30.f;
   float base_frict = .89f;
   float dx;
   float dy;

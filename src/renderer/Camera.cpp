@@ -41,7 +41,7 @@ void Camera::move() {
     if (dist>=dead_zone){
       auto a = std::atan2(ty - m_pos.y, tx - m_pos.x);
 
-      dx += std::cos(a) * (dist-dead_zone) * tracking_speed * Timer::get_dt() * m_camera->zoom_x;
+      dx += std::cos(a) * (dist-dead_zone) * tracking_speed * Timer::get_dt();
       dy += std::sin(a) * (dist-dead_zone) * tracking_speed * Timer::get_dt();
     }
 

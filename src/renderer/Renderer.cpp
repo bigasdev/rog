@@ -3,6 +3,7 @@
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
 #include  "../core/Engine.hpp"
+#include "../renderer/Sprite.hpp"
 #include "Camera.hpp"
 #include "SDL_gpu.h"
 
@@ -88,4 +89,26 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
   m_calls++;
 
   GPU_DeactivateShaderProgram();
+}
+
+//draw of a sprite, this is the same as for drawing an entity but it can be used standalone
+void Renderer::draw(GPU_Image *sheet, Sprite spr, vec2 pos) {
+  GPU_Rect src;
+  src.x = spr.dst_x * spr.wid;
+  src.y = spr.dst_y * spr.hei;
+  src.w = spr.wid;
+  src.h = spr.hei;
+
+  GPU_Rect dst;
+  dst.x = static_cast<int>(pos.x + spr.spr_x);
+  dst.y = static_cast<int>(pos.y + spr.spr_y);
+  //this works??
+  dst.w = spr.wid * g_camera->get_game_scale() * spr.scale_x * spr.squash_x;
+  dst.h = spr.hei * g_camera->get_game_scale() * spr.scale_y * spr.squash_y;
+
+  GPU_FlipEnum flip = spr.dir == -1 ? GPU_FLIP_HORIZONTAL : GPU_FLIP_NONE;
+
+  GPU_BlitRectX(sheet, &src, m_gpu, &dst, spr.angle, 0,
+                0, flip);
+  m_calls++;
 }

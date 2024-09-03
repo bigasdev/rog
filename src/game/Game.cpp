@@ -8,6 +8,7 @@
 #include "../core/global.hpp"
 #include "../core/Timer.hpp"
 #include "../tools/Math.hpp"
+#include "../renderer/Sprite.hpp"
 #include "SDL.h"
 
 bool moving_right = false;
@@ -20,6 +21,8 @@ float timer = 0;
 float dx, dy, dwood;
 vec2 hero_pos;
 vec2 wood_pos = {20, 40};
+
+Sprite hero;
 
 Game::Game() {
 }
@@ -39,14 +42,19 @@ void Game::init() {
   g_input_manager->bind_keyboard(SDLK_SPACE, &slow_mo);
 
   g_camera->track_pos(&hero_pos);
+
+  hero.dst_x = 0;
+  hero.dst_y = 1;
+  hero.wid = 7;
+  hero.hei = 8;
 }
 
 void Game::fixed_update(double tmod) {
-  dx += (g_input_manager->get_raw_axis().x * 7.5) * tmod;
-  dy += (g_input_manager->get_raw_axis().y * 7.5) * tmod;
+  dx += (g_input_manager->get_raw_axis().x * 17.5) * tmod;
+  dy += (g_input_manager->get_raw_axis().y * 17.5) * tmod;
 
-  dx*=Math::pow(.9f, tmod);
-  dy*=Math::pow(.9f, tmod);
+  dx*=Math::pow(.82f, tmod);
+  dy*=Math::pow(.82f, tmod);
 }
 
 void Game::update(double dt) {
@@ -56,6 +64,12 @@ void Game::update(double dt) {
     m_camera->track_pos(&wood_pos);
   if(moving_right)
     m_camera->track_pos(&hero_pos);
+
+  if(dx > 0){
+    hero.dir = 1;
+  }else if(dx < 0){
+    hero.dir = -1;
+  }
 
   timer += 1*dt;
   if(timer >= .1f){
@@ -92,8 +106,7 @@ void Game::draw_root() {
 }
 
 void Game::draw_ent(){
-  g_renderer->draw_from_sheet(*g_res->get_texture("concept"), hero_pos,
-                              {hero_x, 1, 7, 8}, true);
+  g_renderer->draw(*g_res->get_texture("concept"), hero, hero_pos);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),wood_pos,
                               {1, 1, 31, 16}, true);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),{-15,30},
