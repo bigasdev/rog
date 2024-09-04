@@ -82,7 +82,7 @@ void Engine::init() {
     Logger::log("SDL2 image initialized");
   }
 
-  SDL_GL_SetSwapInterval(0);
+  SDL_GL_SetSwapInterval(1);
 
   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) >= 0) {
     Logger::log("SDL2 mixer initialized");

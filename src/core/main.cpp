@@ -30,10 +30,10 @@ void loop() {
 #elif __WIN32__
   //dt calculation is always done at the start of the frame
   Timer::update();
+  engine->input();
 
   //fixed delta time loop
   while (Timer::get_accumulator() >= Timer::get_tmod()) {
-    engine->input();
     Timer::fixed_t();
     engine->fixed_update();
   }
@@ -46,7 +46,6 @@ void loop() {
 #ifdef __EMSCRIPTEN__
   emscripten_cancel_main_loop();
 #endif
-  SDL_Delay(10);
 }
 
 int main(int args, char *argv[]) {

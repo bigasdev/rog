@@ -9,6 +9,7 @@
 #include "../core/Timer.hpp"
 #include "../tools/Math.hpp"
 #include "../renderer/Sprite.hpp"
+#include "../tools/Logger.hpp"
 #include "SDL.h"
 
 bool moving_right = false;
@@ -53,8 +54,8 @@ void Game::fixed_update(double tmod) {
   dx += (g_input_manager->get_raw_axis().x * 17.5) * tmod;
   dy += (g_input_manager->get_raw_axis().y * 17.5) * tmod;
 
-  dx*=Math::pow(.82f, tmod);
-  dy*=Math::pow(.82f, tmod);
+  dx*=Math::pow(.89f, tmod);
+  dy*=Math::pow(.89f, tmod);
 }
 
 void Game::update(double dt) {
