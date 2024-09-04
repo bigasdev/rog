@@ -1,13 +1,13 @@
 #include "Engine.hpp"
 #include "../game/Game.hpp"
+#include "../imgui/imgui.h"
+#include "../renderer/AppGui.hpp"
 #include "../renderer/Camera.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Math.hpp"
 #include "../tools/Profiler.hpp"
-#include "../renderer/AppGui.hpp"
-#include "../imgui/imgui.h"
 #include "Assert.hpp"
 #include "InputManager.hpp"
 #include "SDL.h"
@@ -19,6 +19,7 @@
 #include "SDL_mixer.h"
 #include "SDL_render.h"
 #include "SDL_scancode.h"
+#include "SDL_timer.h"
 #include "SDL_ttf.h"
 #include "SDL_video.h"
 #include "SoundManager.hpp"
@@ -52,6 +53,8 @@ void Engine::init() {
     Logger::log_group("SDL2 version", SDL_GetRevision());
   }
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI |
@@ -79,7 +82,7 @@ void Engine::init() {
     Logger::log("SDL2 image initialized");
   }
 
-  SDL_GL_SetSwapInterval(1);
+  SDL_GL_SetSwapInterval(0);
 
   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) >= 0) {
     Logger::log("SDL2 mixer initialized");
@@ -127,7 +130,7 @@ void Engine::post_init() {
   Logger::log("Game initialized");
 
 #if _IMGUI
-  SDL_GLContext& gl_context = m_gpu->context->context;
+  SDL_GLContext &gl_context = m_gpu->context->context;
   GUI::setup(m_sdl_window, gl_context);
 #endif
 
@@ -227,11 +230,10 @@ void Engine::draw() {
 
 #if _IMGUI
   GPU_FlushBlitBuffer();
-  GUI::draw([&](){});
+  GUI::draw([&]() {});
 #endif
 
   GPU_Flip(m_gpu);
-
 }
 
 void Engine::quit() {

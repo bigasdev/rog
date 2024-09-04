@@ -108,9 +108,9 @@ void Game::draw_root() {
 void Game::draw_ent(){
   g_renderer->draw(*g_res->get_texture("concept"), hero, hero_pos);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),wood_pos,
-                              {1, 1, 31, 16}, true);
+                              {1, 1, 31, 16}, false);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),{-15,30},
-                              {0, 3, 8, 8}, true);
+                              {0, 3, 8, 8}, false);
 }
 void Game::draw_ui(){
 
