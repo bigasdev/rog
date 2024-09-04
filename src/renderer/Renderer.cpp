@@ -76,7 +76,7 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
     auto program = g_res->get_shader_id();
     GPU_ShaderBlock block = g_res->get_shader_block();
     GPU_ActivateShaderProgram(program, &block);
-    auto col = g_res->get_color_primitive(2);
+    //auto col = g_res->get_color_primitive(2);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"r") , 1.0);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"g") , 0.0);
     GPU_SetUniformf(GPU_GetUniformLocation(program,"b") , 0.0);
