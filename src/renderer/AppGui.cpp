@@ -3,8 +3,12 @@
 #include "../ImGui/imgui.h"
 #include "../ImGui/imgui_impl_sdl.h"
 #include "../ImGui/imgui_impl_sdlrenderer.h"
+#include "../imgui/imgui_impl_opengl3.h"
 
-void GUI::setup(SDL_Window *window, SDL_Renderer *renderer) {
+SDL_Window* GUI::gui_window = nullptr;
+SDL_GLContext GUI::gui_renderer = nullptr;
+
+void GUI::setup(SDL_Window *window, SDL_GLContext& renderer) {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
@@ -36,16 +40,19 @@ void GUI::setup(SDL_Window *window, SDL_Renderer *renderer) {
 
   // ImGui::StyleColorsDark();
 
-  ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
-  ImGui_ImplSDLRenderer_Init(renderer);
+  GUI::gui_window = window;
+  GUI::gui_renderer = renderer;
+
+  ImGui_ImplSDL2_InitForOpenGL(window, renderer);
+  ImGui_ImplOpenGL3_Init("#version 130");
 }
 
 void GUI::event(SDL_Event event) { ImGui_ImplSDL2_ProcessEvent(&event); }
 
 void GUI::draw(std::function<void()> function) {
   // Start the Dear ImGui frame
-  ImGui_ImplSDLRenderer_NewFrame();
-  ImGui_ImplSDL2_NewFrame();
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplSDL2_NewFrame(GUI::gui_window);
   ImGui::NewFrame();
 
   // add here our GUI render
@@ -65,12 +72,13 @@ void GUI::draw(std::function<void()> function) {
 
   // rendering
   ImGui::Render();
-  ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
+  SDL_GL_MakeCurrent(GUI::gui_window, GUI::gui_renderer);
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void GUI::clean() {
   // Cleanup
-  ImGui_ImplSDLRenderer_Shutdown();
+  ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplSDL2_Shutdown();
   ImGui::DestroyContext();
 }
@@ -83,7 +91,11 @@ void GUI::set_focus() {
 }
 #else 
 #include "AppGui.hpp"
-void GUI::setup(SDL_Window *window, SDL_Renderer *renderer) {}
+
+SDL_Window* GUI::gui_window = nullptr;
+SDL_GLContext GUI::gui_renderer = nullptr;
+
+void GUI::setup(SDL_Window *window, SDL_GLContext& renderer) {}
 void GUI::event(SDL_Event event) {}
 void GUI::draw(std::function<void()> function) {}
 void GUI::clean() {}

@@ -62,7 +62,7 @@ void Res::init() {
   load_fonts();
   load_sounds();
   load_aseprites();
-  load_pallete();
+  //load_pallete();
   load_shaders();
 }
 

@@ -6,6 +6,8 @@
 #include "../tools/Logger.hpp"
 #include "../tools/Math.hpp"
 #include "../tools/Profiler.hpp"
+#include "../renderer/AppGui.hpp"
+#include "../imgui/imgui.h"
 #include "Assert.hpp"
 #include "InputManager.hpp"
 #include "SDL.h"
@@ -125,7 +127,8 @@ void Engine::post_init() {
   Logger::log("Game initialized");
 
 #if _IMGUI
-  // GUI::setup(m_sdl_window, m_sdl_renderer);
+  SDL_GLContext& gl_context = m_gpu->context->context;
+  GUI::setup(m_sdl_window, gl_context);
 #endif
 
   Logger::log("Engine post init");
@@ -139,10 +142,10 @@ void Engine::input() {
 
   SDL_Event event;
 
-#if _IMGUI
-  // GUI::event(event);
-#endif
   while (SDL_PollEvent(&event) != 0) {
+#if _IMGUI
+    GUI::event(event);
+#endif
     g_input_manager->update(event);
     switch (event.type) {
     case SDL_WINDOWEVENT:
@@ -223,9 +226,12 @@ void Engine::draw() {
 #endif
 
 #if _IMGUI
+  GPU_FlushBlitBuffer();
+  GUI::draw([&](){});
 #endif
 
   GPU_Flip(m_gpu);
+
 }
 
 void Engine::quit() {
