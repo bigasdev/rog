@@ -9,6 +9,7 @@
 #include "../core/Timer.hpp"
 #include "../tools/Math.hpp"
 #include "../renderer/Sprite.hpp"
+#include "../tools/Logger.hpp"
 #include "SDL.h"
 
 bool moving_right = false;
@@ -53,8 +54,8 @@ void Game::fixed_update(double tmod) {
   dx += (g_input_manager->get_raw_axis().x * 17.5) * tmod;
   dy += (g_input_manager->get_raw_axis().y * 17.5) * tmod;
 
-  dx*=Math::pow(.82f, tmod);
-  dy*=Math::pow(.82f, tmod);
+  dx*=Math::pow(.89f, tmod);
+  dy*=Math::pow(.89f, tmod);
 }
 
 void Game::update(double dt) {
@@ -108,9 +109,9 @@ void Game::draw_root() {
 void Game::draw_ent(){
   g_renderer->draw(*g_res->get_texture("concept"), hero, hero_pos);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),wood_pos,
-                              {1, 1, 31, 16}, true);
+                              {1, 1, 31, 16}, false);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),{-15,30},
-                              {0, 3, 8, 8}, true);
+                              {0, 3, 8, 8}, false);
 }
 void Game::draw_ui(){
 
