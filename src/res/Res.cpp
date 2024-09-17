@@ -9,6 +9,7 @@
 #include "Res.hpp"
 #include "SDL_render.h"
 #include "cute_aseprite.h"
+#include "../renderer/Sprite.hpp"
 #include "json.hpp"
 
 #include "../tools/Logger.hpp"
@@ -64,7 +65,7 @@ void Res::init() {
   load_sounds();
   load_aseprites();
   load_prefabs();
-  //load_pallete();
+  // load_pallete();
   load_shaders();
 }
 
@@ -251,7 +252,8 @@ void Res::load_shaders() {
   }*/
 }
 
-//loads all the .jsons file in the prefabs folder, the jsons are edited in the rog-editor 
+// loads all the .jsons file in the prefabs folder, the jsons are edited in the
+// rog-editor
 void Res::load_prefabs() {
   auto files = Reader::get_extension_files("res/prefabs", ".json");
 
@@ -269,21 +271,42 @@ void Res::load_prefabs() {
 
     auto prefab = nlohmann::json::parse(json);
 
-    //get all of the values from the json and try to create an Sprite from it
-    try{
-      auto name = prefab["name"].get<std::string>();
-      auto x = prefab["dst_x"].get<float>();
-      auto y = prefab["dst_y"].get<float>();
-      auto file_name = prefab["file_name"].get<std::string>();
-      auto hei = prefab["hei"].get<float>();
-      auto wid = prefab["wid"].get<float>();
+    // loop through all the keys in the json array
+    // get all of the values from the json and try to create an Sprite from it
+    for (auto &[key, value] : prefab.items()) {
+      try {
+        auto name = value["asset_name"].get<std::string>();
+        auto dst_x = value["dst_x"].get<float>();
+        auto dst_y = value["dst_y"].get<float>();
+        auto wid = value["wid"].get<int>();
+        auto hei = value["hei"].get<int>();
+        auto file_name = value["file_name"].get<std::string>();
 
-      Logger::log("Prefab loaded: " + name);
-    }catch(const nlohmann::json::exception& e){
-      Logger::error("Failed to load prefab: " + file);
-      continue;
+        auto spr = Sprite();
+        spr.sheet = file_name;
+        spr.dst_x = dst_x;
+        spr.dst_y = dst_y;
+        spr.wid = wid;
+        spr.hei = hei;
+
+        m_sprites.insert(std::make_pair(name, spr));
+
+
+        Logger::log("Prefab loaded: " + name);
+      } catch (nlohmann::json::exception &e) {
+        Logger::error("Failed to load prefab: " + file + " " + e.what());
+      }
     }
     // m_prefabs.insert(std::make_pair(file_name, file));
+  }
+}
+
+Sprite Res::get_sprite(std::string name) {
+  try {
+    return m_sprites.at(name);
+  } catch (const std::out_of_range &e) {
+    Logger::error("Sprite " + std::string(name) + " not found!");
+    return Sprite();
   }
 }
 

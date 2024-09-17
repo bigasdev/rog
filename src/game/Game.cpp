@@ -11,6 +11,7 @@
 #include "../renderer/Sprite.hpp"
 #include "../tools/Logger.hpp"
 #include "SDL.h"
+#include <memory>
 
 bool moving_right = false;
 bool moving_left = false;
@@ -23,7 +24,7 @@ float dx, dy, dwood;
 vec2 hero_pos;
 vec2 wood_pos = {20, 40};
 
-Sprite hero;
+std::unique_ptr<Sprite> hero;
 
 Game::Game() {
 }
@@ -44,10 +45,7 @@ void Game::init() {
 
   g_camera->track_pos(&hero_pos);
 
-  hero.dst_x = 0;
-  hero.dst_y = 1;
-  hero.wid = 7;
-  hero.hei = 8;
+  hero = std::make_unique<Sprite>(g_res->get_sprite("bigas"));
 }
 
 void Game::fixed_update(double tmod) {
@@ -67,9 +65,9 @@ void Game::update(double dt) {
     m_camera->track_pos(&hero_pos);
 
   if(dx > 0){
-    hero.dir = 1;
+    hero->dir = 1;
   }else if(dx < 0){
-    hero.dir = -1;
+    hero->dir = -1;
   }
 
   timer += 1*dt;
@@ -107,7 +105,7 @@ void Game::draw_root() {
 }
 
 void Game::draw_ent(){
-  g_renderer->draw(*g_res->get_texture("concept"), hero, hero_pos);
+  g_renderer->draw(*g_res->get_texture(hero->sheet), *hero, hero_pos);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),wood_pos,
                               {1, 1, 31, 16}, false);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),{-15,30},

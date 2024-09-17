@@ -12,6 +12,7 @@
 #include <vector>
 
 class AssetData;
+class Sprite;
 
 struct AsepriteHelper
 {
@@ -43,6 +44,7 @@ public:
   std::vector<std::string> get_shaders() { return m_shaders; }
   Uint32 get_shader_id();
   GPU_ShaderBlock get_shader_block();
+  Sprite get_sprite(std::string name);
 
   void create_asset_data(std::string file, std::string name, std::string folder);
 
@@ -55,6 +57,7 @@ private:
   std::vector<Uint32> m_shaders_id;
   std::vector<GPU_ShaderBlock> m_shader_blocks;
   std::vector<AsepriteHelper> m_aseprite_files;
+  std::map<std::string, Sprite> m_sprites;
 
   SDL_Renderer *m_renderer;
 };

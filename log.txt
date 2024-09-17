@@ -53,7 +53,9 @@ Aseprite: items_atlas
 Aseprite: logo
 Aseprite: ui
 Loading prefab: map
-ERROR: Failed to load sprite: res/prefabs\map.json
+Prefab loaded: bigas
+Prefab loaded: stamina_potion
+Prefab loaded: health_potion
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
 Game:4
 4
