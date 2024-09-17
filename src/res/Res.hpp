@@ -12,6 +12,7 @@
 #include <vector>
 
 class AssetData;
+class Sprite;
 
 struct AsepriteHelper
 {
@@ -34,17 +35,16 @@ public:
   void load_fonts();
   void load_sounds();
   void load_aseprites();
-  void load_pallete();
+  void load_prefabs();
   void load_shaders();
 
   //getters 
   TTF_Font *get_font(std::string name) { return m_fonts[name]; }
-  Col get_color(int idx) { return m_palette[idx]; };
-  PCol get_color_primitive(int idx) { return m_palette[idx].to_pcol(); };
   GPU_Image **get_texture(std::string name);
   std::vector<std::string> get_shaders() { return m_shaders; }
   Uint32 get_shader_id();
   GPU_ShaderBlock get_shader_block();
+  Sprite get_sprite(std::string name);
 
   void create_asset_data(std::string file, std::string name, std::string folder);
 
@@ -57,7 +57,7 @@ private:
   std::vector<Uint32> m_shaders_id;
   std::vector<GPU_ShaderBlock> m_shader_blocks;
   std::vector<AsepriteHelper> m_aseprite_files;
-  std::vector<Col> m_palette;
+  std::map<std::string, Sprite> m_sprites;
 
   SDL_Renderer *m_renderer;
 };
