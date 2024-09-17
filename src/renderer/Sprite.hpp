@@ -3,18 +3,27 @@
 #define SPRITE_HPP
 
 #include "../tools/Common.hpp"
-#include <map>
+#include <vector>
+#include <string>
 
+// the sprite frame will assigned to the dst_x and dst_y variables of the sprite
 struct SpriteFrame{
+  std::string name = "default";
   int x, y;
-  int frames;
+  int frame = 0;
+  int max_frames;
   float frame_timer = 0.16f;
+  bool loop = true;
+  bool block_transition = false;
+
+  bool* state = nullptr;
 };
 
 struct Sprite{
   //positions 
 
   //basically an offset,this won't take the collisions into account
+  std::string sheet = "";
   float spr_x = 0.0f, spr_y = 0.0f;
 
   //scale
@@ -48,10 +57,10 @@ class SpriteAnimator{
     ~SpriteAnimator();
 
     void update(double dt);
-    void register_anim(SpriteFrame frame, bool* state);
+    void register_anim(SpriteFrame frame);
   private:
     Sprite m_spr;
-    std::map<SpriteFrame, bool*> m_states;
+    std::vector<SpriteFrame> m_frames;
     SpriteFrame m_current_frame;
     float m_timer = 0;
     bool m_playing = false;

@@ -9,6 +9,7 @@
 #include "Res.hpp"
 #include "SDL_render.h"
 #include "cute_aseprite.h"
+#include "json.hpp"
 
 #include "../tools/Logger.hpp"
 #include <filesystem>
@@ -62,6 +63,7 @@ void Res::init() {
   load_fonts();
   load_sounds();
   load_aseprites();
+  load_prefabs();
   //load_pallete();
   load_shaders();
 }
@@ -163,50 +165,6 @@ void Res::load_aseprites() {
   }
 }
 
-void Res::load_pallete() {
-  std::string path = "res/sweetie-16-1x.png";
-
-  GPU_Image *image = GPU_LoadImage(path.c_str());
-
-  if (!image) {
-    Logger::error("Failed to load pallete: " + path);
-    return;
-  }
-
-  int w = image->w;
-  int h = image->h;
-  Logger::log("Loading pallete: " + path + " w: " + std::to_string(w) +
-              " h: " + std::to_string(h));
-
-  Uint8 *pixels = (Uint8 *)image->data;
-
-  if (pixels == nullptr) {
-    Logger::error("Failed to get pixels from pallete: " + path);
-    return;
-  }
-
-  for (int i = 0; i < h; i++) {
-    for (int j = 0; j < w; j++) {
-      int pixel = ((i * w) + j) * 3;
-      Logger::log("Loading pixel: " + std::to_string(pixels[pixel]));
-      Uint8 r, g, b, a;
-
-      r = pixels[pixel+0];
-      g = pixels[pixel+1];
-      b = pixels[pixel+2];
-      a = 255;
-
-      Logger::log("Loading color : " + std::to_string(r) + " " +
-                  std::to_string(g) + " " + std::to_string(b) + " " +
-                  std::to_string(a));
-
-      m_palette.push_back({r, g, b, a});
-    }
-  }
-
-  GPU_FreeImage(image);
-}
-
 // FIX: To my older self..
 //  this shader part needs to be rewritten to easily load more shaders, for now
 //  its hard Loading remember for every frag we need a vert (and we can change
@@ -291,6 +249,42 @@ void Res::load_shaders() {
 
     m_shaders.push_back(file);
   }*/
+}
+
+//loads all the .jsons file in the prefabs folder, the jsons are edited in the rog-editor 
+void Res::load_prefabs() {
+  auto files = Reader::get_extension_files("res/prefabs", ".json");
+
+  for (auto file : files) {
+    std::string path = file;
+    std::string file_name = path.substr(path.find_last_of("/\\") + 1);
+    file_name = file_name.substr(0, file_name.find_last_of("."));
+    Logger::log("Loading prefab: " + file_name);
+
+    std::string json = Reader::get_file_contents(file);
+    if (json.empty()) {
+      Logger::error("Failed to read prefab: " + file);
+      continue;
+    }
+
+    auto prefab = nlohmann::json::parse(json);
+
+    //get all of the values from the json and try to create an Sprite from it
+    try{
+      auto name = prefab["name"].get<std::string>();
+      auto x = prefab["dst_x"].get<float>();
+      auto y = prefab["dst_y"].get<float>();
+      auto file_name = prefab["file_name"].get<std::string>();
+      auto hei = prefab["hei"].get<float>();
+      auto wid = prefab["wid"].get<float>();
+
+      Logger::log("Prefab loaded: " + name);
+    }catch(const nlohmann::json::exception& e){
+      Logger::error("Failed to load prefab: " + file);
+      continue;
+    }
+    // m_prefabs.insert(std::make_pair(file_name, file));
+  }
 }
 
 // FIX: needs to be rewrite later, this is just returning the light shader for
