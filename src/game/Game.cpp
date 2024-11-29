@@ -25,6 +25,7 @@ vec2 hero_pos;
 vec2 wood_pos = {20, 40};
 
 std::unique_ptr<Sprite> hero;
+std::unique_ptr<Sprite> hp;
 
 Game::Game() {
 }
@@ -46,6 +47,7 @@ void Game::init() {
   g_camera->track_pos(&hero_pos);
 
   hero = std::make_unique<Sprite>(g_res->get_sprite("bigas"));
+  hp = std::make_unique<Sprite>(g_res->get_sprite("health_potion"));
 }
 
 void Game::fixed_update(double tmod) {
@@ -106,6 +108,7 @@ void Game::draw_root() {
 
 void Game::draw_ent(){
   g_renderer->draw(*g_res->get_texture(hero->sheet), *hero, hero_pos);
+  g_renderer->draw(*g_res->get_texture(hp->sheet), *hp, {0, 0});
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),wood_pos,
                               {1, 1, 31, 16}, false);
   g_renderer->draw_from_sheet(*g_res->get_texture("concept"),{-15,30},
