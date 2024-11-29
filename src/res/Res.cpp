@@ -275,12 +275,12 @@ void Res::load_prefabs() {
     // get all of the values from the json and try to create an Sprite from it
     for (auto &[key, value] : prefab.items()) {
       try {
-        auto name = value["asset_name"].get<std::string>();
-        auto dst_x = value["dst_x"].get<float>();
-        auto dst_y = value["dst_y"].get<float>();
-        auto wid = value["wid"].get<int>();
-        auto hei = value["hei"].get<int>();
-        auto file_name = value["file_name"].get<std::string>();
+        auto name = value["name"].get<std::string>();
+        auto dst_x = value["atlas_pos_x"].get<float>();
+        auto dst_y = value["atlas_pos_y"].get<float>();
+        auto wid = value["sprite_size_x"].get<int>();
+        auto hei = value["sprite_size_y"].get<int>();
+        auto file_name = value["atlas_name"].get<std::string>();
 
         auto spr = Sprite();
         spr.sheet = file_name;
