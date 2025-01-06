@@ -13,18 +13,29 @@ using Random = effolkronium::random_static;
 
 class Entity{
 public:
+  Entity();
+  Entity(std::string spr_name, vec2 _pos);
+  ~Entity();
+
+  virtual void update(double dt);
+  virtual void fixed_update(double tmod);
+
+  Sprite spr;
+  //
+  vec2 pos;
+  //
+  int life = 100;
+  int max_life = 100;
+  int armor = 0;
+  //velocity
+  float dx = 0.0, dy = 0.0;
 private:
-  Sprite m_spr;
   //
   Cooldown* m_cooldown;
   //used to add debuffs or buffs to the entity, it has a strength priority system too
   AffectManager* m_affect_manager;
 
-  //
-  vec2 m_pos;
   
-  //velocity
-  float dx = 0.0, dy = 0.0;
   float frict_x = 0.82 , frict_y = 0.82;
   //gravity stuff 
   float dz = 0.0, zr = 0.0;
@@ -38,10 +49,6 @@ private:
   float dd_x = 0.0, dd_y = 0.0;
   float dd_frict = 0.96f;
 
-  //
-  int life = 100;
-  int max_life = 100;
-  int armor = 0;
   Entity *last_dmg_source = nullptr;
   Entity *last_heal_source = nullptr;
   Entity *target = nullptr;
