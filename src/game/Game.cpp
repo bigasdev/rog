@@ -12,6 +12,7 @@
 #include "../tools/Logger.hpp"
 #include "SDL.h"
 #include <memory>
+#include <string>
 
 #include "../entity/Entity.hpp"
 
@@ -55,6 +56,8 @@ void Game::init() {
 void Game::fixed_update(double tmod) {
   dx += (g_input_manager->get_raw_axis().x * 17.5) * tmod;
   dy += (g_input_manager->get_raw_axis().y * 17.5) * tmod;
+
+  hero->fixed_update(tmod);
 }
 
 void Game::update(double dt) {
