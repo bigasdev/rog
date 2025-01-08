@@ -4,6 +4,7 @@
 #include "../tools/Math.hpp"
 #include "AffectManager.hpp"
 #include "../tools/Cooldown.hpp"
+#include  "../tools/Logger.hpp"
 
 Entity::Entity() {
 }
@@ -30,6 +31,7 @@ void Entity::update(double dt) {
 void Entity::fixed_update(double tmod) {
   dx*=Math::pow(frict_x, tmod);
   dy*=Math::pow(frict_y, tmod);
+
 }
 
 

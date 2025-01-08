@@ -36,7 +36,7 @@ private:
   AffectManager* m_affect_manager;
 
   
-  float frict_x = 0.82 , frict_y = 0.82;
+  float frict_x = 0.98f , frict_y = 0.98f;
   //gravity stuff 
   float dz = 0.0, zr = 0.0;
   float z_gravity = 0.027;
