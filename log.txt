@@ -1,7 +1,5 @@
 SDL2 initialized
 SDL2 version: SDL-release-2.28.4-0-gcc016b004
-SDL2 renderer created
-SDL2 GPU created
 SDL2 image initialized
 SDL2 mixer initialized
 SDL2 window created
@@ -46,6 +44,13 @@ Finished aseprite load!
 ------------
 Aseprite: character_atlas
 Aseprite: items_atlas
+Loading animation file: animations
+Loading animation: idle
+Frames: 1
+Loading animation: walk
+Frames: 4
+Animation loaded: bigas
+ERROR: Failed to load animation: res/animations\animations.json [json.exception.type_error.302] type must be array, but is null
 Loading prefab: map
 Prefab loaded: bigas
 Prefab loaded: health_potion
@@ -55,4 +60,6 @@ Game:3
 Hero spr sheet : items_atlas
 Game initialized
 Engine post init
+Playing animation 0 4
+Playing animation 0 4
 SDL2 quit

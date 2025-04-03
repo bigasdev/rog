@@ -27,8 +27,8 @@ void SpriteAnimator::update(double dt){
       }
     }
     //animation moves only in the horizontal, no need for vertical support yet
-    m_spr->dst_x = m_current_frame.x + m_current_frame.frame;
-    m_spr->dst_y = m_current_frame.y;
+    m_spr->dst_x = m_current_frame.orig_x +  m_current_frame.x + m_current_frame.frame;
+    m_spr->dst_y = m_current_frame.orig_y +  m_current_frame.y;
   }
 
   //loop through the frames and check if the state is true
