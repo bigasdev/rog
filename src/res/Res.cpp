@@ -1,5 +1,6 @@
 #include "SDL_gpu.h"
 #include "SDL_pixels.h"
+#include <array>
 #include <string>
 #define CUTE_ASEPRITE_IMPLEMENTATION
 #include "../core/Engine.hpp"
@@ -64,6 +65,7 @@ void Res::init() {
   load_fonts();
   load_sounds();
   load_aseprites();
+  load_animations();
   load_prefabs();
   // load_pallete();
   load_shaders();
@@ -280,14 +282,26 @@ void Res::load_prefabs() {
         auto dst_y = value["atlas_pos_y"].get<float>();
         auto wid = value["sprite_size_x"].get<int>();
         auto hei = value["sprite_size_y"].get<int>();
+        auto col_wid = value["collision_box_x"].get<int>();
+        auto col_hei = value["collision_box_y"].get<int>();
+        auto col_x = value["collision_offset_x"].get<int>();
+        auto col_y = value["collision_offset_y"].get<int>();
+        auto offset_x = value["sprite_offset_x"].get<int>();
+        auto offset_y = value["sprite_offset_y"].get<int>();
         auto file_name = value["atlas_name"].get<std::string>();
 
         auto spr = Sprite();
         spr.sheet = file_name;
         spr.dst_x = dst_x;
         spr.dst_y = dst_y;
+        spr.col_wid = col_wid;
+        spr.col_hei = col_hei;
+        spr.col_x = col_x;
+        spr.col_y = col_y;
         spr.wid = wid;
         spr.hei = hei;
+        spr.spr_x = offset_x;
+        spr.spr_y = offset_y;
 
         m_sprites.insert(std::make_pair(name, spr));
 
@@ -301,12 +315,74 @@ void Res::load_prefabs() {
   }
 }
 
+void Res::load_animations(){
+  auto files = Reader::get_extension_files("res/animations", ".json");
+
+  for (auto file : files) {
+    std::string path = file;
+    std::string file_name = path.substr(path.find_last_of("/\\") + 1);
+    file_name = file_name.substr(0, file_name.find_last_of("."));
+    Logger::log("Loading animation file: " + file_name);
+
+    std::string json = Reader::get_file_contents(file);
+    if (json.empty()) {
+      Logger::error("Failed to read animation file: " + file);
+      continue;
+    }
+
+    auto prefab = nlohmann::json::parse(json);
+
+    // loop through all the keys in the json array
+    // get all of the values from the json and try to create an Animation from it
+    for (auto &[key, value] : prefab.items()) {
+      try {
+        auto name = value["name"].get<std::string>();
+
+
+        std::vector<nlohmann::json> animations = value["animations"].get<std::vector<nlohmann::json>>();
+        //load animations array 
+        for(auto &anim : animations){
+          auto anim_name = anim["name"].get<std::string>();
+          auto frames = anim["frames"].get<int>();
+          auto x = anim["x"].get<int>();
+          auto y = anim["y"].get<int>();
+          auto loop = anim["loop"].get<bool>();
+          auto block_transition = anim["block_transition"].get<bool>();
+
+          Logger::log("Loading animation: " + anim_name);
+          Logger::log("Frames: " + std::to_string(frames));
+
+          SpriteFrame frame = {anim_name, x, y, 0, frames, .16f, loop, block_transition, nullptr};
+
+          m_animations.insert(std::make_pair(anim_name, frame));
+        }
+
+        
+
+        Logger::log("Animation loaded: " + name);
+      } catch (nlohmann::json::exception &e) {
+        Logger::error("Failed to load animation: " + file + " " + e.what());
+      }
+    }
+    // m_prefabs.insert(std::make_pair(file_name, file));
+  }
+}
+
 Sprite Res::get_sprite(std::string name) {
   try {
     return m_sprites.at(name);
   } catch (const std::out_of_range &e) {
     Logger::error("Sprite " + std::string(name) + " not found!");
     return Sprite();
+  }
+}
+
+SpriteFrame Res::get_animation(std::string name) {
+  try {
+    return m_animations.at(name);
+  } catch (const std::out_of_range &e) {
+    Logger::error("Animation " + std::string(name) + " not found!");
+    return SpriteFrame();
   }
 }
 

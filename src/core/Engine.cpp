@@ -56,12 +56,17 @@ void Engine::init() {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
+  //get computer resolution 
+  SDL_DisplayMode DM;
+  SDL_GetCurrentDisplayMode(0, &DM);
+
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI |
                         SDL_WINDOW_RESIZABLE);
-  m_sdl_window = SDL_CreateWindow("Game", 1920 - WIN_WIDTH, 1080 - WIN_HEIGHT,
+  m_sdl_window = SDL_CreateWindow("Game",DM.w - (WIN_WIDTH*1.1f) , DM.h - (WIN_HEIGHT*1.1f),
                                   WIN_WIDTH, WIN_HEIGHT, window_flags);
   m_window_size = {WIN_WIDTH, WIN_HEIGHT};
+
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 

@@ -39,6 +39,9 @@ struct vec2 {
   vec2 operator/(const vec2 &v) { return vec2(x / v.x, y / v.y); }
   vec2 operator/(const int &i) { return vec2(x / i, y / i); }
   vec2 operator*(const float &f) { return vec2(x * f, y * f); }
+
+  int distance_x(vec2 v) { return v.x - x; }
+  int distance_y(vec2 v) { return v.y - y; }
 };
 
 struct vec3 {

@@ -51,6 +51,8 @@ void Game::init() {
 
   hero = std::make_unique<Entity>("bigas", vec2{0, 0});
   hp = std::make_unique<Entity>("health_potion", vec2{0, 50});
+
+  Logger::log("Hero spr sheet : " + hp->spr.sheet);
 }
 
 void Game::fixed_update(double tmod) {
@@ -101,12 +103,6 @@ void Game::post_update(double dt) {
 }
 
 void Game::draw_root() {
-  for (int i = -500; i < 500; i += 8*g_camera->get_game_scale()) {
-    for (int j = -500; j < 500; j += 8*g_camera->get_game_scale()) {
-      g_renderer->draw_from_sheet(*g_res->get_texture("concept"), {i, j},
-                                  {2, 0, 8, 8}, false);
-    }
-  }
 }
 
 void Game::draw_ent(){

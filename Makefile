@@ -13,12 +13,12 @@ RELEASE_FOLDER = .release
 ICON_DIR = res/icon/icon.res
 BIN = bin/*.o
 DEBUG_FLAGS = -D_ASSERTS -D_DEBUG -D_IMGUI
-GAME_FLAGS = -D_IMGUI -DWIN_WIDTH=1024 -DWIN_HEIGHT=600 -DGAME_SCALE=3
+GAME_FLAGS = -D_IMGUI -DWIN_WIDTH=1024 -DWIN_HEIGHT=768 -DGAME_SCALE=3
 
 bin_dir:
 	mkdir bin
 
-SRC_DIRS := src/imgui src/core src/entity src/renderer src/res src/game src/tools
+SRC_DIRS := src/imgui src/core src/core/ui src/entity src/entity/ui src/renderer src/res src/game src/tools
 
 OBJ_FILES := $(foreach dir, $(SRC_DIRS), $(patsubst $(dir)/%.cpp, bin/%.o, $(wildcard $(dir)/*.cpp)))
 

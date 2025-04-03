@@ -93,6 +93,8 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
 
 //draw of a sprite, this is the same as for drawing an entity but it can be used standalone
 void Renderer::draw(GPU_Image *sheet, Sprite spr, vec2 pos) {
+  if(!spr.visible) return;
+
   GPU_Rect src;
   src.x = spr.dst_x * spr.wid;
   src.y = spr.dst_y * spr.hei;
@@ -100,8 +102,8 @@ void Renderer::draw(GPU_Image *sheet, Sprite spr, vec2 pos) {
   src.h = spr.hei;
 
   GPU_Rect dst;
-  dst.x = static_cast<int>(pos.x + spr.spr_x);
-  dst.y = static_cast<int>(pos.y + spr.spr_y);
+  dst.x = static_cast<int>(pos.x + (spr.spr_x*g_camera->get_game_scale()));
+  dst.y = static_cast<int>(pos.y + (spr.spr_y*g_camera->get_game_scale()));
   //this works??
   dst.w = spr.wid * g_camera->get_game_scale() * spr.scale_x * spr.squash_x;
   dst.h = spr.hei * g_camera->get_game_scale() * spr.scale_y * spr.squash_y;

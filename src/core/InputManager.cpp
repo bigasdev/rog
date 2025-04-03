@@ -1,6 +1,7 @@
 #include "InputManager.hpp"
 #include "global.hpp"
 #include "../tools/Logger.hpp"
+#include "../tools/Mouse.hpp"
 #include "SDL_events.h"
 #include "SDL_joystick.h"
 #include "SDL_keycode.h"
@@ -139,8 +140,10 @@ void InputManager::update(SDL_Event event) {
     break;
   case SDL_MOUSEBUTTONDOWN:
     if (event.button.button == SDL_BUTTON_LEFT) {
-      if (left_click != nullptr)
+      if (left_click != nullptr){
         *left_click = true;
+      }
+      Mouse::is_clicked = true;
     } else if (event.button.button == SDL_BUTTON_RIGHT) {
       if (right_click != nullptr)
         *right_click = true;
@@ -151,8 +154,10 @@ void InputManager::update(SDL_Event event) {
     break;
   case SDL_MOUSEBUTTONUP:
     if (event.button.button == SDL_BUTTON_LEFT) {
-      if (left_click != nullptr)
+      if (left_click != nullptr){
         *left_click = false;
+      }
+      Mouse::is_clicked = false;
     } else if (event.button.button == SDL_BUTTON_RIGHT) {
       if (right_click != nullptr)
         *right_click = false;

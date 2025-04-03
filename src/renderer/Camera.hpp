@@ -17,6 +17,7 @@ public:
 
   GPU_Camera** get_gpu_cam();
   int get_game_scale() { return m_game_scale; }
+  vec2 get_pos();
 
   bool is_on_screen(vec2 pos, float padding = 0);
   bool is_dirty() { return dirty; }
