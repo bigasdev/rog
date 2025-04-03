@@ -352,7 +352,7 @@ void Res::load_animations(){
           Logger::log("Loading animation: " + anim_name);
           Logger::log("Frames: " + std::to_string(frames));
 
-          SpriteFrame frame = {anim_name, x, y, 0, frames, .16f, loop, block_transition, nullptr};
+          SpriteFrame frame = {anim_name,0,0, x, y, 0, frames, .16f, loop, block_transition, nullptr};
 
           m_animations.insert(std::make_pair(anim_name, frame));
         }

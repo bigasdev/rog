@@ -37,6 +37,8 @@ public:
   Cooldown* m_cooldown;
   //used to add debuffs or buffs to the entity, it has a strength priority system too
   AffectManager* m_affect_manager;
+  //used to animate the Entity
+  SpriteAnimator *animator;
 private:
 
   

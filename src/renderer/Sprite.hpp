@@ -9,6 +9,7 @@
 // the sprite frame will assigned to the dst_x and dst_y variables of the sprite
 struct SpriteFrame{
   std::string name = "default";
+  int orig_x = 0, orig_y = 0;
   int x, y;
   int frame = 0;
   int max_frames;
