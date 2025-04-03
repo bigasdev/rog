@@ -27,6 +27,10 @@ GPU_Camera **Camera::get_gpu_cam() { return &m_camera; }
 
 Camera::~Camera() { delete m_camera; }
 
+vec2 Camera::get_pos() {
+  return vec2(m_camera->x, m_camera->y);
+}
+
 void Camera::move() {
   if (m_tracked_pos != nullptr) {
     last_pos = m_pos;

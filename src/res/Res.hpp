@@ -13,6 +13,7 @@
 
 class AssetData;
 class Sprite;
+class SpriteFrame;
 
 struct AsepriteHelper
 {
@@ -36,6 +37,7 @@ public:
   void load_sounds();
   void load_aseprites();
   void load_prefabs();
+  void load_animations();
   void load_shaders();
 
   //getters 
@@ -45,6 +47,7 @@ public:
   Uint32 get_shader_id();
   GPU_ShaderBlock get_shader_block();
   Sprite get_sprite(std::string name);
+  SpriteFrame get_animation(std::string name);
 
   void create_asset_data(std::string file, std::string name, std::string folder);
 
@@ -58,6 +61,7 @@ private:
   std::vector<GPU_ShaderBlock> m_shader_blocks;
   std::vector<AsepriteHelper> m_aseprite_files;
   std::map<std::string, Sprite> m_sprites;
+  std::map<std::string, SpriteFrame> m_animations;
 
   SDL_Renderer *m_renderer;
 };

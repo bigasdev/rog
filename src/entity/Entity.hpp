@@ -19,7 +19,11 @@ public:
 
   virtual void update(double dt);
   virtual void fixed_update(double tmod);
+  virtual void move_to(vec2 target, float speed = 0);
 
+  Rect get_collision_box();
+
+   
   Sprite spr;
   //
   vec2 pos;
@@ -29,11 +33,11 @@ public:
   int armor = 0;
   //velocity
   float dx = 0.0, dy = 0.0;
-private:
   //
   Cooldown* m_cooldown;
   //used to add debuffs or buffs to the entity, it has a strength priority system too
   AffectManager* m_affect_manager;
+private:
 
   
   float frict_x = 0.98f , frict_y = 0.98f;
