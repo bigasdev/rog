@@ -1,6 +1,7 @@
 #include "global.hpp"
 
 Engine* g_engine;
+GameManager* g_game_manager;
 Res* g_res;
 Renderer* g_renderer;
 Camera* g_camera;

@@ -45,11 +45,7 @@ Finished aseprite load!
 Aseprite: character_atlas
 Aseprite: items_atlas
 Loading animation file: animations
-Loading animation: idle
-Frames: 1
-Loading animation: walk
-Frames: 4
-Animation loaded: bigas
+ERROR: Failed to load animation: res/animations\animations.json [json.exception.type_error.302] type must be array, but is null
 ERROR: Failed to load animation: res/animations\animations.json [json.exception.type_error.302] type must be array, but is null
 Loading prefab: map
 Prefab loaded: bigas
@@ -57,9 +53,11 @@ Prefab loaded: health_potion
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
 Game:3
 3
+ERROR: Animation idle not found!
+ERROR: Animation walk not found!
+ERROR: Animation idle not found!
+ERROR: Animation walk not found!
 Hero spr sheet : items_atlas
 Game initialized
 Engine post init
-Playing animation 0 4
-Playing animation 0 4
 SDL2 quit

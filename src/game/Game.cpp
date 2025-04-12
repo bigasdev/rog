@@ -16,6 +16,16 @@
 
 #include "../entity/Entity.hpp"
 
+//FIX:: start of the ecs, this will be better created in the future
+#include "../core/GameManager.hpp"
+#include "../entity/GameAsset.hpp"
+#include "../components/IComponent.hpp"
+#include "../components/SpriteComponent.hpp"
+
+std::unique_ptr<GameAsset> g_game_asset = std::make_unique<GameAsset>();
+std::unique_ptr<SpriteComponent> orc_spr;
+
+
 bool moving_right = false;
 bool moving_left = false;
 bool slow_mo = false;
@@ -29,6 +39,7 @@ vec2 wood_pos = {20, 40};
 
 std::unique_ptr<Entity> hero;
 std::unique_ptr<Entity> hp;
+
 
 Game::Game() {
 }
@@ -53,6 +64,15 @@ void Game::init() {
   hp = std::make_unique<Entity>("health_potion", vec2{0, 50});
 
   Logger::log("Hero spr sheet : " + hp->spr.sheet);
+
+  //FIX:: ECS TEST 
+  g_game_manager = new GameManager();
+
+  orc_spr = std::make_unique<SpriteComponent>("bigas", vec2{0, 80});
+  g_game_asset->components.push_back(std::move(orc_spr));
+  g_game_asset->GUID = 1;
+
+  g_game_asset->init();
 }
 
 void Game::fixed_update(double tmod) {
