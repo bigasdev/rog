@@ -13,6 +13,4 @@ class ISystem
     virtual void fixed_update(double tmod) = 0;
     virtual void render() = 0;
     virtual void dispose() = 0;
-
-    std::list<std::unique_ptr<IComponent>> m_components;
 };

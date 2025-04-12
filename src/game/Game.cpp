@@ -21,8 +21,10 @@
 #include "../entity/GameAsset.hpp"
 #include "../components/IComponent.hpp"
 #include "../components/SpriteComponent.hpp"
+#include "../systems/SpriteSystem.hpp"
 
 std::unique_ptr<GameAsset> g_game_asset = std::make_unique<GameAsset>();
+std::unique_ptr<SpriteSystem> m_sprite_system = std::make_unique<SpriteSystem>();
 std::unique_ptr<SpriteComponent> orc_spr;
 
 
@@ -72,7 +74,23 @@ void Game::init() {
   g_game_asset->components.push_back(std::move(orc_spr));
   g_game_asset->GUID = 1;
 
+  //limit test 
+  for (int i = 0; i < 1000; i++) {
+    auto sprite_component = std::make_unique<SpriteComponent>("bigas", vec2{0, 80});
+    sprite_component->pos.x += i * 10;
+    auto g_asset = std::make_unique<GameAsset>();
+    g_asset->GUID = i + 1;
+    g_asset->components.push_back(std::move(sprite_component));
+
+    g_game_manager->add_game_asset(std::move(g_asset));
+  }
+
   g_game_asset->init();
+  g_game_manager->add_game_asset(std::move(g_game_asset));
+  g_game_manager->add_system(std::move(m_sprite_system));
+
+  g_game_manager->init();
+  g_game_manager->start();
 }
 
 void Game::fixed_update(double tmod) {
@@ -80,10 +98,14 @@ void Game::fixed_update(double tmod) {
   dy += (g_input_manager->get_raw_axis().y * 17.5) * tmod;
 
   hero->fixed_update(tmod);
+
+  g_game_manager->fixed_update();
 }
 
 void Game::update(double dt) {
   m_cooldown->update(dt);
+
+  g_game_manager->update();
 
   hero->dx = dx;
   hero->dy = dy;
@@ -128,6 +150,8 @@ void Game::draw_root() {
 void Game::draw_ent(){
   g_renderer->draw(*g_res->get_texture(hp->spr.sheet), hp->spr, hp->pos);
   g_renderer->draw(*g_res->get_texture(hero->spr.sheet), hero->spr, hero->pos);
+
+  g_game_manager->render();
 }
 void Game::draw_ui(){
 

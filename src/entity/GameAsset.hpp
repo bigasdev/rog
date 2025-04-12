@@ -2,7 +2,8 @@
 
 #include <list>
 #include <memory>
-class IComponent;
+#include <vector>
+#include "../components/IComponent.hpp"
 
 class GameAsset
 {
@@ -11,5 +12,16 @@ class GameAsset
     void dispose();
 
     int GUID = 0;
-    std::list<std::unique_ptr<IComponent>> components;
+    std::vector<std::unique_ptr<IComponent>> components;
+
+    template<typename T>
+    std::vector<T*> get_components_of_type() {
+        std::vector<T*> result;
+        for (auto& comp : components) {
+            if (auto casted = dynamic_cast<T*>(comp.get())) {
+                result.push_back(casted);
+            }
+        }
+        return result;
+    }
 };

@@ -9,7 +9,7 @@ class SpriteComponent : public IComponent
 {
   public:
     SpriteComponent(const std::string& sprite, const vec2& _pos);
-    ~SpriteComponent()  = default;
+    ~SpriteComponent() override = default;
 
     int type = 1;
     Sprite spr;

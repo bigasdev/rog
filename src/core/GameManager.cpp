@@ -9,6 +9,21 @@ GameManager::GameManager() {
 
 void GameManager::init() {
 }
+void GameManager::start() {
+}
+
+void GameManager::update(){
+
+}
+void GameManager::fixed_update(){
+
+}
+void GameManager::render(){
+  for(auto& system : m_systems) {
+    system->render();
+  }
+
+}
 
 void GameManager::dispose() {
 }
