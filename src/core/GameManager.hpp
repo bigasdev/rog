@@ -15,8 +15,8 @@ class GameManager{
     void init();
     void start();
 
-    void update();
-    void fixed_update();
+    void update(float dt);
+    void fixed_update(double tmod);
     void render();
     void dispose();
 

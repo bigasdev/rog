@@ -8,15 +8,27 @@ GameManager::GameManager() {
 }
 
 void GameManager::init() {
+  for(auto& system : m_systems) {
+    system->awake();
+  }
 }
 void GameManager::start() {
+  for(auto& system : m_systems) {
+    system->start();
+  }
 }
 
-void GameManager::update(){
-
+void GameManager::update(float dt){
+  
+  for(auto& system : m_systems) {
+    system->update(dt);
+  }
 }
-void GameManager::fixed_update(){
+void GameManager::fixed_update(double tmod){
 
+  for(auto& system : m_systems) {
+    system->fixed_update(tmod);
+  }
 }
 void GameManager::render(){
   for(auto& system : m_systems) {

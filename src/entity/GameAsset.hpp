@@ -15,13 +15,14 @@ class GameAsset
     std::vector<std::unique_ptr<IComponent>> components;
 
     template<typename T>
-    std::vector<T*> get_components_of_type() {
-        std::vector<T*> result;
+    T* get_component_of_type() {
+        T* result;
         for (auto& comp : components) {
             if (auto casted = dynamic_cast<T*>(comp.get())) {
-                result.push_back(casted);
+                result = casted;
+                return result;
             }
         }
-        return result;
+        return nullptr;
     }
 };

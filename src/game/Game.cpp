@@ -21,6 +21,7 @@
 #include "../entity/GameAsset.hpp"
 #include "../components/IComponent.hpp"
 #include "../components/SpriteComponent.hpp"
+#include "../components/TransformComponent.hpp"
 #include "../systems/SpriteSystem.hpp"
 
 std::unique_ptr<GameAsset> g_game_asset = std::make_unique<GameAsset>();
@@ -70,17 +71,14 @@ void Game::init() {
   //FIX:: ECS TEST 
   g_game_manager = new GameManager();
 
-  orc_spr = std::make_unique<SpriteComponent>("bigas", vec2{0, 80});
-  g_game_asset->components.push_back(std::move(orc_spr));
-  g_game_asset->GUID = 1;
-
   //limit test 
   for (int i = 0; i < 1000; i++) {
-    auto sprite_component = std::make_unique<SpriteComponent>("bigas", vec2{0, 80});
-    sprite_component->pos.x += i * 10;
+    auto sprite_component = std::make_unique<SpriteComponent>("bigas");
+    auto transform_component = std::make_unique<TransformComponent>(vec2{i * 10, 90}, vec2{1, 1}, 0.0f);
     auto g_asset = std::make_unique<GameAsset>();
     g_asset->GUID = i + 1;
     g_asset->components.push_back(std::move(sprite_component));
+    g_asset->components.push_back(std::move(transform_component));
 
     g_game_manager->add_game_asset(std::move(g_asset));
   }
@@ -99,13 +97,13 @@ void Game::fixed_update(double tmod) {
 
   hero->fixed_update(tmod);
 
-  g_game_manager->fixed_update();
+  g_game_manager->fixed_update(tmod);
 }
 
 void Game::update(double dt) {
   m_cooldown->update(dt);
 
-  g_game_manager->update();
+  g_game_manager->update(dt);
 
   hero->dx = dx;
   hero->dy = dy;

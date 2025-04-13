@@ -6,7 +6,9 @@
 #include "../res/Res.hpp"
 #include "../components/IComponent.hpp"
 #include "../entity/GameAsset.hpp"
+#include "../tools/Logger.hpp"
 #include "../components/SpriteComponent.hpp"
+#include "../components/TransformComponent.hpp"
 #include "../core/GameManager.hpp"
 
 void SpriteSystem::awake(){
@@ -24,11 +26,10 @@ void SpriteSystem::fixed_update(double tmod){
 
 void SpriteSystem::render(){
   for(auto& game_asset : g_game_manager->get_game_assets()){
-    auto components = game_asset->get_components_of_type<SpriteComponent>();
-    for(auto& component : components){
-      auto sprite_component = static_cast<SpriteComponent*>(component);
-      g_renderer->draw(*g_res->get_texture(sprite_component->spr.sheet), sprite_component->spr, sprite_component->pos);
-    }
+    auto spr = game_asset->get_component_of_type<SpriteComponent>();
+    auto transform = game_asset->get_component_of_type<TransformComponent>();
+    if(spr == nullptr || transform == nullptr || !spr->enabled) continue;
+    g_renderer->draw(*g_res->get_texture(spr->spr.sheet), spr->spr, transform->pos);
   }
 }
 
