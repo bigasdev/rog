@@ -8,6 +8,7 @@
 class SpriteComponent : public IComponent
 {
   public:
+    SpriteComponent() = default;
     SpriteComponent(const std::string& sprite);
     ~SpriteComponent() override = default;
 

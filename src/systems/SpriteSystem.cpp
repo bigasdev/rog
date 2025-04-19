@@ -25,9 +25,12 @@ void SpriteSystem::fixed_update(double tmod){
 }
 
 void SpriteSystem::render(){
-  for(auto& game_asset : g_game_manager->get_game_assets()){
-    auto spr = game_asset->get_component_of_type<SpriteComponent>();
-    auto transform = game_asset->get_component_of_type<TransformComponent>();
+  auto sprite_components = g_game_manager->get_components<SpriteComponent>();
+  auto transform_components = g_game_manager->get_components<TransformComponent>();
+
+  for(int i = 0;i < sprite_components.size();i++){
+    auto spr = sprite_components[i];
+    auto transform = transform_components[i];
     if(spr == nullptr || transform == nullptr || !spr->enabled) continue;
     g_renderer->draw(*g_res->get_texture(spr->spr.sheet), spr->spr, transform->pos);
   }

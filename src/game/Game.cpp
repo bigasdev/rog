@@ -23,9 +23,11 @@
 #include "../components/SpriteComponent.hpp"
 #include "../components/TransformComponent.hpp"
 #include "../systems/SpriteSystem.hpp"
+#include "../systems/PlayerMoveSystem.hpp"
 
 std::unique_ptr<GameAsset> g_game_asset = std::make_unique<GameAsset>();
 std::unique_ptr<SpriteSystem> m_sprite_system = std::make_unique<SpriteSystem>();
+std::unique_ptr<PlayerMoveSystem> m_player_move_system = std::make_unique<PlayerMoveSystem>();
 std::unique_ptr<SpriteComponent> orc_spr;
 
 
@@ -72,20 +74,18 @@ void Game::init() {
   g_game_manager = new GameManager();
 
   //limit test 
-  for (int i = 0; i < 1000; i++) {
+  for (int i = 0; i < 10000; i++) {
     auto sprite_component = std::make_unique<SpriteComponent>("bigas");
     auto transform_component = std::make_unique<TransformComponent>(vec2{i * 10, 90}, vec2{1, 1}, 0.0f);
-    auto g_asset = std::make_unique<GameAsset>();
-    g_asset->GUID = i + 1;
-    g_asset->components.push_back(std::move(sprite_component));
-    g_asset->components.push_back(std::move(transform_component));
 
-    g_game_manager->add_game_asset(std::move(g_asset));
+    g_game_manager->add_component<SpriteComponent>(i + 1, *sprite_component);
+    g_game_manager->add_component<TransformComponent>(i + 1, *transform_component);
+    g_game_manager->create_entity();
   }
 
   g_game_asset->init();
-  g_game_manager->add_game_asset(std::move(g_game_asset));
   g_game_manager->add_system(std::move(m_sprite_system));
+  g_game_manager->add_system(std::move(m_player_move_system));
 
   g_game_manager->init();
   g_game_manager->start();
