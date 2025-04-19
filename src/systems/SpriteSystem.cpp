@@ -12,6 +12,11 @@
 #include "../core/GameManager.hpp"
 
 void SpriteSystem::awake(){
+  auto sprite_components = g_game_manager->get_components<SpriteComponent>();
+  for(auto& spr : sprite_components){
+    if(spr == nullptr) continue;
+    spr->spr = g_res->get_sprite(spr->name);
+  }
 }
 
 void SpriteSystem::start(){

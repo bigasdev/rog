@@ -77,7 +77,6 @@ void Game::init() {
   //limit test 
   for (int i = 0; i < 10000; i++) {
     auto sprite_component = std::make_unique<SpriteComponent>();
-    sprite_component->spr = g_res->get_sprite("bigas");
     auto transform_component = std::make_unique<TransformComponent>();
     transform_component->pos = vec2{static_cast<float>(i * 26), static_cast<float>(80)};
     transform_component->scale = vec2{1, 1};
