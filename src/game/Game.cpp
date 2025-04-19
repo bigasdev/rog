@@ -11,6 +11,7 @@
 #include "../renderer/Sprite.hpp"
 #include "../tools/Logger.hpp"
 #include "SDL.h"
+#include <algorithm>
 #include <memory>
 #include <string>
 
@@ -75,8 +76,11 @@ void Game::init() {
 
   //limit test 
   for (int i = 0; i < 10000; i++) {
-    auto sprite_component = std::make_unique<SpriteComponent>("bigas");
-    auto transform_component = std::make_unique<TransformComponent>(vec2{i * 10, 90}, vec2{1, 1}, 0.0f);
+    auto sprite_component = std::make_unique<SpriteComponent>();
+    sprite_component->spr = g_res->get_sprite("bigas");
+    auto transform_component = std::make_unique<TransformComponent>();
+    transform_component->pos = vec2{static_cast<float>(i * 26), static_cast<float>(80)};
+    transform_component->scale = vec2{1, 1};
 
     g_game_manager->add_component<SpriteComponent>(i + 1, *sprite_component);
     g_game_manager->add_component<TransformComponent>(i + 1, *transform_component);

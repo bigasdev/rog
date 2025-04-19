@@ -1,8 +1,7 @@
 #pragma once 
 
-class IComponent
+struct IComponent
 {
-  public:
   virtual ~IComponent() = default;
   bool enabled = true;
 };
