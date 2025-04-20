@@ -7,6 +7,50 @@
         "collision_box_y": 16,
         "collision_offset_x": 0,
         "collision_offset_y": 0,
+        "components": [
+            {
+                "is_active": true,
+                "name": "TransformComponent",
+                "variables": [
+                    {
+                        "name": "pos",
+                        "type": "vec2",
+                        "val": "{5, 45}"
+                    },
+                    {
+                        "name": "scale",
+                        "type": "vec2",
+                        "val": "{1, 1}"
+                    },
+                    {
+                        "name": "rotation",
+                        "type": "float",
+                        "val": "0"
+                    },
+                    {
+                        "name": "flip_x",
+                        "type": "bool",
+                        "val": "false"
+                    },
+                    {
+                        "name": "flip_y",
+                        "type": "bool",
+                        "val": "false"
+                    }
+                ]
+            },
+            {
+                "is_active": true,
+                "name": "SpriteComponent",
+                "variables": [
+                    {
+                        "name": "name",
+                        "type": "std::string",
+                        "val": "bigas"
+                    }
+                ]
+            }
+        ],
         "group": "default",
         "name": "bigas",
         "sprite_offset_x": 0,
@@ -22,6 +66,50 @@
         "collision_box_y": 16,
         "collision_offset_x": 0,
         "collision_offset_y": 0,
+        "components": [
+            {
+                "is_active": true,
+                "name": "TransformComponent",
+                "variables": [
+                    {
+                        "name": "pos",
+                        "type": "vec2",
+                        "val": "{10, 180}"
+                    },
+                    {
+                        "name": "scale",
+                        "type": "vec2",
+                        "val": "{1, 1}"
+                    },
+                    {
+                        "name": "rotation",
+                        "type": "float",
+                        "val": "0"
+                    },
+                    {
+                        "name": "flip_x",
+                        "type": "bool",
+                        "val": "false"
+                    },
+                    {
+                        "name": "flip_y",
+                        "type": "bool",
+                        "val": "false"
+                    }
+                ]
+            },
+            {
+                "is_active": true,
+                "name": "SpriteComponent",
+                "variables": [
+                    {
+                        "name": "name",
+                        "type": "std::string",
+                        "val": "health_potion"
+                    }
+                ]
+            }
+        ],
         "group": "default",
         "name": "health_potion",
         "sprite_offset_x": 0,

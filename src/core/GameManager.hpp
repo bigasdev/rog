@@ -7,6 +7,7 @@
 #include <typeindex>
 #include <memory>
 #include "../components/ComponentStore.hpp"
+#include "ComponentFactory.hpp"
 class GameAsset;
 class ISystem;
 
@@ -21,15 +22,18 @@ class GameManager{
     void fixed_update(double tmod);
     void render();
     void dispose();
+    void add_dynamic_component(EntityID entity, std::shared_ptr<IComponent> component) {
+      component->register_component(this, entity);
+    }
 
     EntityID create_entity() {
       return m_next_entity_id++;
     }
 
     template<typename T>
-    void add_component(EntityID entity, T component) {
-        auto& store = get_store<T>();
-        store.add(entity, std::move(component));
+    void add_component(EntityID entity, const T& component) {
+      auto& store = get_store<T>();
+      store.add(entity, component);
     }
 
     template<typename T>
@@ -60,6 +64,8 @@ class GameManager{
         }
         return result;
     }
+
+    std::unique_ptr<ComponentFactory> component_factory;
 
 
   private:

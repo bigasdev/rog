@@ -5,6 +5,7 @@
 #include "../systems/ISystem.hpp"
 
 GameManager::GameManager() {
+  component_factory = std::make_unique<ComponentFactory>();
 }
 
 void GameManager::init() {
