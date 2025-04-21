@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL_render.h"
 #include "SDL_stdinc.h"
+#include <unordered_map>
 #ifndef RES_HPP
 #define RES_HPP
 #include "SDL_ttf.h"
@@ -10,6 +11,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include "../entity/Types.hpp"
 
 class AssetData;
 class Sprite;
@@ -47,6 +49,9 @@ public:
   Uint32 get_shader_id();
   GPU_ShaderBlock get_shader_block();
   Sprite get_sprite(std::string name);
+  Prefab get_prefab(std::string name) {
+    return m_prefabs[name];
+  }
   SpriteFrame get_animation(std::string name);
 
   void create_asset_data(std::string file, std::string name, std::string folder);
@@ -62,6 +67,8 @@ private:
   std::vector<AsepriteHelper> m_aseprite_files;
   std::map<std::string, Sprite> m_sprites;
   std::map<std::string, SpriteFrame> m_animations;
+
+  std::unordered_map<std::string, Prefab> m_prefabs;
 
   SDL_Renderer *m_renderer;
 };

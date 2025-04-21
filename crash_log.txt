@@ -44,14 +44,19 @@ Finished aseprite load!
 ------------
 Aseprite: character_atlas
 Aseprite: items_atlas
+Loading animation file: animations
+ERROR: Failed to load animation: res/animations\animations.json [json.exception.type_error.302] type must be array, but is null
+ERROR: Failed to load animation: res/animations\animations.json [json.exception.type_error.302] type must be array, but is null
 Loading prefab: map
 Prefab loaded: bigas
 Prefab loaded: health_potion
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
 Game:3
 3
-Hero spr sheet : item_atlas
+Component name: TransformComponent
+Component name: SpriteComponent
+Component name: PlayerMoveComponent
 Game initialized
 Engine post init
-ERROR: Texture item_atlas not found!
+PlayerMoveSystem::update 
 ERROR: Signal: 11

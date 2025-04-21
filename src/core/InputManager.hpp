@@ -34,6 +34,8 @@ public:
   vec2 get_right_axis() { return right_axis; }
   void update(SDL_Event event);
 
+  bool get_key_down(SDL_Keycode key);
+
 private:
   std::map<SDL_Keycode, bool*> m_key_map;
   std::map<JoyInput, bool*> m_joy_map;

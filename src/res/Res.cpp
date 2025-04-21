@@ -303,7 +303,39 @@ void Res::load_prefabs() {
         spr.spr_x = offset_x;
         spr.spr_y = offset_y;
 
+        auto prefab = Prefab();
+        prefab.name = name;
+        prefab.components.clear();
+        auto components = value["components"].get<std::vector<nlohmann::json>>();
+        prefab.components.reserve(components.size());
+        for (auto &component : components) {
+          auto component_name = component["name"].get<std::string>();
+          auto component_active = component["is_active"].get<bool>();
+          if(!component_active){
+            continue;
+          }
+          auto component_data = ComponentData();
+          component_data.name = component_name;
+          component_data.active = true;
+          auto variables =
+              component["variables"].get<std::vector<nlohmann::json>>();
+          component_data.variables.reserve(variables.size());
+          for (auto &variable : variables) {
+            auto variable_name = variable["name"].get<std::string>();
+            auto variable_type = variable["type"].get<std::string>();
+            auto variable_val = variable["val"].get<std::string>();
+            VariableData var;
+            var.name = variable_name;
+            var.type = variable_type;
+            var.val = variable_val;
+            component_data.variables.push_back(var);
+          }
+          prefab.components.push_back(component_data);
+        }
+
+
         m_sprites.insert(std::make_pair(name, spr));
+        m_prefabs.insert(std::make_pair(name, prefab));
 
 
         Logger::log("Prefab loaded: " + name);
