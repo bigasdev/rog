@@ -59,10 +59,11 @@ void Game::init() {
   //FIX:: ECS TEST 
   g_game_manager = new GameManager();
 
-  auto hero = g_res->get_prefab("health_potion");
+  auto hero = g_res->get_prefab("bigas");
   auto hero_entity_id = g_game_manager->create_entity();
   for(auto& components : hero.components){
     auto component = g_game_manager->component_factory->create(components.name);
+    Logger::log("Component name: " + components.name);
     for(auto& variable : components.variables){
       component->set_variable(variable.name, variable.type, variable.val);
     }
@@ -70,7 +71,7 @@ void Game::init() {
     g_game_manager->add_dynamic_component(hero_entity_id, component);
   }
   //limit test 
-  auto bigas = g_res->get_prefab("bigas");
+  /*auto bigas = g_res->get_prefab("bigas");
   for (int i = 0; i < 10000; i++) {
     auto entity = g_game_manager->create_entity();
     
@@ -91,8 +92,7 @@ void Game::init() {
     transform_component->scale = vec2{1, 1};
 
     g_game_manager->add_component<TransformComponent>(i + 1, *transform_component);
-    g_game_manager->create_entity();
-  }
+  }*/
 
   g_game_asset->init();
   g_game_manager->add_system(std::move(m_sprite_system));

@@ -6,6 +6,7 @@
 #include <vector>
 #include <typeindex>
 #include <memory>
+#include "../tools/Logger.hpp"
 #include "../components/ComponentStore.hpp"
 #include "ComponentFactory.hpp"
 class GameAsset;
@@ -23,6 +24,7 @@ class GameManager{
     void render();
     void dispose();
     void add_dynamic_component(EntityID entity, std::shared_ptr<IComponent> component) {
+      Logger::log("Adding dynamic component: to entity: " + std::to_string(entity));
       component->register_component(this, entity);
     }
 

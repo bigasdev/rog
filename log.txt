@@ -53,6 +53,12 @@ Prefab loaded: health_potion
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
 Game:3
 3
+Component name: TransformComponent
+Adding dynamic component: to entity: 0
+Component name: SpriteComponent
+Adding dynamic component: to entity: 0
+Component name: PlayerMoveComponent
+Adding dynamic component: to entity: 0
 Game initialized
 Engine post init
 SDL2 quit

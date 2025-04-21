@@ -39,6 +39,13 @@ void InputManager::bind_mouse(bool *left, bool *right, bool *wheel) {
   wheel_click = wheel;
 }
 
+bool InputManager::get_key_down(SDL_Keycode key) {
+  if (m_key_map.find(key) != m_key_map.end()) {
+    return *m_key_map[key];
+  }
+  return false;
+}
+
 //loops through the keys set in the key and joy map
 //default implementation for axis and RT/LT 
 void InputManager::update(SDL_Event event) {

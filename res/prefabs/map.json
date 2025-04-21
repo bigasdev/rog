@@ -15,7 +15,7 @@
                     {
                         "name": "pos",
                         "type": "vec2",
-                        "val": "{5, 45}"
+                        "val": "{35, 125}"
                     },
                     {
                         "name": "scale",
@@ -47,6 +47,17 @@
                         "name": "name",
                         "type": "std::string",
                         "val": "bigas"
+                    }
+                ]
+            },
+            {
+                "is_active": true,
+                "name": "PlayerMoveComponent",
+                "variables": [
+                    {
+                        "name": "speed",
+                        "type": "float",
+                        "val": "125"
                     }
                 ]
             }
@@ -106,6 +117,17 @@
                         "name": "name",
                         "type": "std::string",
                         "val": "health_potion"
+                    }
+                ]
+            },
+            {
+                "is_active": false,
+                "name": "PlayerMoveComponent",
+                "variables": [
+                    {
+                        "name": "speed",
+                        "type": "float",
+                        "val": ""
                     }
                 ]
             }
